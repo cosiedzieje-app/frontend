@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+:root {
+  font-family: "Raleway", sans-serif;
+  @media screen and (min-width: 769px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+html, body, #app {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
