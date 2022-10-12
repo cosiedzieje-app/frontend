@@ -4,7 +4,7 @@
     :class="{
       'bg-yellow-600': level === 'warn',
       'bg-red-600': level === 'error',
-      'bg-dark-cyan': level === 'info',
+      'bg-cyan-dark': level === 'info',
       'bg-green': level === 'success'
     }"
   >

@@ -7,16 +7,29 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'violet': '#845ec2',
+        'violet': {
+          DEFUALT: '#845ec2'
+        },
         'purple': {
           DEFAULT: '#2c73d2',
           'light': '#4c88d9',
           'dark': '#2561b2'
         },
-        'dark-blue': '#0081cf',
-        'dark-cyan': '#0089ba',
-        'green': '#008f7a',
-        'dark-gray': '#272727'
+        'blue': { 
+          'dark': '#0081cf'
+        },
+        'cyan': {
+          'dark': '#0089ba'
+        },
+        'green': {
+          DEFAULT: '#008f7a',
+          'dark': '#006859',
+          'light': '#00b69b',
+          'light2': '#00caac'
+        },
+        'gray': { 
+          'dark': '#272727'
+        }
       }
     },
   },
