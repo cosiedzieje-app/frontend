@@ -3,3 +3,9 @@
     <slot></slot>
   </div>
 </template>
+
+<style lang="scss">
+.route-wrapper {
+  grid-area: route;
+}
+</style>

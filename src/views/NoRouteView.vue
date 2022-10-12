@@ -1,7 +1,7 @@
 <template>
   <RouteWrapper class="flex flex-col justify-center items-center text-5xl text-white">
     <font-awesome-icon class="text-8xl text-red-600" icon="fa-solid fa-triangle-exclamation" fixed-width />
-    <h1 class="p-4">Page not found!</h1>
+    <h1 class="p-4">Nie znaleziono strony!</h1>
     <CustomButton 
       :props="returnBtn"
     />
@@ -15,7 +15,7 @@ import type { ButtonProps } from "../types";
 import router from "@/router";
 
 const returnBtn: ButtonProps = {
-  caption: "Go back",
+  caption: "Powrót",
   action: () => router.back(),
   icon: "fa-solid fa-arrow-left"
 };

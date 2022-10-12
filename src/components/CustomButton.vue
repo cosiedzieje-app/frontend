@@ -1,6 +1,6 @@
 <template>
   <button 
-    class="bg-purple rounded-md flex flex-row justify-center items-center text-center text-white min-w-[100px] p-2 m-2 hover:bg-purple-light transition-[background-color] duration-200"
+    class="bg-green rounded-md flex flex-row justify-center items-center text-center text-white min-w-[150px] p-2 m-2 hover:bg-green-light transition-[background-color] duration-200"
     @click="() => props.action()"
   >
     <font-awesome-icon class="h-[20px] w-[20px]" :icon="props.icon" />

@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue';
-import router from './router'
+import router from './router';
+import { createPinia } from 'pinia';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -19,7 +20,8 @@ import {
   faArrowUp,
   faArrowRight,
   faArrowDown,
-  faArrowLeft
+  faArrowLeft,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 
 import './styles/index.scss';
@@ -39,11 +41,16 @@ library.add(
   faArrowUp,
   faArrowRight,
   faArrowDown,
-  faArrowLeft
+  faArrowLeft,
+  faUser
 );
+
+const pinia = createPinia();
 
 const app = createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon);
 
-app.use(router)
-app.mount('#app')
+app.use(router);
+app.use(pinia);
+
+app.mount('#app');
