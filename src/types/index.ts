@@ -11,7 +11,14 @@ interface ButtonProps {
   icon: string;
 }
 
+// Login Request format
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
 export type {
   ButtonProps,
-  Store
+  Store,
+  LoginRequest
 };
