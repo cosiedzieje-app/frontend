@@ -1,7 +1,7 @@
 <template>
   <main id="app-root" class="bg-gray-dark w-screen h-screen">
     <HeaderBox class="main-header" />
-    <section id="main-route-wrapper h-full w-full">
+    <section id="main-route-wrapper" class="h-full w-full">
       <RouterView v-slot="{ Component }">
         <transition name="view-fade" mode="out-in">
           <component :is="Component" />
