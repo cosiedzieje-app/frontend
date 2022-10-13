@@ -1,5 +1,5 @@
 <template>
-  <main id="app-root" class="bg-gray-dark w-screen h-screen flex flex-col justify-center items-center">
+  <main id="app-root" class="bg-gray-dark w-screen h-screen">
     <HeaderBox class="main-header" />
     <section class="main-route-wrapper h-full w-full">
       <RouterView v-slot="{ Component }">
