@@ -67,16 +67,14 @@ router.beforeEach((to, from) => {
     } else return false;
   }
 
-  //console.log(to.path);
-  //console.log(JSON.stringify(to.matched, null, 4));
-
+  // NOTE: If you want to add another conditional checks here, remember to make 
+  // them from most specific to least specific, see '/account' and 
+  // '/account/login' checks
   if(checkMatched("/account/login") || to.name === 'accountLogin') {
-    //console.log("accountLogin matched");
     if(store.isAuthenticated) {
       return { name: "account" };
     }
   } else if(checkMatched("/account") || to.name === 'account') {
-    //console.log("account matched");
     if(!store.isAuthenticated) {
       return { 
         name: "accountLogin",
