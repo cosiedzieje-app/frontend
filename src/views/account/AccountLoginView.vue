@@ -30,8 +30,8 @@ const route = useRoute();
 
 const redirected = ref<boolean>(route.query.redirect === 'true');
 
-let email = ref<string>('m@m.pl');
-let password = ref<string>('123');
+const email = ref<string>('m@m.pl');
+const password = ref<string>('123');
 
 async function sendForm() {
   const loginRequest: LoginRequest = {
@@ -40,6 +40,8 @@ async function sendForm() {
   }
   console.log(loginRequest);
   
+  //Nie lepiej po prostu zrobić to na then/catch zamiast przypisywać
+  //do zmiennych?
   const rawResponse = await fetch(`${import.meta.env.BACKEND_URL}/login`, {
         method: 'POST',
         headers: {
@@ -50,12 +52,16 @@ async function sendForm() {
       }
   );
 
+  //A co jak .json() zwróci błąd?
+  //WTF
   const content = await rawResponse.json();
 }
 
+//Zamiast () => null powinno być () => {} bo i tak potem coś z tą funkcją
+//zrobimy *shrug*
 const buttonProps: ButtonProps = {
   caption: 'Prześlij',
-  action: () => null,
+  action: () => {},
   icon: 'fa-solid fa-check'
 }
 </script>
