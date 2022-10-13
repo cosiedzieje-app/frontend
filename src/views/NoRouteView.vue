@@ -12,8 +12,9 @@
 import RouteWrapper from "../components/RouteWrapper.vue";
 import CustomButton from "../components/CustomButton.vue";
 import type { ButtonProps } from "../types";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const returnBtn: ButtonProps = {
   caption: "Powrót",
   action: () => router.back(),
