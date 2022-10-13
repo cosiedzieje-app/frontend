@@ -1,7 +1,7 @@
 <template>
   <main id="app-root" class="bg-gray-dark w-screen h-screen">
     <HeaderBox class="main-header" />
-    <section class="main-route-wrapper h-full w-full">
+    <section id="main-route-wrapper h-full w-full">
       <RouterView v-slot="{ Component }">
         <transition name="view-fade" mode="out-in">
           <component :is="Component" />
@@ -25,7 +25,7 @@ import { RouterView } from 'vue-router';
     "route";
 }
 
-.main-route-wrapper {
+#main-route-wrapper {
   grid-area: route;
 }
 .main-header {
