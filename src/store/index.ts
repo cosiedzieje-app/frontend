@@ -1,9 +1,5 @@
+import type { Store } from "@/types";
 import { defineStore } from 'pinia';
-
-interface Store {
-  authenticated: boolean;
-  accountName: string;
-}
 
 const useStore = defineStore("main", {
   state: () => {
