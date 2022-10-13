@@ -14,14 +14,9 @@ import RouteWrapper from "@/components/RouteWrapper.vue";
 import NoticeBox from "@/components/NoticeBox.vue";
 
 import { useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 const route = useRoute();
-
-onMounted(() => {
-  console.log(route);
-  console.log(route.query);
-});
 
 const redirected = ref<boolean>(route.query.redirect === 'true');
 </script>

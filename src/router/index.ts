@@ -54,38 +54,37 @@ const router = createRouter({
   ]
 })
 
-// account navigation guard
-router.beforeEach((to, from, next) => {
+// navigation guard
+router.beforeEach((to, from) => {
   const store = useStore();
 
-  if(to.path === '/account' || to.name === 'account') {
+  function checkMatched(path: string): boolean {
+    if(to.matched.length > 0) {
+      if(to.matched.find(v => v.path === path) !== undefined)
+        return true;
+      else
+        return false;
+    } else return false;
+  }
+
+  //console.log(to.path);
+  //console.log(JSON.stringify(to.matched, null, 4));
+
+  if(checkMatched("/account/login") || to.name === 'accountLogin') {
+    //console.log("accountLogin matched");
     if(store.isAuthenticated) {
-      next();
-    } else {
-      next({ 
+      return { name: "account" };
+    }
+  } else if(checkMatched("/account") || to.name === 'account') {
+    //console.log("account matched");
+    if(!store.isAuthenticated) {
+      return { 
         name: "accountLogin",
         query: {
           redirect: 'true'
         }
-      });
+      };
     }
-  } else {
-    next();
-  }
-});
-
-// accountLogin navigation guard
-router.beforeEach((to, from, next) => {
-  const store = useStore();
-
-  if(to.path === '/account/login' || to.name === 'accountLogin') {
-    if(store.isAuthenticated) {
-      next({ name: "account" });
-    } else {
-      next();
-    }
-  } else {
-    next();
   }
 });
 
