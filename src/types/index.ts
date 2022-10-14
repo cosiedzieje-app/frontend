@@ -54,6 +54,28 @@ interface NewAccount {
   reputation: number;
 }
 
+// Contact info format
+interface ContactInfo {
+  name: string;
+  surname: string;
+  address: Address;
+  phoneNumber: string
+}
+
+// Marker format
+interface Marker {
+  id: number;
+  createdBy: number;
+  lat: number;
+  lon: number;
+  title: string;
+  description: string;
+  addedAt: string;
+  endsAt?: string;
+  address: Address;
+  contactInfo: ContactInfo;
+}
+
 export type {
   ButtonProps,
   Store,
@@ -61,7 +83,9 @@ export type {
   UserAccountData,
   UserPersonalData,
   Address,
-  NewAccount
+  NewAccount,
+  ContactInfo,
+  Marker
 };
 export {
   Sex
