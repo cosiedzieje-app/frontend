@@ -5,10 +5,10 @@
         class="w-full text-center text-white text-4xl"
       >Rejestracja</h1>
       <div
-        class="w-full flex flex-col md:flex-row md:flex-[1_1_33.33%]"
+        class="flex flex-col items-center w-max"
       >
         <div
-          class="mt-10 md:mx-4 w-full"
+          class="mt-10"
         >
           <h2
             class="w-full text-center text-white text-2xl"
@@ -36,7 +36,7 @@
           />
         </div>
         <div
-          class="mt-10 md:mx-4 w-full"
+          class="mt-10"
         >
           <h2
             class="w-full text-center text-white text-2xl"
@@ -57,7 +57,7 @@
           />
         </div>
         <div
-          class="mt-10 md:mx-4 w-full"
+          class="mt-10"
         >
           <h2
             class="w-full text-center text-white text-2xl"
@@ -89,8 +89,8 @@
             autocomplete="country-name"
           />
         </div>
+        <CustomButton class="mt-10 w-full" :props="buttonProps" />
       </div>
-      <CustomButton class="mt-10 w-full" :props="buttonProps" />
       <div
         class="mt-10 text-center text-white flex flex-col items-center"
       >
