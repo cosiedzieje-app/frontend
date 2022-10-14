@@ -99,6 +99,11 @@ interface GeolocationData {
   map_url: string;
 }
 
+interface PointerProps{
+  caption: string;
+  position: [string, string];
+}
+
 export type {
   ButtonProps,
   Store,
@@ -109,7 +114,8 @@ export type {
   NewAccount,
   ContactInfo,
   Marker,
-  GeolocationData
+  GeolocationData,
+  PointerProps
 };
 export {
   Sex
