@@ -76,6 +76,29 @@ interface Marker {
   contactInfo: ContactInfo;
 }
 
+// Geolocation data retrieved from PositionStack format
+interface GeolocationData {
+  latitude: number;
+  longitude: number;
+  label: string;
+  name: string;
+  type: "venue" | "address" | "street" | "neighbourhood" | "borough" |
+    "localadmin" | "locality" | "county" | "macrocounty" | "region" | 
+    "macroregion" | "country" | "coarse" | "postalcode";
+  distance?: number;
+  number: string;
+  street: string;
+  postal_code: string;
+  confidence: number;
+  region: string;
+  region_code: string;
+  administrative_area: string | null;
+  neighbourhood: string;
+  country: string;
+  country_code: string;
+  map_url: string;
+}
+
 export type {
   ButtonProps,
   Store,
@@ -85,7 +108,8 @@ export type {
   Address,
   NewAccount,
   ContactInfo,
-  Marker
+  Marker,
+  GeolocationData
 };
 export {
   Sex
