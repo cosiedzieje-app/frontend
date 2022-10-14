@@ -113,6 +113,12 @@ interface GeoData {
   country: string;
   neighbourhood?: string;
 }
+
+
+interface Pointer {
+  id: number;
+  props: PointerProps;
+}
 interface PointerProps{
   caption: string;
   position: [string, string];
@@ -131,6 +137,7 @@ export type {
   Marker,
   GeolocationData,
   GeoData,
+  Pointer,
   PointerProps
 };
 export {

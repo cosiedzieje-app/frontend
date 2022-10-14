@@ -17,7 +17,7 @@
           <ol-source-osm />
       </ol-tile-layer>
       <ul>
-        <li v-for="todo in todos" :key="id">
+        <li v-for="todo in todos" :key="todo.id">
             <Pointer :props = "todo.props"/>
         </li>
       </ul>
@@ -28,7 +28,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import Pointer from '@/components/CustomPointer.vue';
-  import type { PointerProps } from '../types';
+  import type { Pointer as IPointer, PointerProps } from '@/types';
   import type { Ref } from 'vue';
 
   const center = ref([ 19.1198,50.278502]);
@@ -44,13 +44,7 @@
     position: ["0","0"]
   }
 
-  interface Pointer {
-    id: number;
-    props: PointerProps;
-  }
-
-  const todos: Ref<Pointer[]> = ref([]);
-
+  const todos: Ref<IPointer[]> = ref([]);
 
   function onInput(e:any) {
     l1.value = e.target.value
