@@ -26,6 +26,7 @@
       :autocomplete="autocomplete" 
       :placeholder="placeholder"
       required
+      :disabled="!enabled"
     >
   </div>
 </template>
@@ -41,6 +42,7 @@ interface Props {
   notRounded?: boolean;
   customBorder?: string;
   customTextAlign?: string;
+  enabled: boolean;
 }
 
 
