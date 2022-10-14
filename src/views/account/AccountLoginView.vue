@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import RouteWrapper from "@/components/RouteWrapper.vue";
 import NoticeBox from "@/components/NoticeBox.vue";
-import LoginFormInput from "@/components/LoginFormInput.vue";
+import LoginFormInput from "@/components/FormInput.vue";
 import CustomButton from "@/components/CustomButton.vue";
 
 import { useRoute, useRouter } from "vue-router";

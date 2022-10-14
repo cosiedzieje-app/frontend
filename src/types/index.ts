@@ -2,6 +2,7 @@
 interface Store {
   authenticated: boolean;
   accountName: string;
+  userGeoData: GeoData | null;
 }
 
 // CustomButton props format
@@ -99,6 +100,16 @@ interface GeolocationData {
   map_url: string;
 }
 
+// Geographical data format (for use with users and such)
+interface GeoData {
+  latitude: number;
+  longitude: number;
+  street: string;
+  postalCode: string;
+  country: string;
+  neighbourhood?: string;
+}
+
 export type {
   ButtonProps,
   Store,
@@ -109,7 +120,8 @@ export type {
   NewAccount,
   ContactInfo,
   Marker,
-  GeolocationData
+  GeolocationData,
+  GeoData
 };
 export {
   Sex

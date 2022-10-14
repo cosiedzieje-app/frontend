@@ -1,0 +1,28 @@
+<template>
+  <FormInput 
+    name="address"
+    type="text"
+    :modelValue="modelValue"
+    @update:model-value="updateValue"
+    placeholder="Twój adres"
+    :not-rounded="true"
+    custom-border="border-0 border-b-2"
+    custom-text-align="text-center"
+    @enter="onEnter"
+  />
+</template>
+
+<script setup lang="ts">
+import FormInput from '@/components/FormInput.vue';
+
+interface Props {
+  modelValue: string;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(['update:modelValue', 'enter']);
+const updateValue = (v: string) => {
+  emit('update:modelValue', v);
+}
+const onEnter = () => emit('enter');
+</script>
