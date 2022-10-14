@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, type RouteLocationNormalized, type RouteLocationRaw } from 'vue-router';
+
 import useStore from '@/store';
 
 import HomeView from '@/views/home/HomeView.vue';
@@ -7,21 +8,67 @@ import HomeIndexView from '@/views/home/HomeIndexView.vue';
 import AccountView from '@/views/account/AccountView.vue';
 import AccountIndexView from '@/views/account/AccountIndexView.vue';
 import AccountLoginView from '@/views/account/AccountLoginView.vue';
+import AccountRegisterView from '@/views/account/AccountRegisterView.vue';
 
 import NoRouteView from "@/views/NoRouteView.vue";
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    authRedirect?: RouteLocationRaw;
+  } 
+}
+
+// authorization navigation guard
+function requiresAuth() {
+  const store = useStore();
+
+  //console.log('route requires authorization');
+  if(!store.isAuthenticated) {
+    //console.log('user not authorized - redirecting');
+    return { 
+      name: 'accountLogin', 
+      query: { 
+        redirect: 'true' 
+      } 
+    };
+  }
+}
+
+// navigation guard in cases where
+// user has NOT to be authorized
+// to access route (e.g. login, register etc.)
+function authRedirect(to: RouteLocationNormalized) {
+  const store = useStore();
+
+  //console.log('route requires user NOT to be authorized');
+  if(store.isAuthenticated) {
+    //console.log('user IS authorized - redirecting');
+    if(to.meta.authRedirect !== undefined) {
+      return to.meta.authRedirect;
+    } else {
+      console.error('authRedirect meta is not set! Redirecting to home...');
+      return { name: 'home' };
+    }
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
       component: HomeView,
       children: [
         {
           path: '/',
-          name: 'homeIndex',
+          name: 'home',
           component: HomeIndexView
+        },
+        {
+          path: 'add',
+          name: 'homeAdd',
+          component: NoRouteView,
+          beforeEnter: [ requiresAuth ]
         },
         {
           path: ':pathMatch(.*)*',
@@ -35,14 +82,29 @@ const router = createRouter({
       component: AccountView,
       children: [
         {
-          path: 'login',
-          name: 'accountLogin',
-          component: AccountLoginView
+          path: '',
+          name: 'account',
+          component: AccountIndexView,
+          beforeEnter: [ requiresAuth ]
         },
         {
-          path: '/',
-          name: 'account',
-          component: AccountIndexView
+          path: 'login',
+          name: 'accountLogin',
+          component: AccountLoginView,
+          beforeEnter: [ authRedirect ],
+          meta: {
+            authRedirect: { name: "account" }
+          }
+        },
+        {
+          path: 'register',
+          name: 'accountRegister',
+          component: AccountRegisterView,
+          props: true,
+          beforeEnter: [ authRedirect ],
+          meta: {
+            authRedirect: { name: "account" }
+          }
         }
       ]
     },
@@ -53,37 +115,5 @@ const router = createRouter({
     }
   ]
 })
-
-// navigation guard
-router.beforeEach((to, from) => {
-  const store = useStore();
-
-  function checkMatched(path: string): boolean {
-    if(to.matched.length > 0) {
-      if(to.matched.find(v => v.path === path) !== undefined)
-        return true;
-      else
-        return false;
-    } else return false;
-  }
-
-  // NOTE: If you want to add another conditional checks here, remember to make 
-  // them from most specific to least specific, see '/account' and 
-  // '/account/login' checks
-  if(checkMatched("/account/login") || to.name === 'accountLogin') {
-    if(store.isAuthenticated) {
-      return { name: "account" };
-    }
-  } else if(checkMatched("/account") || to.name === 'account') {
-    if(!store.isAuthenticated) {
-      return { 
-        name: "accountLogin",
-        query: {
-          redirect: 'true'
-        }
-      };
-    }
-  }
-});
 
 export default router;

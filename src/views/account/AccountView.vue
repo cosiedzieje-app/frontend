@@ -1,5 +1,5 @@
 <template>
-  <RouteWrapper class="flex flex-col items-center">
+  <RouteWrapper>
     <RouterView v-slot="{ Component }">
       <transition name="view-fade" mode="out-in">
         <component :is="Component" />

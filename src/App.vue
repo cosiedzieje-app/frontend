@@ -23,6 +23,10 @@ import { RouterView } from 'vue-router';
   grid-template-columns: 1fr;
   grid-template-areas: "header"
     "route";
+
+  @media screen and (max-width: 767px) {
+    grid-template-rows: auto 1fr;
+  }
 }
 
 #main-route-wrapper {
