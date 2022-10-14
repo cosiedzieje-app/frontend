@@ -1,4 +1,5 @@
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
+type ListingCategory = "neighborHelp" | "happening" | "charity";
 
 // Store format
 interface Store {
@@ -138,7 +139,8 @@ export type {
   GeolocationData,
   GeoData,
   Pointer,
-  PointerProps
+  PointerProps,
+  ListingCategory
 };
 export {
   Sex

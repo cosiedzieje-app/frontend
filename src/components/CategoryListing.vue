@@ -3,7 +3,7 @@
     class="w-full"
   >
     <h1>{{ category }}</h1>
-    <CardsWrapper 
+    <ListingCardsWrapper 
 
     />
     <article
@@ -16,7 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import CardsWrapper from "@/components/CardsWrapper.vue";
+import ListingCardsWrapper from "@/components/ListingCardsWrapper.vue";
+
+import type { ListingCategory } from '@/types';
 
 interface Props {
   category: string;
