@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue';
 import router from './router';
 import { createPinia } from 'pinia';
+import OpenLayersMap from 'vue3-openlayers'
+import 'vue3-openlayers/dist/vue3-openlayers.css'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -52,6 +54,7 @@ const pinia = createPinia();
 const app = createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(pinia)
-  .use(router);
+  .use(router)
+  .use(OpenLayersMap);
 
 app.mount('#app');
