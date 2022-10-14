@@ -4,6 +4,7 @@
     type="text"
     :modelValue="modelValue"
     @update:model-value="updateValue"
+    :autocomplete="autocomplete !== undefined ? autocomplete : 'off'"
     :placeholder="placeholder !== undefined ? placeholder : 'Twój adres'"
     :not-rounded="true"
     custom-border="border-0 border-b-2"
@@ -21,6 +22,7 @@ interface Props {
   modelValue: string;
   enabled: boolean;
   placeholder?: string;
+  autocomplete?: string;
 }
 
 const props = defineProps<Props>();

@@ -1,9 +1,4 @@
 <template>
-  <input type="number" :value = "l1" @input="onInput">
-  <br>
-  <input type="number" :value = "l2" @input="onInput2">
-  <br>
-  <button @click="newPointer">Przeslij</button>
   <div class="map-box w-full h-full flex flex-col justify-center items-center text-center text-white text-6xl">
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full" >
       <ol-view 
