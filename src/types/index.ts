@@ -1,8 +1,12 @@
+type AddressGeocodingState = "idle" | "pending" | "error" | "success";
+
 // Store format
 interface Store {
   authenticated: boolean;
   accountName: string;
   userGeoData: GeoData | null;
+  addressBarEnabled: boolean;
+  addressGeocodingState: AddressGeocodingState;
 }
 
 // CustomButton props format
@@ -113,6 +117,7 @@ interface GeoData {
 export type {
   ButtonProps,
   Store,
+  AddressGeocodingState,
   LoginRequest,
   UserAccountData,
   UserPersonalData,

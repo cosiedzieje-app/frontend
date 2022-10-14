@@ -17,8 +17,21 @@
         Logowanie
       </h1>
       <div>
-        <LoginFormInput v-model="email" name="email" autocomplete="email" type="email" label-content="Adres email"></LoginFormInput>
-        <LoginFormInput v-model="password" name="password" type="password" label-content="Hasło"></LoginFormInput>
+        <LoginFormInput 
+          v-model="email" 
+          name="email" 
+          autocomplete="email" 
+          type="email" 
+          label-content="Adres email"
+          :enabled="true"
+        />
+        <LoginFormInput 
+          v-model="password" 
+          name="password" 
+          type="password" 
+          label-content="Hasło"
+          :enabled="true"
+        />
         <CustomButton class="mt-5 w-full" :props="buttonProps" />
       </div>
       <div class="mt-20 text-center text-white">
