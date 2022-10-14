@@ -113,6 +113,10 @@ interface GeoData {
   country: string;
   neighbourhood?: string;
 }
+interface PointerProps{
+  caption: string;
+  position: [string, string];
+}
 
 export type {
   ButtonProps,
@@ -126,7 +130,8 @@ export type {
   ContactInfo,
   Marker,
   GeolocationData,
-  GeoData
+  GeoData,
+  PointerProps
 };
 export {
   Sex
