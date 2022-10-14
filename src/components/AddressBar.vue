@@ -7,6 +7,7 @@
     :placeholder="placeholder !== undefined ? placeholder : 'Twój adres'"
     :not-rounded="true"
     custom-border="border-0 border-b-2"
+    custom-border-color="border-green"
     custom-text-align="text-center"
     @enter="onEnter"
     :enabled="enabled"
