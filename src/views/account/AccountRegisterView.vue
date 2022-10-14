@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import LoginFormInput from '@/components/LoginFormInput.vue';
+import LoginFormInput from '@/components/FormInput.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import RouteWrapper from '@/components/RouteWrapper.vue';
 
