@@ -1,7 +1,9 @@
 <template>
-  <header class="flex flex-row h-full w-full outline-none border-solid border-0 border-b-2 border-green">
+  <header 
+    class="flex flex-col md:flex-row h-full w-full outline-none border-solid border-0 border-b-2 border-green"
+  >
     <span
-      class="h-full text-center text-green hover:text-green-light transition-[color] duration-200 hover:cursor-pointer p-4 flex flex-col justify-center items-center text-4xl font-bold"
+      class="md:h-full text-center text-green hover:text-green-light transition-[color] duration-200 hover:cursor-pointer p-4 flex flex-col justify-center items-center text-4xl font-bold"
       @click="() => router.push('/')"
     >
       Somsiad
