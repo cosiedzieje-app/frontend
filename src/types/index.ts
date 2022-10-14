@@ -1,7 +1,12 @@
+type AddressGeocodingState = "idle" | "pending" | "error" | "success";
+
 // Store format
 interface Store {
   authenticated: boolean;
   accountName: string;
+  userGeoData: GeoData | null;
+  addressBarEnabled: boolean;
+  addressGeocodingState: AddressGeocodingState;
 }
 
 // CustomButton props format
@@ -99,6 +104,16 @@ interface GeolocationData {
   map_url: string;
 }
 
+// Geographical data format (for use with users and such)
+interface GeoData {
+  latitude: number;
+  longitude: number;
+  street: string;
+  postalCode: string;
+  country: string;
+  neighbourhood?: string;
+}
+
 interface PointerProps{
   caption: string;
   position: [string, string];
@@ -107,6 +122,7 @@ interface PointerProps{
 export type {
   ButtonProps,
   Store,
+  AddressGeocodingState,
   LoginRequest,
   UserAccountData,
   UserPersonalData,
@@ -115,7 +131,8 @@ export type {
   ContactInfo,
   Marker,
   GeolocationData,
-  PointerProps
+  PointerProps,
+  GeoData
 };
 export {
   Sex

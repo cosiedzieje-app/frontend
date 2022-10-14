@@ -19,6 +19,7 @@
             type="text" 
             label-content="Nazwa użytkownika"
             autocomplete="username"
+            :enabled="true"
           />
           <LoginFormInput 
             v-model="accountData.email" 
@@ -26,6 +27,7 @@
             autocomplete="email" 
             type="email" 
             label-content="Adres email"
+            :enabled="true"
           />
           <LoginFormInput 
             v-model="accountData.password" 
@@ -33,6 +35,7 @@
             type="password" 
             label-content="Hasło"
             autocomplete="new-password"
+            :enabled="true"
           />
         </div>
         <div
@@ -47,6 +50,7 @@
             type="text"
             label-content="Imię"
             autocomplete="given-name"
+            :enabled="true"
           />
           <LoginFormInput 
             v-model="personalData.surname"
@@ -54,6 +58,7 @@
             type="text"
             label-content="Nazwisko"
             autocomplete="family-name"
+            :enabled="true"
           />
         </div>
         <div
@@ -67,12 +72,14 @@
             name="street"
             type="text"
             label-content="Ulica"
+            :enabled="true"
           /> 
           <LoginFormInput 
             v-model="address.number"
             name="number"
             type="number"
             label-content="Numer domu"
+            :enabled="true"
           />
           <LoginFormInput 
             v-model="address.postalCode"
@@ -80,6 +87,7 @@
             type="text"
             label-content="Kod pocztowy"
             autocomplete="postal-code"
+            :enabled="true"
           />
           <LoginFormInput 
             v-model="address.country"
@@ -87,6 +95,7 @@
             type="text"
             label-content="Kraj"
             autocomplete="country-name"
+            :enabled="true"
           />
         </div>
         <CustomButton class="mt-10 w-full" :props="buttonProps" />
@@ -109,7 +118,7 @@
 </template>
 
 <script setup lang="ts">
-import LoginFormInput from '@/components/LoginFormInput.vue';
+import LoginFormInput from '@/components/FormInput.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import RouteWrapper from '@/components/RouteWrapper.vue';
 
