@@ -1,5 +1,5 @@
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
-type ListingCategory = "neighborHelp" | "happening" | "charity";
+type ListingCategory = "NeighborHelp" | "Happening" | "Charity";
 
 // Store format
 interface Store {
@@ -17,8 +17,8 @@ interface ButtonProps {
   icon: string;
 }
 
-// Login Request format
-interface LoginRequest {
+// Login data format
+interface LoginData {
   email: string;
   password: string;
 }
@@ -54,10 +54,16 @@ interface UserPersonalData {
 
 // Registration form format
 interface NewAccount {
-  accountData: UserAccountData;
-  personalData: UserPersonalData;
-  address: Address;
+  login: {
+    email: string;
+    password: string;
+  };
+  username: string;
+  name: string;
+  surname: string;
+  sex: Sex;
   reputation: number;
+  address: Address;
 }
 
 // Contact info format
@@ -65,21 +71,32 @@ interface ContactInfo {
   name: string;
   surname: string;
   address: Address;
-  phoneNumber: string
+  phoneNumber: string;
+  email: string;
 }
 
 // Marker format
 interface Marker {
   id: number;
-  createdBy: number;
-  lat: number;
-  lon: number;
+  latitude: number;
+  longitude: number;
+  title: string;
+  type: ListingCategory;
+}
+
+// Marker details format
+interface MarkerDetails {
+  id?: number;
+  userId: number;
+  latitude: number;
+  longitude: number;
   title: string;
   description: string;
-  addedAt: string;
-  endsAt?: string;
+  addTime: string;
+  endTime?: string;
   address: Address;
   contactInfo: ContactInfo;
+  type: ListingCategory;
 }
 
 // Geolocation data retrieved from PositionStack format
@@ -115,7 +132,6 @@ interface GeoData {
   neighbourhood?: string;
 }
 
-
 interface Pointer {
   id: number;
   props: PointerProps;
@@ -125,22 +141,30 @@ interface PointerProps{
   position: [string, string];
 }
 
+// SomsiadStatus format (https://github.com/somsiad-app/api#somsiadstatus-type)
+interface SomsiadStatus {
+  status: "ok" | "error";
+  errors: string[]; 
+}
+
 export type {
   ButtonProps,
   Store,
   AddressGeocodingState,
-  LoginRequest,
   UserAccountData,
   UserPersonalData,
   Address,
   NewAccount,
   ContactInfo,
   Marker,
+  MarkerDetails,
   GeolocationData,
   GeoData,
   Pointer,
   PointerProps,
-  ListingCategory
+  ListingCategory,
+  SomsiadStatus,
+  LoginData
 };
 export {
   Sex
