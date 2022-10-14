@@ -5,7 +5,7 @@
   <br>
   <button @click="newPointer">Przeslij</button>
   <div class="map-box w-full h-full flex flex-col justify-center items-center text-center text-white text-6xl">
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full" >
+    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full z-0" >
       <ol-view 
         ref="view" 
         :center="center" 
@@ -16,11 +16,17 @@
       <ol-tile-layer>
           <ol-source-osm />
       </ol-tile-layer>
+
+      <ol-geolocation :projection="projection" @positionChanged="geoLocChange" v-if="located">
+     </ol-geolocation>
+
       <ul>
         <li v-for="todo in todos" :key="id">
             <Pointer :props = "todo.props"/>
         </li>
       </ul>
+
+      
     </ol-map>
   </div>
 </template>
@@ -38,9 +44,20 @@
   const l1 = ref('')
   const l2 = ref('')
   let id = 0;
+  const view = ref()
+  const located = ref(false)
+
+  const geoLocChange = (loc:any) => {
+      console.log(loc);
+      view.value.fit([loc[0], loc[1], loc[0], loc[1]], {
+          maxZoom: 14
+      })
+  }
+
   let dix: PointerProps = 
   {
     caption: "",
+    icon: "",
     position: ["0","0"]
   }
 
@@ -70,6 +87,7 @@
     const newProps: PointerProps = 
     {
       caption: "Chuj mi w cyca",
+      icon: "fa-solid fa-location-dot",
       position: [l1.value, l2.value]
     }
     todos.value.push({id: id++, props: newProps})
