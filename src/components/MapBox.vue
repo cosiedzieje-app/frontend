@@ -22,6 +22,7 @@
 
       <ul>
         <li v-for="todo in todos" :key="id">
+
             <Pointer :props = "todo.props"/>
         </li>
       </ul>
@@ -101,7 +102,6 @@
     }
     todos.value.push({id: id++, props: newProps})
   }
-
   // const props = defineProps<Props>();
 </script>
 

@@ -10,11 +10,15 @@
       {{ labelContent }}
     </label>
     <input 
-      class="text-white bg-gray-dark py-2 px-4 w-full border-solid border-white focus:border-green"
+      class="text-white bg-gray-dark py-2 px-4 w-full border-solid"
       :class="{
         rounded: notRounded !== true,
         'border-2': customBorder === undefined,
         [customBorder as string]: customBorder !== undefined,
+        'border-white': customBorderColor === undefined,
+        [customBorderColor as string]: customBorder !== undefined,
+        'focus:border-green': customFocusBorderColor === undefined,
+        [customFocusBorderColor as string]: customFocusBorderColor !== undefined,
         [customTextAlign as string]: customTextAlign !== undefined
       }"
       :value="modelValue" 
@@ -41,6 +45,8 @@ interface Props {
   placeholder?: string;
   notRounded?: boolean;
   customBorder?: string;
+  customBorderColor?: string;
+  customFocusBorderColor?: string;
   customTextAlign?: string;
   enabled: boolean;
 }

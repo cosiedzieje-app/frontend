@@ -5,13 +5,26 @@
         class="w-full text-center text-white text-4xl"
       >Rejestracja</h1>
       <div
+        class="mt-10 text-center text-white flex flex-col items-center"
+      >
+        <h2
+          class="text-2xl"
+        >
+          Posiadasz już konto?
+        </h2>
+        <CustomButton 
+          class="mt-2 w-full" 
+          :props="loginButtonProps"
+        />
+      </div>
+      <div
         class="flex flex-col items-center w-max"
       >
         <div
           class="mt-10"
         >
           <h2
-            class="w-full text-center text-white text-2xl"
+            class="w-full text-center text-white text-2xl mb-4"
           >Dane ogólne</h2>
           <LoginFormInput
             v-model="accountData.username" 
@@ -42,7 +55,7 @@
           class="mt-10"
         >
           <h2
-            class="w-full text-center text-white text-2xl"
+            class="w-full text-center text-white text-2xl mb-4"
           >Dane personalne</h2>
           <LoginFormInput 
             v-model="personalData.name"
@@ -65,7 +78,7 @@
           class="mt-10"
         >
           <h2
-            class="w-full text-center text-white text-2xl"
+            class="w-full text-center text-white text-2xl mb-4"
           >Adres</h2>
           <LoginFormInput 
             v-model="address.street"
@@ -99,19 +112,6 @@
           />
         </div>
         <CustomButton class="mt-10 w-full" :props="buttonProps" />
-      </div>
-      <div
-        class="mt-10 text-center text-white flex flex-col items-center"
-      >
-        <h2
-          class="text-2xl"
-        >
-          Posiadasz już konto?
-        </h2>
-        <CustomButton 
-          class="mt-2 w-full" 
-          :props="loginButtonProps"
-        />
       </div>
     </form>
   </RouteWrapper>

@@ -4,6 +4,7 @@ import useStore from '@/store';
 
 import HomeView from '@/views/home/HomeView.vue';
 import HomeIndexView from '@/views/home/HomeIndexView.vue';
+import HomeListingView from '@/views/home/HomeListingView.vue';
 
 import AccountView from '@/views/account/AccountView.vue';
 import AccountIndexView from '@/views/account/AccountIndexView.vue';
@@ -69,6 +70,11 @@ const router = createRouter({
           name: 'homeAdd',
           component: NoRouteView,
           beforeEnter: [ requiresAuth ]
+        },
+        {
+          path: 'listing/:id',
+          name: 'homeListing',
+          component: HomeListingView
         },
         {
           path: ':pathMatch(.*)*',
