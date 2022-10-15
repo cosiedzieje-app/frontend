@@ -40,9 +40,10 @@
   import type { PointerProps } from '../types';
   import type { Ref } from 'vue';
 
-  const center = ref([ 19.1198,50.278502]);
+  let centerConverted = convertLen(19.37775993347168, 61.147850036621094)
+  const center = ref(centerConverted);
   const projection = ref('');
-  const zoom = ref(19);
+  const zoom = ref(6.7);
   const rotation = ref(0);
   const l1 = ref('')
   const l2 = ref('')
