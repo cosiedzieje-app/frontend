@@ -34,11 +34,11 @@ module.exports = {
           'dark': '#202020',
         },
         'main': {
-          DEFAULT: '#305dd9',
-          'megalight': '#87a8ff',
-          'superlight': '#5e8aff',
-          'light': '#386eff',
-          'dark': '#2649ab'
+          DEFAULT: '#cc570e',
+          'megalight': '#ffa770',
+          'superlight': '#fc7b28',
+          'light': '#f56911',
+          'dark': '#b34d0c'
         }
       }
     },
