@@ -1,7 +1,7 @@
 <template>
      <ol-overlay :position="props.position">
-            <div class="overlay-content">
-                <font-awesome-icon class="h-[20px] w-[20px] text-red-600 cursor-pointer" :icon="props.icon"/>
+            <div class="overlay-content flex justify-start items-start">
+                <font-awesome-icon class="h-[20px] w-[20px] text-red-600 cursor-pointer " :icon="props.icon"/>
                 <!-- {{props.icon}} -->
             </div>
     </ol-overlay>

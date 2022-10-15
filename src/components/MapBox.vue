@@ -1,8 +1,8 @@
 <template>
-  <input type="number" :value = "l1" @input="onInput">
+  <!-- <input type="number" :value = "l1" @input="onInput">
   <br>
   <input type="number" :value = "l2" @input="onInput2">
-  <br>
+  <br> -->
   <button @click="newPointer">Przeslij</button>
   <div class="map-box w-full h-full flex flex-col justify-end items-end text-center text-white text-6xl">
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full z-0" >
@@ -25,11 +25,6 @@
             <Pointer :props = "todo.props"/>
         </li>
       </ul>
-
-
-
-      
-
     </ol-map>
     <button @click="changeLocated" class="fixed z-10 text-xl p-3 mb-7 mr-7 rounded-md bg-green">
       <font-awesome-icon class="h-[20px] w-[20px]" icon="fa-solid fa-location-crosshairs" />
