@@ -53,10 +53,11 @@
  
 
   const geoLocChange = (loc:any) => {
-      console.log(loc);
-      
-      view.value.fit([loc[0], loc[1], loc[0], loc[1]], {
-          maxZoom: 14
+
+      let locs = convertLen(loc[1], loc[0])
+      console.log(loc)
+      view.value.fit([locs[1], locs[0], locs[1], locs[0]], {
+          maxZoom: 16
       })
   }
 
