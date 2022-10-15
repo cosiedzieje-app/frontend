@@ -1,20 +1,14 @@
 <template>
-  <input type="number" :value = "l1" @input="onInput">
-  <br>
-  <input type="number" :value = "l2" @input="onInput2">
-  <br>
-  <button @click="newPointer">Przeslij</button>
-  <div class="map-box w-full h-full flex flex-col justify-end items-end text-center text-white text-6xl">
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full z-0" >
+  <div class="map-box w-full h-full flex flex-col justify-center items-center text-center text-white text-6xl">
+    <ol-map ref="map" :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full" >
       <ol-view 
         ref="view" 
         :center="center" 
-        :rotation="rotation" 
         :zoom="zoom" 
-        :projection="projection" 
       />
+      <!-- <ol-zoom-control />  -->
       <ol-tile-layer>
-          <ol-source-osm />
+        <ol-source-xyz crossOrigin='anonymous' url="https://c.tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=87PWIbRaZAGNmYDjlYsLkeTVJpQeCfl2Y61mcHopxXqSdxXExoTLEv7dwqBwSWuJ" />
       </ol-tile-layer>
 
       <ol-geolocation :projection="projection" @positionChanged="geoLocChange" v-if="located">
@@ -36,21 +30,21 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import Pointer from '@/components/CustomPointer.vue';
-  import type { PointerProps } from '../types';
+  import Pointer from './CustomPointer.vue';
   import type { Ref } from 'vue';
+  import type { Pointer as IPointer, PointerProps } from '@/types';
 
-  const center = ref([ 19.1198,50.278502]);
+  const center = ref([19.191665, 51.8803198]);
   const projection = ref('');
-  const zoom = ref(19);
+  const zoom = ref(6.5);
   const rotation = ref(0);
   const l1 = ref('')
   const l2 = ref('')
   let id = 0;
   const view = ref()
   const located = ref(false)
-
- 
+  const map = ref();
+  console.log(map);
 
   const geoLocChange = (loc:any) => {
 
@@ -91,21 +85,6 @@
     return [`${lon}`, `${lat}`]
   }
 
-
-    // let lonInEPSG4326 = lon
-    // let latInEPSG4326 = lat
-
-    // let lonInEPSG3857 = (lonInEPSG4326 * 20037508.34 / 180)
-    // let latInEPSG3857 = (Math.log(Math.tan((90 + latInEPSG4326) * Math.PI / 360)) / (Math.PI / 180)) * (20037508.34 / 180)
-
-    // print("{0},{1}".format(lonInEPSG3857,latInEPSG3857))
-  //   console.log(lonInEPSG3857, latInEPSG3857)
-
-    
-
-  //   return [`${lonInEPSG3857}`, `${latInEPSG3857}`]
-  // }
-
   function changeLocated() {
     located.value= !located.value; 
   }
@@ -122,7 +101,6 @@
     props: PointerProps;
   }
 
-
   const todos: Ref<Pointer[]> = ref([]);
 
   function onInput(e:any) {
@@ -134,8 +112,6 @@
     l2.value= e.target.value
     console.log(l2.value)
   }
-
-
 
   function newPointer(): void{
     let position = convertLen(l2.value, l1.value);

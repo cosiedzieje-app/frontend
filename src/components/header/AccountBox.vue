@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import CustomButton from "@/components/CustomButton.vue";
+import CustomButton from "@/components/general/CustomButton.vue";
 import type { ButtonProps } from "@/types";
 import { useRouter } from "vue-router";
 
@@ -16,7 +16,7 @@ interface Props {
 const router = useRouter();
 const props = defineProps<Props>();
 const buttonProps: ButtonProps = {
-  caption: (props.name !== null) ? props.name : "Zaloguj/zarejestruj się",
+  caption: (props.name !== null) ? props.name : "Zaloguj się",
   action: () => { 
     if(props.name !== null) {
       router.push("/account")
