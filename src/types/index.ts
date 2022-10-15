@@ -138,6 +138,7 @@ interface Pointer {
 }
 interface PointerProps{
   caption: string;
+  icon: string;
   position: [string, string];
 }
 
