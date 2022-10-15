@@ -1,9 +1,9 @@
 <template>
   <header 
-    class="flex flex-col md:flex-row h-full w-full outline-none border-solid border-0 border-b-2 border-green"
+    class="flex flex-row h-full w-full outline-none border-solid border-0 border-b border-gray-600 px-6"
   >
     <span
-      class="md:h-full text-center text-green hover:text-green-light transition-[color] duration-200 hover:cursor-pointer p-4 flex flex-col justify-center items-center text-4xl font-bold"
+      class="text-center text-green cursor-pointer p-2 flex flex-col justify-center items-center text-3xl font-bold"
       @click="() => router.push('/')"
     >
       Somsiad
@@ -20,9 +20,19 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const navbarItems: ButtonProps[] = [
   {
-    caption: "Dodaj ogłoszenie",
-    action: () => router.push("/add"),
-    icon: "fa-solid fa-location-pin"
+    caption: "Ogłoszenia",
+    action: () => router.push("/announcements"),
+    icon: "fa-solid fa-location-dot"
+  },
+  {
+    caption: "Pomoc",
+    action: () => router.push("/help"),
+    icon: "fa-solid fa-question"
+  },
+  {
+    caption: "Załóż konto",
+    action: () => router.push("/account/register"),
+    icon: ""
   }
 ];
 </script>

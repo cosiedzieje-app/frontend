@@ -19,7 +19,7 @@ import { RouterView } from 'vue-router';
 <style lang="scss">
 #app-root {
   display: grid;
-  grid-template-rows: 100px 1fr;
+  grid-template-rows: 70px 1fr;
   grid-template-columns: 1fr;
   grid-template-areas: "header"
     "route";

@@ -1,14 +1,13 @@
 <template>
   <nav class="navbar w-full">
-    <div class="w-full flex flex-col md:flex-row justify-center items-center">
+    <div class="border-green flex justify-end items-center p-2">
       <NavBarItem 
         v-for="item in items"
         :key="item.caption"
-        :item="item"
+        :props="item"
       />
-    </div>
-    <div class="mt-5 border-dashed border-0 border-t md:border-0 border-green md:mt-0 flex justify-center items-center p-4">
       <AccountBox 
+        class="ml-4"
         :name="(authenticated) ? store.getAccountName : null"
       />
     </div>
@@ -37,9 +36,9 @@ const props = defineProps<Props>();
   grid-template-columns: 1fr auto;
   grid-template-rows: 1fr;
 
-  @media screen and (max-width: 767px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-  }
+  // @media screen and (max-width: 767px) {
+  //   grid-template-columns: 1fr;
+  //   grid-template-rows: 1fr auto;
+  // }
 }
 </style>
