@@ -1,8 +1,8 @@
 <template>
-  <!-- <input type="number" :value = "l1" @input="onInput">
+  <input type="number" :value = "l1" @input="onInput">
   <br>
   <input type="number" :value = "l2" @input="onInput2">
-  <br> -->
+  <br>
   <button @click="newPointer">Przeslij</button>
   <div class="map-box w-full h-full flex flex-col justify-end items-end text-center text-white text-6xl">
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full z-0" >
@@ -41,7 +41,7 @@
   import type { Ref } from 'vue';
 
   const center = ref([ 19.1198,50.278502]);
-  const projection = ref('EPSG:4326');
+  const projection = ref('');
   const zoom = ref(19);
   const rotation = ref(0);
   const l1 = ref('')
@@ -59,6 +59,51 @@
           maxZoom: 14
       })
   }
+
+  function convertLen(lon: any, lat: any){
+    let smRadius = 6378136.98;
+    let smRange = smRadius * Math.PI * 2.0;
+    let smLonToX = smRange / 360.0;
+    let smRadiansOverDegrees = Math.PI / 180.0;
+
+    // compute x-map-unit
+    lat *= smLonToX;
+
+    let y = lon;
+
+    // compute y-map-unit
+    if (y > 86.0)
+    {
+      lon = smRange;
+    }
+    else if (y < -86.0)
+    {
+      lon = -smRange;
+    }
+    else
+    {
+        y *= smRadiansOverDegrees;
+        y = Math.log(Math.tan(y) + (1.0 / Math.cos(y)));
+        lon = y * smRadius; 
+    }
+
+    return [`${lon}`, `${lat}`]
+  }
+
+
+    // let lonInEPSG4326 = lon
+    // let latInEPSG4326 = lat
+
+    // let lonInEPSG3857 = (lonInEPSG4326 * 20037508.34 / 180)
+    // let latInEPSG3857 = (Math.log(Math.tan((90 + latInEPSG4326) * Math.PI / 360)) / (Math.PI / 180)) * (20037508.34 / 180)
+
+    // print("{0},{1}".format(lonInEPSG3857,latInEPSG3857))
+  //   console.log(lonInEPSG3857, latInEPSG3857)
+
+    
+
+  //   return [`${lonInEPSG3857}`, `${latInEPSG3857}`]
+  // }
 
   function changeLocated() {
     located.value= !located.value; 
@@ -92,8 +137,10 @@
 
 
   function newPointer(): void{
-    let position = [l1.value, l2.value];
+    let position = convertLen(l2.value, l1.value);
     
+    l2.value = position[0];
+    l1.value = position[1];
     const newProps: PointerProps = 
     {
       caption: "Chuj mi w cyca",
