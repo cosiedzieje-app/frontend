@@ -4,7 +4,10 @@ import useStore from '@/store';
 
 import HomeView from '@/views/home/HomeView.vue';
 import HomeIndexView from '@/views/home/HomeIndexView.vue';
-import HomeListingView from '@/views/home/HomeListingView.vue';
+
+import MarkersView from '@/views/markers/MarkersView.vue';
+import MarkersIndexView from '@/views/markers/MarkersIndexView.vue';
+import MarkersListingView from '@/views/markers/MarkersListingView.vue';
 
 import AccountView from '@/views/account/AccountView.vue';
 import AccountIndexView from '@/views/account/AccountIndexView.vue';
@@ -61,20 +64,31 @@ const router = createRouter({
       component: HomeView,
       children: [
         {
-          path: '/',
+          path: '',
           name: 'home',
           component: HomeIndexView
+        }
+      ]
+    },
+    {
+      path: '/markers',
+      component: MarkersView,
+      children: [
+        {
+          path: '',
+          name: 'markers',
+          component: MarkersIndexView
         },
         {
           path: 'add',
-          name: 'homeAdd',
+          name: 'markersAdd',
           component: NoRouteView,
           beforeEnter: [ requiresAuth ]
         },
         {
           path: 'listing/:id',
-          name: 'homeListing',
-          component: HomeListingView
+          name: 'markersListing',
+          component: MarkersListingView
         },
         {
           path: ':pathMatch(.*)*',
