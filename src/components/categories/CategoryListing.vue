@@ -16,8 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import ListingCardsWrapper from "@/components/ListingCardsWrapper.vue";
-
+import ListingCardsWrapper from "./ListingCardsWrapper.vue";
 import type { ListingCategory } from '@/types';
 
 interface Props {

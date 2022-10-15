@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import type { ButtonProps } from "../types";
+import type { ButtonProps } from "@/types";
 import NavBarItem from "./NavBarItem.vue";
-import AccountBox from "@/components/AccountBox.vue";
+import AccountBox from "./AccountBox.vue";
 import useStore from "@/store";
 
 const store = useStore();

@@ -7,11 +7,11 @@
 </template>
   
 <script setup lang="ts">
-    import type { PointerProps } from "../types";
+    import type { PointerProps } from "@/types";
 
     // See https://vuejs.org/guide/typescript/composition-api.html#syntax-limitations
     interface Props {
-    props: PointerProps
+        props: PointerProps
     }
 
     // Avoid name collision

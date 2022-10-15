@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ButtonProps } from "../types";
+import type { ButtonProps } from "@/types";
 
 interface Props {
   props: ButtonProps

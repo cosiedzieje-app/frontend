@@ -10,7 +10,7 @@
         :placeholder="addressBarPlaceholder"
       />
       <transition name="view-fade" mode="out-in">
-        <HomeGeocodingPending 
+        <MarkersGeocodingPending 
           v-if="store.getAddressGeocodingState === 'pending'"
         />
         <RouterView
@@ -21,22 +21,22 @@
             <component :is="Component" />
           </transition>
         </RouterView>
-        <HomeGeocodingFailure
+        <MarkersGeocodingFailure
           v-else
         />
       </transition>
     </section>
-    <MapBox />
+    <Map />
   </RouteWrapper>
 </template>
 
 <script setup lang="ts">
-import RouteWrapper from "../../components/RouteWrapper.vue";
-import AddressBar from '@/components/AddressBar.vue';
+import RouteWrapper from "@/components/general/RouteWrapper.vue";
+import AddressBar from '@/components/categories/AddressBar.vue';
 import { RouterView } from 'vue-router';
-import MapBox from "@/components/MapBox.vue";
-import HomeGeocodingPending from '@/components/HomeGeocodingPending.vue';
-import HomeGeocodingFailure from '@/components/HomeGeocodingFailure.vue';
+import Map from "@/components/markers/Map.vue";
+import MarkersGeocodingPending from '@/components/markers/MarkersGeocodingPending.vue';
+import MarkersGeocodingFailure from '@/components/markers/MarkersGeocodingFailure.vue';
 
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';

@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import Pointer from '@/components/CustomPointer.vue';
+  import Pointer from './CustomPointer.vue';
   import type { Pointer as IPointer, PointerProps } from '@/types';
   import type { Ref } from 'vue';
 

@@ -17,7 +17,7 @@
         Logowanie
       </h1>
       <div>
-        <LoginFormInput 
+        <FormInput 
           v-model="email" 
           name="email" 
           autocomplete="email" 
@@ -25,7 +25,7 @@
           label-content="Adres email"
           :enabled="true"
         />
-        <LoginFormInput 
+        <FormInput 
           v-model="password" 
           name="password" 
           type="password" 
@@ -43,10 +43,10 @@
 </template>
 
 <script setup lang="ts">
-import RouteWrapper from "@/components/RouteWrapper.vue";
-import NoticeBox from "@/components/NoticeBox.vue";
-import LoginFormInput from "@/components/FormInput.vue";
-import CustomButton from "@/components/CustomButton.vue";
+import RouteWrapper from "@/components/general/RouteWrapper.vue";
+import NoticeBox from "@/components/general/NoticeBox.vue";
+import FormInput from "@/components/general/FormInput.vue";
+import CustomButton from "@/components/general/CustomButton.vue";
 
 import { useRoute, useRouter } from "vue-router";
 import { ref } from "vue";
