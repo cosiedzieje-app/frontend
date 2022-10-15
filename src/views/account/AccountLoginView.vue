@@ -50,7 +50,7 @@ import CustomButton from "@/components/CustomButton.vue";
 
 import { useRoute, useRouter } from "vue-router";
 import { ref } from "vue";
-import type { ButtonProps, LoginRequest } from "@/types";
+import type { ButtonProps } from "@/types";
 
 const route = useRoute();
 const router = useRouter();
@@ -61,11 +61,10 @@ const email = ref<string>('m@m.pl');
 const password = ref<string>('123');
 
 async function sendForm() {
-  const loginRequest: LoginRequest = {
+  const loginRequest = {
     email: email.value,
     password: password.value
   }
-  console.log(loginRequest);
   
   //Nie lepiej po prostu zrobić to na then/catch zamiast przypisywać
   //do zmiennych?
