@@ -3,7 +3,7 @@
     class="flex flex-row h-full w-full outline-none border-solid border-0 border-b border-[#454545] px-6"
   >
     <span
-      class="text-center text-main cursor-pointer p-2 flex flex-col justify-center items-center text-3xl font-bold"
+      class="text-center text-main-light hover:text-main-superlight transition-colors duration-200 cursor-pointer p-2 flex flex-col justify-center items-center text-3xl font-bold"
       @click="() => router.push('/')"
     >
       Somsiad
