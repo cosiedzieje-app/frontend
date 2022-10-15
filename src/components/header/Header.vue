@@ -25,11 +25,6 @@ const navbarItems: ButtonProps[] = [
     icon: "fa-solid fa-location-dot"
   },
   {
-    caption: "Pomoc",
-    action: () => router.push("/help"),
-    icon: "fa-solid fa-question"
-  },
-  {
     caption: "Załóż konto",
     action: () => router.push("/account/register"),
     icon: ""
