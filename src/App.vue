@@ -1,5 +1,5 @@
 <template>
-  <main id="app-root" class="bg-gray-dark w-screen h-screen">
+  <main id="app-root" class="bg-gray w-screen h-screen">
     <HeaderBox class="main-header" />
     <section id="main-route-wrapper" class="h-full w-full">
       <RouterView v-slot="{ Component }">
@@ -19,7 +19,7 @@ import { RouterView } from 'vue-router';
 <style lang="scss">
 #app-root {
   display: grid;
-  grid-template-rows: 70px 1fr;
+  grid-template-rows: 65px 1fr;
   grid-template-columns: 1fr;
   grid-template-areas: "header"
     "route";

@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar w-full">
-    <div class="border-green flex justify-end items-center p-2">
+    <div class="border-main flex justify-end items-center p-2">
       <NavBarItem 
         v-for="item in items"
         :key="item.caption"
@@ -36,9 +36,9 @@ const props = defineProps<Props>();
   grid-template-columns: 1fr auto;
   grid-template-rows: 1fr;
 
-  // @media screen and (max-width: 767px) {
-  //   grid-template-columns: 1fr;
-  //   grid-template-rows: 1fr auto;
-  // }
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
 }
 </style>
