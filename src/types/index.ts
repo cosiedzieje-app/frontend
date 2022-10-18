@@ -1,5 +1,18 @@
+type JsonPrimitive = string
+  | number
+  | boolean
+  | null;
+type JsonArray = (JsonPrimitive | JsonObject)[];
+type JsonObject = Record<string, JsonPrimitive | JsonArray>;
+type JsonValue = JsonPrimitive | JsonArray | JsonObject;
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
 type ListingCategory = "NeighborHelp" | "Happening" | "Charity";
+
+// Contact method format
+enum ContactMethod {
+  Email = "Email",
+  PhoneNumber = "PhoneNumber"
+}
 
 // Store format
 interface Store {
@@ -70,8 +83,10 @@ interface ContactInfo {
   name: string;
   surname: string;
   address: Address;
-  phoneNumber: string;
-  email: string;
+  method: {
+    type: ContactMethod;
+    val: string;
+  }
 }
 
 // Marker format
@@ -85,7 +100,7 @@ interface Marker {
 
 // Marker details format
 interface MarkerDetails {
-  id?: number;
+  id: number;
   userId: number;
   latitude: number;
   longitude: number;
@@ -96,6 +111,18 @@ interface MarkerDetails {
   address: Address;
   contactInfo: ContactInfo;
   type: ListingCategory;
+}
+
+// New marker format
+interface NewMarker {
+  latitude: number;
+  longitude: number;
+  description: string;
+  type: ListingCategory;
+  addTime: number;
+  endTime: number;
+  address: Address;
+  contactInfo: ContactInfo;
 }
 
 // Geolocation data retrieved from PositionStack format
@@ -144,7 +171,7 @@ interface PointerProps{
 // SomsiadStatus format (https://github.com/somsiad-app/api#somsiadstatus-type)
 interface SomsiadStatus {
   status: "ok" | "error";
-  errors: string[]; 
+  res: JsonValue;
 }
 
 export type {
@@ -158,13 +185,15 @@ export type {
   ContactInfo,
   Marker,
   MarkerDetails,
+  NewMarker,
   GeolocationData,
   GeoData,
   Pointer,
   PointerProps,
   ListingCategory,
   SomsiadStatus,
-  LoginData
+  LoginData,
+  JsonValue
 };
 export {
   Sex
