@@ -10,14 +10,14 @@
       {{ labelContent }}
     </label>
     <input 
-      class="text-white bg-gray-dark py-2 px-4 w-full border-solid"
+      class="text-white bg-gray py-2 px-4 w-full border-solid"
       :class="{
         rounded: notRounded !== true,
         'border-2': customBorder === undefined,
         [customBorder as string]: customBorder !== undefined,
-        'border-white': customBorderColor === undefined,
+        'border-gray-400': customBorderColor === undefined,
         [customBorderColor as string]: customBorder !== undefined,
-        'focus:border-green': customFocusBorderColor === undefined,
+        'focus:border-main': customFocusBorderColor === undefined,
         [customFocusBorderColor as string]: customFocusBorderColor !== undefined,
         [customTextAlign as string]: customTextAlign !== undefined
       }"

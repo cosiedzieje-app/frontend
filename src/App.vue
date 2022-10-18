@@ -1,6 +1,6 @@
 <template>
-  <main id="app-root" class="bg-gray-dark w-screen h-screen">
-    <HeaderBox class="main-header" />
+  <main id="app-root" class="bg-gray w-screen h-screen">
+    <Header class="main-header" />
     <section id="main-route-wrapper" class="h-full w-full">
       <RouterView v-slot="{ Component }">
         <transition name="view-fade" mode="out-in">
@@ -12,14 +12,14 @@
 </template>
 
 <script setup lang="ts">
-import HeaderBox from "@/components/HeaderBox.vue";
+import Header from "@/components/header/Header.vue";
 import { RouterView } from 'vue-router';
 </script>
 
 <style lang="scss">
 #app-root {
   display: grid;
-  grid-template-rows: 100px 1fr;
+  grid-template-rows: 65px 1fr;
   grid-template-columns: 1fr;
   grid-template-areas: "header"
     "route";

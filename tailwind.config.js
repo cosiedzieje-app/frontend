@@ -28,7 +28,17 @@ module.exports = {
           'light2': '#00caac'
         },
         'gray': { 
-          'dark': '#272727'
+          DEFAULT: '#242424',
+          'light': '#505050',
+          'lighter': '#a7a7a7',
+          'dark': '#202020',
+        },
+        'main': {
+          DEFAULT: '#cc570e',
+          'megalight': '#ffa770',
+          'superlight': '#fc7b28',
+          'light': '#f56911',
+          'dark': '#b34d0c'
         }
       }
     },

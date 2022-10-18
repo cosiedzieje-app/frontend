@@ -26,7 +26,7 @@
           <h2
             class="w-full text-center text-white text-2xl mb-4"
           >Dane ogólne</h2>
-          <LoginFormInput
+          <FormInput
             v-model="accountData.username" 
             name="username" 
             type="text" 
@@ -34,7 +34,7 @@
             autocomplete="username"
             :enabled="true"
           />
-          <LoginFormInput 
+          <FormInput 
             v-model="accountData.email" 
             name="email" 
             autocomplete="email" 
@@ -42,7 +42,7 @@
             label-content="Adres email"
             :enabled="true"
           />
-          <LoginFormInput 
+          <FormInput 
             v-model="accountData.password" 
             name="password" 
             type="password" 
@@ -57,7 +57,7 @@
           <h2
             class="w-full text-center text-white text-2xl mb-4"
           >Dane personalne</h2>
-          <LoginFormInput 
+          <FormInput 
             v-model="personalData.name"
             name="name"
             type="text"
@@ -65,7 +65,7 @@
             autocomplete="given-name"
             :enabled="true"
           />
-          <LoginFormInput 
+          <FormInput 
             v-model="personalData.surname"
             name="surname"
             type="text"
@@ -80,21 +80,21 @@
           <h2
             class="w-full text-center text-white text-2xl mb-4"
           >Adres</h2>
-          <LoginFormInput 
+          <FormInput 
             v-model="address.street"
             name="street"
             type="text"
             label-content="Ulica"
             :enabled="true"
           /> 
-          <LoginFormInput 
+          <FormInput 
             v-model="address.number"
             name="number"
             type="number"
             label-content="Numer domu"
             :enabled="true"
           />
-          <LoginFormInput 
+          <FormInput 
             v-model="address.postalCode"
             name="postal-code"
             type="text"
@@ -102,7 +102,7 @@
             autocomplete="postal-code"
             :enabled="true"
           />
-          <LoginFormInput 
+          <FormInput 
             v-model="address.country"
             name="country"
             type="text"
@@ -118,9 +118,9 @@
 </template>
 
 <script setup lang="ts">
-import LoginFormInput from '@/components/FormInput.vue';
-import CustomButton from '@/components/CustomButton.vue';
-import RouteWrapper from '@/components/RouteWrapper.vue';
+import FormInput from '@/components/general/FormInput.vue';
+import CustomButton from '@/components/general/CustomButton.vue';
+import RouteWrapper from '@/components/general/RouteWrapper.vue';
 
 import { reactive } from 'vue';
 import type { ButtonProps, UserAccountData, UserPersonalData, Address } from '@/types';
