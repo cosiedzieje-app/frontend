@@ -1,10 +1,3 @@
-type JsonPrimitive = string
-  | number
-  | boolean
-  | null;
-type JsonArray = (JsonPrimitive | JsonObject)[];
-type JsonObject = Record<string, JsonPrimitive | JsonArray>;
-type JsonValue = JsonPrimitive | JsonArray | JsonObject;
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
 type ListingCategory = "NeighborHelp" | "Happening" | "Charity";
 
@@ -74,7 +67,6 @@ interface NewAccount {
   name: string;
   surname: string;
   sex: Sex;
-  reputation: number;
   address: Address;
 }
 
@@ -101,7 +93,7 @@ interface Marker {
 // Marker details format
 interface MarkerDetails {
   id: number;
-  userId: number;
+  userID: number;
   latitude: number;
   longitude: number;
   title: string;
@@ -115,12 +107,13 @@ interface MarkerDetails {
 
 // New marker format
 interface NewMarker {
+  userID: number;
   latitude: number;
   longitude: number;
+  title: string;
   description: string;
   type: ListingCategory;
-  addTime: number;
-  endTime: number;
+  endTime?: number;
   address: Address;
   contactInfo: ContactInfo;
 }
@@ -171,7 +164,17 @@ interface PointerProps{
 // SomsiadStatus format (https://github.com/somsiad-app/api#somsiadstatus-type)
 interface SomsiadStatus {
   status: "ok" | "error";
-  res: JsonValue;
+  res: any;
+}
+
+// User data format
+interface UserData {
+  loginName: string;
+  name: string;
+  surname: string;
+  sex: Sex;
+  address: Address;
+  reputation: number;
 }
 
 export type {
@@ -193,7 +196,7 @@ export type {
   ListingCategory,
   SomsiadStatus,
   LoginData,
-  JsonValue
+  UserData
 };
 export {
   Sex
