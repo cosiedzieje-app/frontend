@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 const useStore = defineStore("main", {
   state: () => {
     return {
-      authenticated: false,
+      authenticated: true,
       accountName: "",
       userGeoData: null,
       addressBarEnabled: true,

@@ -16,9 +16,12 @@
 import NavBar from "./NavBar.vue";
 import type { ButtonProps } from "@/types";
 import { useRouter } from "vue-router";
+import useStore from '@/store';
+import { ref, type Ref, onMounted } from 'vue';
 
 const router = useRouter();
-const navbarItems: ButtonProps[] = [
+const store = useStore();
+const baseNavbarItems: ButtonProps[] = [
   {
     caption: "Ogłoszenia",
     action: () => router.push("/markers"),
@@ -30,4 +33,36 @@ const navbarItems: ButtonProps[] = [
     icon: ""
   }
 ];
+
+const navbarItems: Ref<ButtonProps[]> = ref([]);
+
+onMounted(() => {
+  if(store.isAuthenticated === true) {
+    navbarItems.value = [ 
+      ...baseNavbarItems,
+      {
+        caption: "Dodaj ogłoszenie",
+        action: () => router.push({ name: 'markersAdd' }),
+        icon: "fa-solid fa-map-pin"
+      }
+    ]; 
+  } else {
+    navbarItems.value = [ ...baseNavbarItems ];
+  }
+});
+
+store.$subscribe((mutation, state) => {
+  if(state.authenticated === true) {
+    navbarItems.value = [ 
+      ...baseNavbarItems,
+      {
+        caption: "Dodaj ogłoszenie",
+        action: () => router.push({ name: 'markersAdd' }),
+        icon: "fa-solid fa-map-pin"
+      }
+    ]; 
+  } else {
+    navbarItems.value = [ ...baseNavbarItems ];
+  }
+});
 </script>

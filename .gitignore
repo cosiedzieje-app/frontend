@@ -29,3 +29,6 @@ coverage
 
 # Environmental variables
 .env*
+
+# Neovim things
+.vim/

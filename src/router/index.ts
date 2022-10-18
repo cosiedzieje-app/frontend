@@ -7,6 +7,7 @@ import HomeIndexView from '@/views/home/HomeIndexView.vue';
 
 import MarkersView from '@/views/markers/MarkersView.vue';
 import MarkersIndexView from '@/views/markers/MarkersIndexView.vue';
+import MarkersAddView from '@/views/markers/MarkersAddView.vue';
 import MarkersListingView from '@/views/markers/MarkersListingView.vue';
 
 import AccountView from '@/views/account/AccountView.vue';
@@ -82,7 +83,7 @@ const router = createRouter({
         {
           path: 'add',
           name: 'markersAdd',
-          component: NoRouteView,
+          component: MarkersAddView,
           beforeEnter: [ requiresAuth ]
         },
         {
