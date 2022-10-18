@@ -1,5 +1,5 @@
 <template>
-  <div class="map-box w-full h-full flex flex-col justify-center items-center text-center text-white text-6xl">
+  <div class="map-box w-full h-full flex flex-col justify-end items-end text-center text-white text-6xl">
     <ol-map ref="map" :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full" >
       <ol-view 
         ref="view" 
@@ -8,7 +8,7 @@
       />
       <!-- <ol-zoom-control />  -->
       <ol-tile-layer>
-        <ol-source-xyz crossOrigin='anonymous' url="https://c.tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=87PWIbRaZAGNmYDjlYsLkeTVJpQeCfl2Y61mcHopxXqSdxXExoTLEv7dwqBwSWuJ" />
+        <ol-source-osm />
       </ol-tile-layer>
 
       <ol-geolocation :projection="projection" @positionChanged="geoLocChange" v-if="located">
