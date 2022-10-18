@@ -177,6 +177,14 @@ interface UserData {
   reputation: number;
 }
 
+// AuthContext provided data format
+interface AuthContext {
+  login: (loginData: LoginData) => Promise<void>,
+  logout: () => Promise<void>,
+  register: (registerData: NewAccount) => Promise<void>,
+  getUserData: () => Promise<UserData>
+};
+
 export type {
   ButtonProps,
   Store,
@@ -196,7 +204,8 @@ export type {
   ListingCategory,
   SomsiadStatus,
   LoginData,
-  UserData
+  UserData,
+  AuthContext
 };
 export {
   Sex
