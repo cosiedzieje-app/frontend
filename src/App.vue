@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import Header from "@/components/header/Header.vue";
-import AuthContext from "@/contexts/AuthContext";
+import AuthContext from "@/contexts/AuthContext.vue";
 import { RouterView } from 'vue-router';
 </script>
 
