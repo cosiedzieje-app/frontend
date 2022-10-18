@@ -92,29 +92,15 @@
     return [`${lon}`, `${lat}`]
   }
 
-
-    // let lonInEPSG4326 = lon
-    // let latInEPSG4326 = lat
-
-    // let lonInEPSG3857 = (lonInEPSG4326 * 20037508.34 / 180)
-    // let latInEPSG3857 = (Math.log(Math.tan((90 + latInEPSG4326) * Math.PI / 360)) / (Math.PI / 180)) * (20037508.34 / 180)
-
-    // print("{0},{1}".format(lonInEPSG3857,latInEPSG3857))
-  //   console.log(lonInEPSG3857, latInEPSG3857)
-
-    
-
-  //   return [`${lonInEPSG3857}`, `${latInEPSG3857}`]
-  // }
-
   function changeLocated() {
     located.value= !located.value; 
   }
 
   let dix: PointerProps = 
   {
+    category: "",
     caption: "",
-    icon: "",
+    // icon: "",
     position: ["0","0"]
   }
 
@@ -146,7 +132,8 @@
     const newProps: PointerProps = 
     {
       caption: "Chuj mi w cyca",
-      icon: "fa-solid fa-location-dot",
+      category: "Charity",
+      // icon: "fa-solid fa-location-dot",
       position: [l1.value, l2.value]
     }
     todos.value.push({id: id++, props: newProps})
