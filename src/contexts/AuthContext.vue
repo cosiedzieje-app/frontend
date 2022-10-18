@@ -21,6 +21,7 @@ async function login(loginData: LoginData): Promise<void> {
     .then((data: UserData) => {
       store.setUserData(data);
       store.setAuthenticated(true);
+      localStorage.setItem("userData", JSON.stringify(data));
     })
     .catch(err => Promise.reject(err));
 }
@@ -35,6 +36,7 @@ async function logout(): Promise<void> {
     .then(() => {
       store.clearUserData();
       store.setAuthenticated(false);
+      localStorage.removeItem("userData");
     })
     .catch(err => Promise.reject(err));
 }
@@ -62,6 +64,7 @@ async function register(registerData: NewAccount): Promise<void> {
     .catch(err => {
       store.clearUserData();
       store.setAuthenticated(false);
+      localStorage.removeItem("userData");
       return Promise.reject(err);
     });
 }
