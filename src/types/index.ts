@@ -10,10 +10,10 @@ enum ContactMethod {
 // Store format
 interface Store {
   authenticated: boolean;
-  accountName: string;
   userGeoData: GeoData | null;
   addressBarEnabled: boolean;
   addressGeocodingState: AddressGeocodingState;
+  userData: null | UserData;
 }
 
 // CustomButton props format
@@ -179,10 +179,9 @@ interface UserData {
 
 // AuthContext provided data format
 interface AuthContext {
-  login: (loginData: LoginData) => Promise<void>,
-  logout: () => Promise<void>,
-  register: (registerData: NewAccount) => Promise<void>,
-  getUserData: () => Promise<UserData>
+  login: (loginData: LoginData) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (registerData: NewAccount) => Promise<void>;
 };
 
 export type {
