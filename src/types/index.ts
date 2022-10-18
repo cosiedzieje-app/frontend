@@ -42,7 +42,6 @@ interface Address {
   street: string;
   number: string;
   postalCode: string;
-  country: string;
 }
 
 // User personal data format

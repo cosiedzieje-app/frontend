@@ -3,7 +3,7 @@
     <h1 class="w-full text-center text-white text-3xl p-4">Dodaj nowe ogłoszenie</h1>
     <form @submit.prevent="" class="min-h-full w-full flex flex-col items-center py-4">
       <section class="w-full flex flex-col items-center px-4 mb-6">
-        <h2 class="w-full text-center text-white text-2xl pb-2">Podstawowe dane</h2>
+        <h2 class="w-full text-center text-white text-2xl pb-4">Podstawowe dane</h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
             :enabled="true"
@@ -46,19 +46,10 @@
             class="my-2"
             autocomplete="postal-code"
           />
-          <FormInput
-            :enabled="true"
-            type="text"
-            name="country"
-            label-content="Kraj"
-            :modelValue="address.country"
-            class="my-2"
-            autocomplete="country-name"
-          />
         </article>
       </section>
       <section class="w-full flex flex-col items-center px-4 my-6">
-        <h2 class="w-full text-center text-white text-2xl pb-2">Dane kontaktowe</h2>
+        <h2 class="w-full text-center text-white text-2xl pb-4">Dane kontaktowe</h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
             :enabled="true"
@@ -99,7 +90,7 @@
         </article>
       </section>
       <section class="w-full flex flex-col items-center px-4 my-6">
-        <h2 class="w-full text-center text-white text-2xl pb-2">Adres do kontaktu</h2>
+        <h2 class="w-full text-center text-white text-2xl pb-4">Adres do kontaktu</h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
             :enabled="true"
@@ -126,19 +117,10 @@
             class="my-2"
             autocomplete="postal-code"
           />
-          <FormInput
-            :enabled="true"
-            type="text"
-            name="country"
-            label-content="Kraj"
-            :modelValue="contactInfo.address.country"
-            class="my-2"
-            autocomplete="country-name"
-          />
         </article>
       </section>
       <CustomButton
-        class="w-[75%]"
+        class="my-4 w-[80%]"
         :props="submitButtonProps"
       />
     </form>
@@ -158,7 +140,6 @@ const address: Address = reactive({
   street: "",
   number: "",
   postalCode: "",
-  country: ""
 });
 const contactInfo: ContactInfo = reactive({
   name: "",
@@ -167,12 +148,12 @@ const contactInfo: ContactInfo = reactive({
     street: "",
     number: "",
     postalCode: "",
-    country: ""
   },
   phoneNumber: "",
   email: ""
 });
 
+//TODO: Implement backend connection
 function submitMarker() {
 
 }
