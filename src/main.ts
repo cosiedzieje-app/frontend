@@ -24,7 +24,8 @@ import {
   faArrowDown,
   faArrowLeft,
   faUser,
-  faPen
+  faPen,
+  faMapPin
 } from "@fortawesome/free-solid-svg-icons";
 
 import './styles/index.scss';
@@ -46,7 +47,8 @@ library.add(
   faArrowDown,
   faArrowLeft,
   faUser,
-  faPen
+  faPen,
+  faMapPin
 );
 
 const pinia = createPinia();

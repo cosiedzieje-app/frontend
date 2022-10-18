@@ -1,6 +1,12 @@
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
 type ListingCategory = "NeighborHelp" | "Happening" | "Charity";
 
+// Contact method format
+enum ContactMethod {
+  Email = "Email",
+  PhoneNumber = "PhoneNumber"
+}
+
 // Store format
 interface Store {
   authenticated: boolean;
@@ -42,7 +48,6 @@ interface Address {
   street: string;
   number: string;
   postalCode: string;
-  country: string;
 }
 
 // User personal data format
@@ -62,7 +67,6 @@ interface NewAccount {
   name: string;
   surname: string;
   sex: Sex;
-  reputation: number;
   address: Address;
 }
 
@@ -71,8 +75,10 @@ interface ContactInfo {
   name: string;
   surname: string;
   address: Address;
-  phoneNumber: string;
-  email: string;
+  method: {
+    type: ContactMethod;
+    val: string;
+  }
 }
 
 // Marker format
@@ -86,8 +92,8 @@ interface Marker {
 
 // Marker details format
 interface MarkerDetails {
-  id?: number;
-  userId: number;
+  id: number;
+  userID: number;
   latitude: number;
   longitude: number;
   title: string;
@@ -97,6 +103,19 @@ interface MarkerDetails {
   address: Address;
   contactInfo: ContactInfo;
   type: ListingCategory;
+}
+
+// New marker format
+interface NewMarker {
+  userID: number;
+  latitude: number;
+  longitude: number;
+  title: string;
+  description: string;
+  type: ListingCategory;
+  endTime?: number;
+  address: Address;
+  contactInfo: ContactInfo;
 }
 
 // Geolocation data retrieved from PositionStack format
@@ -145,7 +164,17 @@ interface PointerProps{
 // SomsiadStatus format (https://github.com/somsiad-app/api#somsiadstatus-type)
 interface SomsiadStatus {
   status: "ok" | "error";
-  errors: string[]; 
+  res: any;
+}
+
+// User data format
+interface UserData {
+  loginName: string;
+  name: string;
+  surname: string;
+  sex: Sex;
+  address: Address;
+  reputation: number;
 }
 
 export type {
@@ -159,13 +188,15 @@ export type {
   ContactInfo,
   Marker,
   MarkerDetails,
+  NewMarker,
   GeolocationData,
   GeoData,
   Pointer,
   PointerProps,
   ListingCategory,
   SomsiadStatus,
-  LoginData
+  LoginData,
+  UserData
 };
 export {
   Sex
