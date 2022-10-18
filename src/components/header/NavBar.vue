@@ -8,19 +8,20 @@
       />
       <AccountBox 
         class="ml-4"
-        :name="(authenticated) ? store.getAccountName : null"
+        :name="(authenticated && userData !== null) ? userData.loginName : null"
       />
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import type { ButtonProps } from "@/types";
+import type { ButtonProps, UserData } from "@/types";
 import NavBarItem from "./NavBarItem.vue";
 import AccountBox from "./AccountBox.vue";
 import useStore from "@/store";
 
 const store = useStore();
+const userData: UserData | null = store.getUserData;
 const authenticated = store.isAuthenticated;
 
 interface Props {

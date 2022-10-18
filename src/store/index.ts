@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 const useStore = defineStore("main", {
   state: () => {
     return {
-      authenticated: true,
+      authenticated: false,
       userGeoData: null,
       addressBarEnabled: true,
       addressGeocodingState: "idle",
@@ -16,7 +16,8 @@ const useStore = defineStore("main", {
     getUserGeoData: (state) => state.userGeoData,
     isUserGeoDataSet: (state) => state.userGeoData !== null,
     isAddressBarEnabled: (state) => state.addressBarEnabled,
-    getAddressGeocodingState: (state) => state.addressGeocodingState
+    getAddressGeocodingState: (state) => state.addressGeocodingState,
+    getUserData: (state) => state.userData
   },
   actions: {
     setAuthenticated(toggle: boolean) {

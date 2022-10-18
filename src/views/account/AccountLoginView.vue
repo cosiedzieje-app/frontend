@@ -49,11 +49,12 @@ import FormInput from "@/components/general/FormInput.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 
 import { useRoute, useRouter } from "vue-router";
-import { ref } from "vue";
-import type { ButtonProps } from "@/types";
+import { ref, inject } from "vue";
+import type { ButtonProps, AuthContext, LoginData } from "@/types";
 
 const route = useRoute();
 const router = useRouter();
+const authContext: AuthContext = inject<AuthContext>("authContext") as AuthContext;
 
 const redirected = ref<boolean>(route.query.redirect === 'true');
 
@@ -61,26 +62,28 @@ const email = ref<string>('m@m.pl');
 const password = ref<string>('123');
 
 async function sendForm() {
-  const loginRequest = {
+  const loginData: LoginData = {
     email: email.value,
     password: password.value
-  }
-  
-  //Nie lepiej po prostu zrobić to na then/catch zamiast przypisywać
-  //do zmiennych?
-  const rawResponse = await fetch(`${import.meta.env.BACKEND_URL}/login`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginRequest)
-      }
-  );
+  };
 
-  //A co jak .json() zwróci błąd?
-  //WTF
-  const content = await rawResponse.json();
+  await authContext.login(loginData);
+  
+  ////Nie lepiej po prostu zrobić to na then/catch zamiast przypisywać
+  ////do zmiennych?
+  //const rawResponse = await fetch(`${import.meta.env.BACKEND_URL}/login`, {
+  //      method: 'POST',
+  //      headers: {
+  //        'Accept': 'application/json',
+  //        'Content-Type': 'application/json'
+  //      },
+  //      body: JSON.stringify(loginRequest)
+  //    }
+  //);
+
+  ////A co jak .json() zwróci błąd?
+  ////WTF
+  //const content = await rawResponse.json();
 }
 
 //Zamiast () => null powinno być () => {} bo i tak potem coś z tą funkcją

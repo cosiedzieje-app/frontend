@@ -1,6 +1,5 @@
 <template>
   <RouteWrapper>
-
   </RouteWrapper>
 </template>
 

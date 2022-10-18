@@ -102,14 +102,6 @@
             autocomplete="postal-code"
             :enabled="true"
           />
-          <FormInput 
-            v-model="address.country"
-            name="country"
-            type="text"
-            label-content="Kraj"
-            autocomplete="country-name"
-            :enabled="true"
-          />
         </div>
         <CustomButton class="mt-10 w-full" :props="buttonProps" />
       </div>
@@ -122,8 +114,9 @@ import FormInput from '@/components/general/FormInput.vue';
 import CustomButton from '@/components/general/CustomButton.vue';
 import RouteWrapper from '@/components/general/RouteWrapper.vue';
 
-import { reactive } from 'vue';
-import type { ButtonProps, UserAccountData, UserPersonalData, Address } from '@/types';
+import { reactive, inject } from 'vue';
+import type { ButtonProps, UserAccountData, UserPersonalData, Address, 
+  NewAccount, AuthContext } from '@/types';
 import { Sex } from '@/types';
 import { useRouter } from 'vue-router';
 
@@ -131,6 +124,7 @@ interface Props {
   initEmail: string;
 }
 
+const authContext: AuthContext = inject("authContext") as AuthContext;
 const router = useRouter();
 const props = defineProps<Props>();
 const buttonProps: ButtonProps = {
@@ -157,7 +151,22 @@ const personalData = reactive<UserPersonalData>({
 const address = reactive<Address>({
   postalCode: "",
   number: "",
-  street: "",
-  country: ""
+  street: ""
 });
+
+async function sendForm() {
+  const newAccount: NewAccount = {
+    login: {
+      email: accountData.email,
+      password: accountData.password
+    },
+    username: accountData.username,
+    name: personalData.name,
+    surname: personalData.surname,
+    sex: personalData.sex,
+    address: address
+  };
+
+  await authContext.register(newAccount);
+}
 </script>
