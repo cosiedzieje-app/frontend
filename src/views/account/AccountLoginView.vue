@@ -67,7 +67,8 @@ async function sendForm() {
     password: password.value
   };
 
-  await authContext.login(loginData);
+  await authContext.login(loginData)
+    .then(() => router.replace({ name: 'home' }));
   
   ////Nie lepiej po prostu zrobić to na then/catch zamiast przypisywać
   ////do zmiennych?

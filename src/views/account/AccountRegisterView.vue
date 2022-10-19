@@ -121,26 +121,16 @@ import { Sex } from '@/types';
 import { useRouter } from 'vue-router';
 
 interface Props {
-  initEmail: string;
+  initEmail?: string;
 }
 
 const authContext: AuthContext = inject("authContext") as AuthContext;
 const router = useRouter();
 const props = defineProps<Props>();
-const buttonProps: ButtonProps = {
-  caption: "Utwórz konto",
-  action: () => {},
-  icon: "fa-solid fa-pen"
-};
-const loginButtonProps: ButtonProps = {
-  caption: "Zaloguj się",
-  action: () => router.push({ name: 'accountLogin' }),
-  icon: "fa-solid fa-key"
-};
 
 const accountData = reactive<UserAccountData>({
   username: "",
-  email: props.initEmail,
+  email: props.initEmail ?? "",
   password: ""
 });
 const personalData = reactive<UserPersonalData>({
@@ -169,4 +159,15 @@ async function sendForm() {
 
   await authContext.register(newAccount);
 }
+
+const buttonProps: ButtonProps = {
+  caption: "Utwórz konto",
+  action: () => sendForm(),
+  icon: "fa-solid fa-pen"
+};
+const loginButtonProps: ButtonProps = {
+  caption: "Zaloguj się",
+  action: () => router.push({ name: 'accountLogin' }),
+  icon: "fa-solid fa-key"
+};
 </script>

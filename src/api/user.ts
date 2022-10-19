@@ -12,13 +12,16 @@ import type {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function register(newAccount: NewAccount): Promise<void> {
-  return fetch(`${import.meta.env.BACKEND_URL}/register`, {
+  console.log(import.meta.env.VITE_BACKEND_URL);
+
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/register`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(newAccount)
+    body: JSON.stringify(newAccount),
+    credentials: "include"
   })
     .catch(() => Promise.reject(null))
     .then(res => res.json()
@@ -37,17 +40,25 @@ async function register(newAccount: NewAccount): Promise<void> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function login(data: LoginData): Promise<void> {
-  return fetch(`${import.meta.env.BACKEND_URL}/login`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
+    credentials: "include",
+    mode: "cors"
   })
-    .catch(() => Promise.reject(null))
+    .catch(err => { 
+      console.error(err);
+      return Promise.reject(null);
+    })
     .then(res => res.json()
-      .catch(() => Promise.reject(null))
+      .catch(err => { 
+        console.log(err);
+        return Promise.reject(null);
+      })
     )
     .then((res: SomsiadStatus) => {
       if(res.status === 'error')
@@ -61,11 +72,12 @@ async function login(data: LoginData): Promise<void> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function logout(): Promise<void> {
-  return fetch(`${import.meta.env.BACKEND_URL}/logout`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/logout`, {
     method: "GET",
     headers: {
       Accept: "application/json"
-    }
+    },
+    credentials: "include"
   })
     .catch(() => Promise.reject(null))
     .then(res => res.json()
@@ -84,11 +96,12 @@ async function logout(): Promise<void> {
  * @throws SomsiadError on API error, null on fetch error
  */
 async function getUserData(): Promise<UserData> {
-  return fetch(`${import.meta.env.BACKEND_URL}/user_data`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/user_data`, {
     method: "GET",
     headers: {
       Accept: "application/json"
-    }
+    },
+    credentials: "include"
   })
     .catch(() => Promise.reject(null))
     .then(res => res.json()

@@ -43,7 +43,8 @@ async function getUserMarkers(): Promise<MarkerDetails[]> {
     method: "GET",
     headers: {
       Accept: "application/json"
-    }
+    },
+    credentials: "include"
   })
     .catch(() => Promise.reject(null))
     .then(res => res.json()
@@ -98,7 +99,8 @@ async function addMarker(markerData: NewMarker): Promise<void> {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(markerData)
+    body: JSON.stringify(markerData),
+    credentials: "include"
   })
     .catch(() => Promise.reject(null))
     .then(res => res.json()
@@ -122,7 +124,8 @@ async function deleteMarker(id: number): Promise<MarkerDetails> {
     method: "DELETE",
     headers: {
       Accept: "application/json"
-    }
+    },
+    credentials: "include"
   })
     .catch(() => Promise.reject(null))
     .then(res => res.json()

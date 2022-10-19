@@ -17,6 +17,22 @@
 import Header from "@/components/header/Header.vue";
 import AuthContext from "@/contexts/AuthContext.vue";
 import { RouterView } from 'vue-router';
+import useStore from "@/store";
+import { onMounted } from "vue";
+import Cookies from "js-cookie";
+import type { UserData } from "@/types";
+
+const store = useStore();
+
+onMounted(() => {
+  if(localStorage.getItem("userData") !== null) {
+    console.log("User session present.");
+    store.setAuthenticated(true);
+    store.setUserData(JSON.parse(localStorage.getItem("userData") as string) as UserData);
+  } else {
+    console.log("User is not logged in.");
+  }
+});
 </script>
 
 <style lang="scss">

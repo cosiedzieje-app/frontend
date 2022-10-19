@@ -31,9 +31,9 @@ interface LoginData {
 
 // Sex format
 enum Sex {
-  Male = "M",
-  Female = "F",
-  Other = "O" 
+  Male = "Male",
+  Female = "Female",
+  Other = "Other" 
 }
 
 // General account data format

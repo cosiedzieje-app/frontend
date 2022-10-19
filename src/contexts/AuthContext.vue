@@ -17,8 +17,12 @@ const store = useStore();
 */
 async function login(loginData: LoginData): Promise<void> {
   return userApi.login(loginData)
-    .then(() => userApi.getUserData())
+    .then(() => { 
+      console.log("Successfully logged in");
+      return userApi.getUserData();
+    })
     .then((data: UserData) => {
+      console.log("Successfully fetched user data!");
       store.setUserData(data);
       store.setAuthenticated(true);
       localStorage.setItem("userData", JSON.stringify(data));
@@ -34,6 +38,7 @@ async function login(loginData: LoginData): Promise<void> {
 async function logout(): Promise<void> {
   return userApi.logout()
     .then(() => {
+      console.log("Successfully logged out");
       store.clearUserData();
       store.setAuthenticated(false);
       localStorage.removeItem("userData");
@@ -54,6 +59,7 @@ async function logout(): Promise<void> {
 async function register(registerData: NewAccount): Promise<void> {
   return userApi.register(registerData)
     .then(() => {
+      console.log("Successfully registered account");
       const loginData: LoginData = {
         email: registerData.login.email,
         password: registerData.login.password
