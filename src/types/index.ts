@@ -21,6 +21,7 @@ interface ButtonProps {
   caption: string;
   action: () => void;
   icon: string;
+  enabled?: boolean;
 }
 
 // Login data format
@@ -48,6 +49,7 @@ interface Address {
   street: string;
   number: string;
   postalCode: string;
+  city: string;
 }
 
 // User personal data format
@@ -183,6 +185,8 @@ interface AuthContext {
   login: (loginData: LoginData) => Promise<void>;
   logout: () => Promise<void>;
   register: (registerData: NewAccount) => Promise<void>;
+  isLoggedIn: () => Promise<void>;
+  applyUserData: () => Promise<void>;
 };
 
 export type {

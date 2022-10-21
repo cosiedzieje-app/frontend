@@ -79,13 +79,21 @@ async function logout(): Promise<void> {
     },
     credentials: "include"
   })
-    .catch(() => Promise.reject(null))
+    .catch(err => {
+      console.error(err);
+      return Promise.reject(null);
+    })
     .then(res => res.json()
-      .catch(() => Promise.reject(null))
+      .catch(err => {
+        console.error(err);
+        return Promise.reject(null);
+      })
     )
     .then((data: SomsiadStatus) => {
       if(data.status === 'error')
         return Promise.reject(data);
+      else
+        return Promise.resolve();
     });
 }
 
@@ -125,9 +133,42 @@ async function getUserData(): Promise<UserData> {
     });
 }
 
+/**
+ * Checks if user is logged in
+ *  
+ * @throws SosmiadStatus if user is not logged in or on API error, 
+ * null on fetch error
+ */
+async function isLoggedIn(): Promise<void> {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/is_logged`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json"
+    },
+    credentials: "include"
+  })
+    .catch(err => {
+      console.error(err);
+      return Promise.reject(null);
+    })
+    .then(res => res.json()
+      .catch(err => {
+        console.error(err);
+        return Promise.reject(null);
+      })
+    )
+    .then((res: SomsiadStatus) => {
+      if(res.status === "error")
+        return Promise.reject(res);
+      else
+        return Promise.resolve();
+    });
+}
+
 export {
   login,
   logout,
   register,
-  getUserData
+  getUserData,
+  isLoggedIn
 };
