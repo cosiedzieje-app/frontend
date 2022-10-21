@@ -9,16 +9,14 @@ import type { GeolocationData } from "@/types";
  * format was received or fetch API threw an error
 */
 async function geocodeFromAddress(address: string): Promise<GeolocationData | null> {
-  return fetch(`http://api.positionstack.com/v1/forward?access_key=${import.meta.env.POSITIONSTACK_API_KEY}&query=${address}&limit=1`)
+  return fetch(`http://api.positionstack.com/v1/forward?access_key=ce9537b64bef057324f119eb266c01ad&query=${address}&limit=1`)
     .then(res => res.json()
       .catch(() => Promise.reject(null))
     )
     .then(res => {
-      console.log(JSON.stringify(res, null, 4));
-
       if(res.data !== undefined) {
-        if(res.data.results.length > 0) {
-          return (res.data.results[0] as GeolocationData);
+        if(res.data.length > 0) {
+          return (res.data[0] as GeolocationData);
         } else {
           return null;
         }

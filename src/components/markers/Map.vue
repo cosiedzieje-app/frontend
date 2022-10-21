@@ -33,6 +33,7 @@
   import Pointer from './CustomPointer.vue';
   import type { Ref } from 'vue';
   import type { Pointer as IPointer, PointerProps } from '@/types';
+  import '../markers/ConvertLenght.ts';
 
   let centerConverted = convertLen(19.37775993347168, 61.147850036621094)
   const center = ref(centerConverted);
@@ -45,7 +46,6 @@
   const view = ref()
   const located = ref(false)
   const map = ref();
-  console.log(map);
 
   const geoLocChange = (loc:any) => {
 
@@ -54,36 +54,6 @@
       view.value.fit([locs[1], locs[0], locs[1], locs[0]], {
           maxZoom: 16
       })
-  }
-
-  function convertLen(lon: any, lat: any){
-    let smRadius = 6378136.98;
-    let smRange = smRadius * Math.PI * 2.0;
-    let smLonToX = smRange / 360.0;
-    let smRadiansOverDegrees = Math.PI / 180.0;
-
-    // compute x-map-unit
-    lat *= smLonToX;
-
-    let y = lon;
-
-    // compute y-map-unit
-    if (y > 86.0)
-    {
-      lon = smRange;
-    }
-    else if (y < -86.0)
-    {
-      lon = -smRange;
-    }
-    else
-    {
-        y *= smRadiansOverDegrees;
-        y = Math.log(Math.tan(y) + (1.0 / Math.cos(y)));
-        lon = y * smRadius; 
-    }
-
-    return [`${lon}`, `${lat}`]
   }
 
   function changeLocated() {
@@ -105,31 +75,24 @@
 
   const todos: Ref<Pointer[]> = ref([]);
 
-  function onInput(e:any) {
-    l1.value = e.target.value
-    console.log(l1.value)
+  const doTestu: PointerProps = 
+  {
+    caption: "Chuj mi w cyca",
+    category: "Charity",
+    // icon: "fa-solid fa-location-dot",
+    position: [centerConverted[0], centerConverted[1]]
   }
+  todos.value.push({id: id++, props: doTestu})
 
-  function onInput2(e:any) {
-    l2.value= e.target.value
-    console.log(l2.value)
-  }
+  // function onInput(e:any) {
+  //   l1.value = e.target.value
+  //   console.log(l1.value)
+  // }
 
-  function newPointer(): void{
-    let position = convertLen(l2.value, l1.value);
-    
-    l2.value = position[0];
-    l1.value = position[1];
-    const newProps: PointerProps = 
-    {
-      caption: "Chuj mi w cyca",
-      category: "Charity",
-      // icon: "fa-solid fa-location-dot",
-      position: [l1.value, l2.value]
-    }
-    todos.value.push({id: id++, props: newProps})
-  }
-  // const props = defineProps<Props>();
+  // function onInput2(e:any) {
+  //   l2.value= e.target.value
+  //   console.log(l2.value)
+  // }
 </script>
 
 <style lang="scss" scoped>

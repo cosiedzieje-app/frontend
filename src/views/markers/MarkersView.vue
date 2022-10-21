@@ -56,12 +56,19 @@ store.$subscribe((mutation, state) => {
   }
 });
 
-const onAddressEnter = () => {
+const onAddressEnter = async () => {
   //console.log("Enter pressed on AddressBar");
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
   const addressVal = address.value;
   address.value = "";
+  let adresL: any;
+
+  adresL = await geocodeFromAddress(addressVal);
+  
+  adresL.longitude, adresL.latitude
+
+  console.log(adresL);
 
   setTimeout(() => {
     store.setAddressGeocodingState("error");
