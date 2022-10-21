@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory, type RouteLocationNormalized, type RouteLocationRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
 
 import useStore from '@/store';
 
@@ -13,6 +14,7 @@ import MarkersListingView from '@/views/markers/MarkersListingView.vue';
 import AccountView from '@/views/account/AccountView.vue';
 import AccountIndexView from '@/views/account/AccountIndexView.vue';
 import AccountLoginView from '@/views/account/AccountLoginView.vue';
+import AccountLogoutView from '@/views/account/AccountLogoutView.vue';
 import AccountRegisterView from '@/views/account/AccountRegisterView.vue';
 
 import NoRouteView from "@/views/NoRouteView.vue";
@@ -116,6 +118,12 @@ const router = createRouter({
           meta: {
             authRedirect: { name: "account" }
           }
+        },
+        {
+          path: 'logout',
+          name: 'accountLogout',
+          component: AccountLogoutView,
+          beforeEnter: [ requiresAuth ]
         },
         {
           path: 'register',

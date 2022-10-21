@@ -10,11 +10,11 @@ enum ContactMethod {
 // Store format
 interface Store {
   authenticated: boolean;
-  accountName: string;
   userGeoData: GeoData | null;
   addressBarEnabled: boolean;
   addressGeocodingState: AddressGeocodingState;
   userLocalization: Localization | null;
+  userData: null | UserData;
 }
 
 // CustomButton props format
@@ -22,6 +22,7 @@ interface ButtonProps {
   caption: string;
   action: () => void;
   icon: string;
+  enabled?: boolean;
 }
 
 // Login data format
@@ -32,9 +33,9 @@ interface LoginData {
 
 // Sex format
 enum Sex {
-  Male = "M",
-  Female = "F",
-  Other = "O" 
+  Male = "Male",
+  Female = "Female",
+  Other = "Other" 
 }
 
 // General account data format
@@ -49,6 +50,7 @@ interface Address {
   street: string;
   number: string;
   postalCode: string;
+  city: string;
 }
 
 // User personal data format
@@ -184,6 +186,15 @@ interface UserData {
   reputation: number;
 }
 
+// AuthContext provided data format
+interface AuthContext {
+  login: (loginData: LoginData) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (registerData: NewAccount) => Promise<void>;
+  isLoggedIn: () => Promise<void>;
+  applyUserData: () => Promise<void>;
+};
+
 export type {
   ButtonProps,
   Store,
@@ -204,7 +215,8 @@ export type {
   SomsiadStatus,
   LoginData,
   UserData,
-  Localization
+  Localization,
+  AuthContext
 };
 export {
   Sex

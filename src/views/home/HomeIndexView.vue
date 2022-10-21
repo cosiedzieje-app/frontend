@@ -14,17 +14,42 @@
 import CustomButton from "@/components/general/CustomButton.vue";
 import type { ButtonProps } from "@/types";
 import router from "@/router";
+import { reactive, ref, type Ref } from "vue";
+import useStore from '@/store';
 
-const buttons: ButtonProps[] = [
-    {
-        caption: 'Załóż konto',
-        action: () => router.push('/account/register'),
-        icon: ''
-    },
+const store = useStore();
+const registerButton: Ref<ButtonProps> = store.isAuthenticated ? ref({
+  caption: "Moje konto",
+  action: () => router.push("/account"),
+  icon: ''
+}) : ref({
+  caption: "Załóż konto",
+  action: () => router.push('/account/register'),
+  icon: ''
+});
+
+store.$subscribe((mut, state) => {
+  if(state.authenticated) {
+    registerButton.value = {
+      caption: "Moje konto",
+      action: () => router.push("/account"),
+      icon: ''
+    };
+  } else {
+    registerButton.value = {
+      caption: "Załóż konto",
+      action: () => router.push('/account/register'),
+      icon: ''
+    };
+  }  
+})
+
+const buttons: Ref<ButtonProps[]> = ref([
+    registerButton.value,
     {
         caption: 'Zobacz ogłoszenia',
         action: () => router.push('/markers'),
         icon: ''
     }
-]
+])
 </script>
