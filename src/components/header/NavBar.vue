@@ -8,7 +8,6 @@
       />
       <AccountBox 
         class="ml-4"
-        :name="(authenticated) ? store.getAccountName : null"
       />
     </div>
   </nav>
@@ -18,10 +17,6 @@
 import type { ButtonProps } from "@/types";
 import NavBarItem from "./NavBarItem.vue";
 import AccountBox from "./AccountBox.vue";
-import useStore from "@/store";
-
-const store = useStore();
-const authenticated = store.isAuthenticated;
 
 interface Props {
   items: ButtonProps[];
