@@ -14,12 +14,12 @@ import useStore from '@/store';
 const store = useStore();
 const router = useRouter();
 const buttonProps: Ref<ButtonProps> = ref({
-  caption: "Zaloguj się",
-  action: () => router.push('/account/login'),
-  icon: "fa-solid fa-key"
+  caption: (store.isAuthenticated && store.getUserData !== null) ? store.getUserData.loginName : "Zaloguj się",
+  action: () => store.isAuthenticated ? router.push('/account') : router.push('/account/login'),
+  icon: store.isAuthenticated ? "fa-solid fa-user" : "fa-solid fa-key"
 } as ButtonProps);
 
-store.$subscribe((mut, state) => {
+store.$subscribe((_mut, state) => {
   buttonProps.value = {
     caption: (state.authenticated && state.userData !== null) ? state.userData.loginName : "Zaloguj się",
     action: () => state.authenticated ? router.push('/account') : router.push('/account/login'),
