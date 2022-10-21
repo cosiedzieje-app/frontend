@@ -6,9 +6,9 @@
         :center="center" 
         :zoom="zoom" 
       />
-      <!-- <ol-zoom-control />  -->
+
       <ol-tile-layer>
-        <ol-source-xyz crossOrigin='anonymous' url="https://c.tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=87PWIbRaZAGNmYDjlYsLkeTVJpQeCfl2Y61mcHopxXqSdxXExoTLEv7dwqBwSWuJ" />
+        <ol-source-osm />
       </ol-tile-layer>
 
       <ol-geolocation :projection="projection" @positionChanged="geoLocChange" v-if="located">
