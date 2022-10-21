@@ -6,6 +6,8 @@
         :center="center" 
         :zoom="zoom" 
       />
+
+      <!-- <ol-mouseposition-control /> -->
       <!-- <ol-zoom-control />  -->
       <ol-tile-layer>
         <ol-source-osm />
@@ -13,7 +15,6 @@
 
       <ol-geolocation :projection="projection" @positionChanged="geoLocChange" v-if="located">
      </ol-geolocation>
-
       <ul>
         <li v-for="todo in todos" :key="id">
 
@@ -21,6 +22,7 @@
         </li>
       </ul>
     </ol-map>
+
     <button @click="changeLocated" class="fixed z-10 text-xl p-3 mb-7 mr-7 rounded-md bg-green">
       <font-awesome-icon class="h-[20px] w-[20px]" icon="fa-solid fa-location-crosshairs" />
       Zlokalizuj mnie
@@ -34,25 +36,37 @@
   import type { Ref } from 'vue';
   import type { Pointer as IPointer, PointerProps } from '@/types';
   import { convertLen } from '@/views/markers/ConvertLenght';
+  import type {ListingCategory} from '@/types';
+  import { watch } from 'vue';
+  import useStore from '@/store';
 
 
-  let centerConverted = convertLen(19.37775993347168, 61.147850036621094)
-  const center = ref(centerConverted);
+  const store = useStore();
   const projection = ref('');
-  const zoom = ref(6.7);
+  const zoom = ref(6.2);
   const rotation = ref(0);
-  const l1 = ref('')
-  const l2 = ref('')
+
   let id = 0;
   const view = ref()
   const located = ref(false)
   const map = ref();
+  let centerConverted = convertLen(19.37775993347168,52.147850036621094)
+  const center = ref(centerConverted);
+
+
+
+  store.$subscribe((mutation, state) => {
+    if(state.userGeoData != null) {
+      center.value = convertLen(state.userGeoData.longitude, state.userGeoData.latitude);
+      zoom.value = 12
+    }
+  });
 
   const geoLocChange = (loc:any) => {
 
-      let locs = convertLen(loc[1], loc[0])
+      let locs = convertLen(loc[0], loc[1])
       console.log(loc)
-      view.value.fit([locs[1], locs[0], locs[1], locs[0]], {
+      view.value.fit([locs[0], locs[1], locs[0], locs[1]], {
           maxZoom: 16
       })
   }
@@ -61,39 +75,20 @@
     located.value= !located.value; 
   }
 
-  let dix: PointerProps = 
-  {
-    category: "",
+  const todos: Ref<IPointer[]> = ref([]);
+
+  function newPointer(l2:any,l1:any): void{
+    let position = convertLen(l2, l1);
+    let chujCyc: PointerProps = 
+    {
+    category: "NeighborHelp",
     caption: "",
-    // icon: "",
-    position: ["0","0"]
+    position: [`${position[0]}`, `${position[1]}`]
+    }
+    todos.value.push({id: id++, props: chujCyc})
   }
 
-  interface Pointer {
-    id: number;
-    props: PointerProps;
-  }
-
-  const todos: Ref<Pointer[]> = ref([]);
-
-  const doTestu: PointerProps = 
-  {
-    caption: "Chuj mi w cyca",
-    category: "Charity",
-    // icon: "fa-solid fa-location-dot",
-    position: [centerConverted[0], centerConverted[1]]
-  }
-  todos.value.push({id: id++, props: doTestu})
-
-  // function onInput(e:any) {
-  //   l1.value = e.target.value
-  //   console.log(l1.value)
-  // }
-
-  // function onInput2(e:any) {
-  //   l2.value= e.target.value
-  //   console.log(l2.value)
-  // }
+  // newPointer(19.1198,50.278502)
 </script>
 
 <style lang="scss" scoped>

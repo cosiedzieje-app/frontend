@@ -79,7 +79,9 @@ interface ContactInfo {
   method: {
     type: ContactMethod;
     val: string;
-  }
+  },
+  phoneNumber: string,
+  email: string
 }
 
 // Marker format
@@ -149,12 +151,11 @@ interface Localization {
 
 // Geographical data format (for use with users and such)
 interface GeoData {
-  latitude: number;
-  longitude: number;
-  street: string;
-  postalCode: string;
-  country: string;
-  neighbourhood?: string;
+  latitude: string;
+  longitude: string;
+  // street: string;
+  // postalCode: string;
+  // city: string;
 }
 
 interface Pointer {
@@ -162,9 +163,8 @@ interface Pointer {
   props: PointerProps;
 }
 interface PointerProps{
-  category: string;
+  category: ListingCategory;
   caption: string;
-  // icon: string;
   position: [string, string];
 }
 

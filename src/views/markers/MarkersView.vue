@@ -37,7 +37,7 @@ import { RouterView } from 'vue-router';
 import Map from "@/components/markers/Map.vue";
 import MarkersGeocodingPending from '@/components/markers/MarkersGeocodingPending.vue';
 import MarkersGeocodingFailure from '@/components/markers/MarkersGeocodingFailure.vue';
-import type {Localization} from '@/types/index'
+import type {GeoData} from '@/types/index'
 
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
@@ -67,12 +67,12 @@ const onAddressEnter = async () => {
 
   adresL = await geocodeFromAddress(addressVal);
   
-  const newLocalization:Localization = {
-        latitude: `${adresL.latitude}`,
-        longitude: `${adresL.longitude}`
+  const newLocalization:GeoData = {
+        latitude: adresL.latitude,
+        longitude: adresL.longitude
   }
   
-  store.userLocalization = newLocalization;
+  store.setUserGeoData(newLocalization);
   console.log(adresL);
 
   setTimeout(() => {

@@ -4,26 +4,25 @@ export function convertLen(lon: any, lat: any){
     let smLonToX = smRange / 360.0;
     let smRadiansOverDegrees = Math.PI / 180.0;
 
-    // compute x-map-unit
-    lat *= smLonToX;
+    lon *= smLonToX;
 
-    let y = lon;
+    let y = lat;
 
-    // compute y-map-unit
+
     if (y > 86.0)
     {
-      lon = smRange;
+      lat = smRange;
     }
     else if (y < -86.0)
     {
-      lon = -smRange;
+      lat = -smRange;
     }
     else
     {
         y *= smRadiansOverDegrees;
         y = Math.log(Math.tan(y) + (1.0 / Math.cos(y)));
-        lon = y * smRadius; 
+        lat = y * smRadius; 
     }
 
-    return [`${lon}`, `${lat}`]
+    return [lon, lat]
 }
