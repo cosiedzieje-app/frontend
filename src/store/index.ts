@@ -8,6 +8,7 @@ const useStore = defineStore("main", {
       userGeoData: null,
       addressBarEnabled: true,
       addressGeocodingState: "idle",
+      userLocalization: null,
       userData: null
     } as Store;
   },
@@ -17,6 +18,7 @@ const useStore = defineStore("main", {
     isUserGeoDataSet: (state) => state.userGeoData !== null,
     isAddressBarEnabled: (state) => state.addressBarEnabled,
     getAddressGeocodingState: (state) => state.addressGeocodingState,
+    getUserLocalizaton: (state) => state.userLocalization,
     getUserData: (state) => state.userData
   },
   actions: {

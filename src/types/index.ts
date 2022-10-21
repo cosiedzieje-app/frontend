@@ -13,6 +13,7 @@ interface Store {
   userGeoData: GeoData | null;
   addressBarEnabled: boolean;
   addressGeocodingState: AddressGeocodingState;
+  userLocalization: Localization | null;
   userData: null | UserData;
 }
 
@@ -80,7 +81,9 @@ interface ContactInfo {
   method: {
     type: ContactMethod;
     val: string;
-  }
+  },
+  phoneNumber: string,
+  email: string
 }
 
 // Marker format
@@ -143,14 +146,18 @@ interface GeolocationData {
   map_url: string;
 }
 
+interface Localization {
+  latitude: string;
+  longitude: string;
+}
+
 // Geographical data format (for use with users and such)
 interface GeoData {
-  latitude: number;
-  longitude: number;
-  street: string;
-  postalCode: string;
-  country: string;
-  neighbourhood?: string;
+  latitude: string;
+  longitude: string;
+  // street: string;
+  // postalCode: string;
+  // city: string;
 }
 
 interface Pointer {
@@ -158,9 +165,8 @@ interface Pointer {
   props: PointerProps;
 }
 interface PointerProps{
-  category: string;
+  category: ListingCategory;
   caption: string;
-  // icon: string;
   position: [string, string];
 }
 
@@ -209,6 +215,7 @@ export type {
   SomsiadStatus,
   LoginData,
   UserData,
+  Localization,
   AuthContext
 };
 export {

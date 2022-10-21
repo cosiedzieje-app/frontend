@@ -10,11 +10,11 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
-  scrollable?: boolean; 
-}
+  interface Props {
+    scrollable?: boolean; 
+  }
 
-const props = withDefaults(defineProps<Props>(), {
-  scrollable: false
-});
+  const props = withDefaults(defineProps<Props>(), {
+    scrollable: false
+  });
 </script>

@@ -37,6 +37,7 @@ import { RouterView } from 'vue-router';
 import Map from "@/components/markers/Map.vue";
 import MarkersGeocodingPending from '@/components/markers/MarkersGeocodingPending.vue';
 import MarkersGeocodingFailure from '@/components/markers/MarkersGeocodingFailure.vue';
+import type {GeoData} from '@/types/index'
 
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
@@ -56,12 +57,23 @@ store.$subscribe((mutation, state) => {
   }
 });
 
-const onAddressEnter = () => {
+const onAddressEnter = async () => {
   //console.log("Enter pressed on AddressBar");
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
   const addressVal = address.value;
   address.value = "";
+  let adresL: any;
+
+  adresL = await geocodeFromAddress(addressVal);
+  
+  const newLocalization:GeoData = {
+        latitude: adresL.latitude,
+        longitude: adresL.longitude
+  }
+  
+  store.setUserGeoData(newLocalization);
+  console.log(adresL);
 
   setTimeout(() => {
     store.setAddressGeocodingState("error");
