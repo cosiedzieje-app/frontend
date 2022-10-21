@@ -1,4 +1,5 @@
 import type { Pointer as IPointer, PointerProps } from '@/types';
+import {convertLen} from './ConvertLenght'
 import '../markers/ConvertLenght.ts';
 
 function newPointer(id:number, l2:any, l1:any): {}{

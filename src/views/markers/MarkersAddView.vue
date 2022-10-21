@@ -74,7 +74,7 @@
             type="text"
             name="phone-number"
             label-content="Numer telefonu"
-            :modelValue="contactInfo.phoneNumber"
+            :modelValue="contactInfo.method.val"
             class="my-2"
             autocomplete="tel"
           />
@@ -83,7 +83,7 @@
             type="text"
             name="email"
             label-content="Adres e-mail"
-            :modelValue="contactInfo.email"
+            :modelValue="contactInfo.method.val"
             class="my-2"
             autocomplete="email"
           />
@@ -133,6 +133,7 @@ import FormInput from "@/components/general/FormInput.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 import { ref, type Ref, reactive } from "vue";
 import type { ContactInfo, Address, ButtonProps } from "@/types";
+import {ContactMethod} from "@/types";
 
 const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
@@ -140,6 +141,7 @@ const address: Address = reactive({
   street: "",
   number: "",
   postalCode: "",
+  city: ""
 });
 const contactInfo: ContactInfo = reactive({
   name: "",
@@ -148,9 +150,12 @@ const contactInfo: ContactInfo = reactive({
     street: "",
     number: "",
     postalCode: "",
+    city: ""
   },
-  phoneNumber: "",
-  email: ""
+  method: {
+  type: ContactMethod.PhoneNumber,
+  val: ""
+  }
 });
 
 //TODO: Implement backend connection

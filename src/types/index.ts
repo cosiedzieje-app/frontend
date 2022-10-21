@@ -81,9 +81,7 @@ interface ContactInfo {
   method: {
     type: ContactMethod;
     val: string;
-  },
-  phoneNumber: string,
-  email: string
+  }
 }
 
 // Marker format
@@ -219,5 +217,6 @@ export type {
   AuthContext
 };
 export {
-  Sex
+  Sex,
+  ContactMethod
 };
