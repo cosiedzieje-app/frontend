@@ -14,6 +14,7 @@ interface Store {
   userGeoData: GeoData | null;
   addressBarEnabled: boolean;
   addressGeocodingState: AddressGeocodingState;
+  userLocalization: Localization | null;
 }
 
 // CustomButton props format
@@ -141,6 +142,11 @@ interface GeolocationData {
   map_url: string;
 }
 
+interface Localization {
+  latitude: string;
+  longitude: string;
+}
+
 // Geographical data format (for use with users and such)
 interface GeoData {
   latitude: number;
@@ -197,7 +203,8 @@ export type {
   ListingCategory,
   SomsiadStatus,
   LoginData,
-  UserData
+  UserData,
+  Localization
 };
 export {
   Sex

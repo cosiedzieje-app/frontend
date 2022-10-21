@@ -33,7 +33,8 @@
   import Pointer from './CustomPointer.vue';
   import type { Ref } from 'vue';
   import type { Pointer as IPointer, PointerProps } from '@/types';
-  import '../markers/ConvertLenght.ts';
+  import { convertLen } from '@/views/markers/ConvertLenght';
+
 
   let centerConverted = convertLen(19.37775993347168, 61.147850036621094)
   const center = ref(centerConverted);

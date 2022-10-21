@@ -1,4 +1,4 @@
-function convertLen(lon: any, lat: any){
+export function convertLen(lon: any, lat: any){
     let smRadius = 6378136.98;
     let smRange = smRadius * Math.PI * 2.0;
     let smLonToX = smRange / 360.0;
@@ -26,4 +26,4 @@ function convertLen(lon: any, lat: any){
     }
 
     return [`${lon}`, `${lat}`]
-  }
+}

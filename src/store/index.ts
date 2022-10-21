@@ -8,7 +8,8 @@ const useStore = defineStore("main", {
       accountName: "",
       userGeoData: null,
       addressBarEnabled: true,
-      addressGeocodingState: "idle"
+      addressGeocodingState: "idle",
+      userLocalization: null
     } as Store;
   },
   getters: {
@@ -17,7 +18,8 @@ const useStore = defineStore("main", {
     getUserGeoData: (state) => state.userGeoData,
     isUserGeoDataSet: (state) => state.userGeoData !== null,
     isAddressBarEnabled: (state) => state.addressBarEnabled,
-    getAddressGeocodingState: (state) => state.addressGeocodingState
+    getAddressGeocodingState: (state) => state.addressGeocodingState,
+    getUserLocalizaton: (state) => state.userLocalization
   },
   actions: {
     setAuthenticated(toggle: boolean) {
