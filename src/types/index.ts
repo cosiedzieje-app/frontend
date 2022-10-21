@@ -156,8 +156,9 @@ interface Pointer {
   props: PointerProps;
 }
 interface PointerProps{
+  category: string;
   caption: string;
-  icon: string;
+  // icon: string;
   position: [string, string];
 }
 

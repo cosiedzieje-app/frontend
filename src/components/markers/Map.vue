@@ -1,5 +1,5 @@
 <template>
-  <div class="map-box w-full h-full flex flex-col justify-center items-center text-center text-white text-6xl">
+  <div class="map-box w-full h-full flex flex-col justify-end items-end text-center text-white text-6xl">
     <ol-map ref="map" :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" class="w-full h-full" >
       <ol-view 
         ref="view" 
@@ -8,7 +8,7 @@
       />
       <!-- <ol-zoom-control />  -->
       <ol-tile-layer>
-        <ol-source-xyz crossOrigin='anonymous' url="https://c.tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=87PWIbRaZAGNmYDjlYsLkeTVJpQeCfl2Y61mcHopxXqSdxXExoTLEv7dwqBwSWuJ" />
+        <ol-source-osm />
       </ol-tile-layer>
 
       <ol-geolocation :projection="projection" @positionChanged="geoLocChange" v-if="located">
@@ -34,9 +34,10 @@
   import type { Ref } from 'vue';
   import type { Pointer as IPointer, PointerProps } from '@/types';
 
-  const center = ref([19.191665, 51.8803198]);
+  let centerConverted = convertLen(19.37775993347168, 61.147850036621094)
+  const center = ref(centerConverted);
   const projection = ref('');
-  const zoom = ref(6.5);
+  const zoom = ref(6.7);
   const rotation = ref(0);
   const l1 = ref('')
   const l2 = ref('')
@@ -91,8 +92,9 @@
 
   let dix: PointerProps = 
   {
+    category: "",
     caption: "",
-    icon: "",
+    // icon: "",
     position: ["0","0"]
   }
 
@@ -121,7 +123,8 @@
     const newProps: PointerProps = 
     {
       caption: "Chuj mi w cyca",
-      icon: "fa-solid fa-location-dot",
+      category: "Charity",
+      // icon: "fa-solid fa-location-dot",
       position: [l1.value, l2.value]
     }
     todos.value.push({id: id++, props: newProps})
