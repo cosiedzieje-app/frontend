@@ -33,7 +33,8 @@ import {
   faStar,
   faFaceFrown,
   faMagnifyingGlass,
-  faCircleQuestion
+  faCircleQuestion,
+  faGenderless
 } from "@fortawesome/free-solid-svg-icons";
 
 import './styles/index.scss';
@@ -63,7 +64,8 @@ library.add(
   faStar,
   faFaceFrown,
   faMagnifyingGlass,
-  faCircleQuestion
+  faCircleQuestion,
+  faGenderless
 );
 
 const pinia = createPinia();
