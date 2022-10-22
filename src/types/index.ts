@@ -59,14 +59,6 @@ interface UserPersonalData {
   sex: Sex;
 }
 
-interface UserPublicData {
-  username: string;
-  name: string;
-  surname: string;
-  sex: Sex;
-  reputation: number;
-}
-
 // Registration form format
 interface NewAccount {
   login: {
@@ -240,8 +232,7 @@ export type {
   Localization,
   AuthContext,
   MarkerCategory,
-  FilteredMarkersData,
-  UserPublicData
+  FilteredMarkersData
 };
 export {
   Sex,

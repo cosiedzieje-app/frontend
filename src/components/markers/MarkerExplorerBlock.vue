@@ -18,19 +18,12 @@
         <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie" @click="markerClicked"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ address.city }}, ul. {{ address.street }} {{ address.number }}</span>
     </div>
 </template>
-  
-<style lang="scss" scoped>
-    .title {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-</style>
 
 <script setup lang="ts">
-import { Sex, type Address, type GeoData, type ListingCategory, type UserPublicData } from '@/types';
+import type {  Address, GeoData, ListingCategory, UserData } from '@/types';
 import useStore from '@/store';
 import { useRouter } from 'vue-router';
+import { getUserData } from '@/api/user';
 
 const store = useStore();
 const router = useRouter();
@@ -48,13 +41,14 @@ interface Props {
 const props = defineProps<Props>();
 
 // GET /user/${authorId}
-const userData: UserPublicData = {
-    username: 'annakowalska1',
-    name: 'Anna',
-    surname: 'Kowalska',
-    sex: Sex.Male,
-    reputation: 0
-};
+const userData: UserData = await getUserData();
+// const userData = {
+//     username: 'annakowalska1',
+//     name: 'Anna',
+//     surname: 'Kowalska',
+//     sex: Sex.Male,
+//     reputation: 0
+// };
 
 async function markerClicked() {
     const newLocalization: GeoData = {
@@ -72,3 +66,11 @@ function showDetails() {
     router.push(`/markers/explorer/${props.markerId}`);
 }
 </script>
+
+<style lang="scss" scoped>
+    .title {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+</style>

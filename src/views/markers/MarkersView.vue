@@ -37,12 +37,13 @@ import { RouterView } from 'vue-router';
 import Map from "@/components/markers/Map.vue";
 import MarkersGeocodingPending from '@/components/markers/MarkersGeocodingPending.vue';
 import MarkersGeocodingFailure from '@/components/markers/MarkersGeocodingFailure.vue';
-import type {GeoData} from '@/types/index'
+import type { GeoData, Marker } from '@/types/index'
 
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import useStore from '@/store';
+import { getMarkersByCity, getMarkersWithinDistance } from "@/api/backend";
 
 const router = useRouter();
 const store = useStore();
@@ -54,19 +55,22 @@ const onAddressEnter = async () => {
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
 
-  // GET /
+  let markers: Marker[];
   if(distance.value === '0') {
-
-  } 
-  
-  // GET /
-  else {
+    markers = await getMarkersByCity(address.value);
+  } else {
     const adresL = await geocodeFromAddress(address.value);
     if(!adresL) {
       store.setAddressGeocodingState("error");
       store.toggleAddressBar(true);
       return;
     }
+
+    markers = await getMarkersWithinDistance(
+      adresL.latitude,
+      adresL.longitude,
+      distance.value
+    );
 
     const newLocalization: GeoData = {
       latitude: adresL.latitude.toString(),
@@ -78,5 +82,7 @@ const onAddressEnter = async () => {
 
     store.setUserGeoData(newLocalization);
   }
+
+  // zapisanie markerów do store'a
 };
 </script>

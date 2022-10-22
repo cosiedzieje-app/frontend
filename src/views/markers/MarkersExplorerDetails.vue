@@ -34,11 +34,13 @@ import { useRouter, useRoute } from "vue-router";
 import type { MarkerDetails } from '@/types';
 import { ContactMethod } from '@/types';
 import markersCategories from "./MarkersCategories";
+import { getMarkerDetails } from "@/api/backend";
 
 const router = useRouter();
-const route = useRoute(); 
 
-// GET /markers/${route.params.id}
+const route = useRoute(); 
+// const data = getMarkerDetails(route.params.id);
+
 const data: MarkerDetails = {
   id: 1,
   userID: 2,
