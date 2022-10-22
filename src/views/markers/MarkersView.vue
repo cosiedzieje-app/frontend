@@ -69,7 +69,11 @@ const onAddressEnter = async () => {
   
   const newLocalization:GeoData = {
         latitude: adresL.latitude,
-        longitude: adresL.longitude
+        longitude: adresL.longitude,
+        city: adresL.locality,
+        street: adresL.street,
+        postalCode: adresL.postal_code,
+        number: adresL.number
   }
   
   store.setUserGeoData(newLocalization);

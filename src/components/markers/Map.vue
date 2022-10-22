@@ -56,12 +56,17 @@
   store.$subscribe((mutation, state) => {
     if(state.userGeoData != null) {
       center.value = convertLen(state.userGeoData.longitude, state.userGeoData.latitude);
+      if(state.userGeoData.street != null || state.userGeoData.number != null ) {
+        zoom.value = 17;
+      }else if(state.userGeoData.city != null){
       zoom.value = 12
+      }else{
+        zoom.value = 10;
+      }
     }
   });
 
   const geoLocChange = (loc:any) => {
-
       let locs = convertLen(loc[0], loc[1])
       console.log(loc)
       view.value.fit([locs[0], locs[1], locs[0], locs[1]], {
