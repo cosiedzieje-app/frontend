@@ -9,7 +9,8 @@ import HomeIndexView from '@/views/home/HomeIndexView.vue';
 import MarkersView from '@/views/markers/MarkersView.vue';
 import MarkersIndexView from '@/views/markers/MarkersIndexView.vue';
 import MarkersAddView from '@/views/markers/MarkersAddView.vue';
-import MarkersListingView from '@/views/markers/MarkersListingView.vue';
+import MarkersExplorer from '@/views/markers/MarkersExplorer.vue';
+import MarkersExplorerDetails from '@/views/markers/MarkersExplorerDetails.vue';
 
 import AccountView from '@/views/account/AccountView.vue';
 import AccountIndexView from '@/views/account/AccountIndexView.vue';
@@ -89,9 +90,14 @@ const router = createRouter({
           beforeEnter: [ requiresAuth ]
         },
         {
-          path: 'listing/:id',
-          name: 'markersListing',
-          component: MarkersListingView
+          path: 'explorer',
+          name: 'markersExplore',
+          component: MarkersExplorer
+        },
+        {
+          path: 'explorer/:id',
+          name: 'markersExploreDetails',
+          component: MarkersExplorerDetails
         },
         {
           path: ':pathMatch(.*)*',

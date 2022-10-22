@@ -7,8 +7,6 @@
         :zoom="zoom" 
       />
 
-      <!-- <ol-mouseposition-control /> -->
-      <!-- <ol-zoom-control />  -->
       <ol-tile-layer>
         <ol-source-osm />
       </ol-tile-layer>
