@@ -349,10 +349,21 @@ async function submitMarker() {
   addState.value = "pending";
   addError.value = null;
 
+  await nextTick();
+  if(routewrapper.value !== null) {
+    if(routewrapper.value.wrapper !== null) {
+      routewrapper.value.wrapper.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    }
+  }
+
   let adresL: any;
 
-  adresL = await geocodeFromAddress(address.street);
-
+  adresL = await geocodeFromAddress(`${address.street} ${address.number} ${address.city}`);
+  console.log(adresL)
   const adres: Address = {
     city: adresL.locality,
     street: adresL.street,
@@ -368,19 +379,9 @@ async function submitMarker() {
     address: adres,
     contactInfo: contactInfo.value
   }
-
-  await addMarker(markerData);
+  console.log(adres);
   console.log(markerData);
-  await nextTick();
-  if(routewrapper.value !== null) {
-    if(routewrapper.value.wrapper !== null) {
-      routewrapper.value.wrapper.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth"
-      });
-    }
-  }
+  await addMarker(markerData);
 }
 
 async function disabledSubmitMarker() {
