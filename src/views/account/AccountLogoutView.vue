@@ -2,18 +2,23 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import type { AuthContext } from "@/types";
-import { inject, onMounted } from "vue";
+import { onMounted } from "vue";
+import { logout } from "@/api/user";
+import useStore from "@/store";
 
-const authContext: AuthContext = inject("authContext") as AuthContext;
+const store = useStore();
 const router = useRouter();
 
 onMounted(() => {
-  authContext.logout()
-    .then(() => router.replace({ name: "home" }))
-    .catch(err => {
-        console.log(err);
-        router.replace({ name: "home" });    
+  logout()
+    .then(() => { 
+      store.setAuthenticated(false);
+      store.clearUserData();
+      router.replace({ name: "home" });
     })
+    .catch(err => {
+      console.error(err);
+      router.replace({ name: "home" });
+    });
 });
 </script>

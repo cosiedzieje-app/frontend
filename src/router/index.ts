@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
+import * as userApi from "@/api/user";
 
 import useStore from '@/store';
 
@@ -27,7 +28,7 @@ declare module 'vue-router' {
 }
 
 // authorization navigation guard
-function requiresAuth() {
+async function requiresAuth() {
   const store = useStore();
 
   //console.log('route requires authorization');
@@ -150,5 +151,47 @@ const router = createRouter({
     }
   ]
 })
+
+router.beforeEach(async (to, from, next) => {
+  const store = useStore();
+
+  if(store.isAuthenticated === false) {
+    await userApi.isLoggedIn()
+      .then(async () => {
+        store.setAuthenticated(true);
+        return await userApi.getUserData()
+          .then(data => {
+            console.log("Successfully fetched user data!");
+            store.setUserData(data);
+            console.log("Successfully applied user data!");
+            next();
+          })
+          .catch(async err => {
+            console.error(err);
+            return await userApi.logout()
+              .then(() => {
+                console.log("Successfully logged out");
+                store.setAuthenticated(false);
+                store.clearUserData();
+                next();
+              })
+              .catch(err => {
+                console.error(`Could not log out: ${err}`);
+                store.setAuthenticated(false);
+                store.clearUserData();
+                next();
+              });
+          });
+      })
+      .catch(() => {
+        console.log("User is not logged in.")
+        store.setAuthenticated(false);
+        store.clearUserData();
+        next();
+      })
+  } else {
+    next();
+  }
+});
 
 export default router;

@@ -72,12 +72,14 @@ import FormInput from "@/components/general/FormInput.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 
 import { useRoute, useRouter } from "vue-router";
-import { ref, inject, type Ref, computed, type ComputedRef } from "vue";
-import type { ButtonProps, AuthContext, LoginData, SomsiadStatus } from "@/types";
+import { ref, type Ref, computed, type ComputedRef } from "vue";
+import type { ButtonProps,LoginData, SomsiadStatus } from "@/types";
+import { login, getUserData } from "@/api/user";
+import useStore from "@/store";
 
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
-const authContext: AuthContext = inject<AuthContext>("authContext") as AuthContext;
 
 
 const redirected = ref<boolean>(route.query.redirect === 'true');
@@ -114,11 +116,15 @@ async function sendForm() {
   loginState.value = "pending";
   loginErrorState.value = null;
 
-  await authContext.login(loginData)
-    .then(() => { 
-      loginState.value = "success";
-      router.replace({ name: 'home' });
-    })
+  await login(loginData)
+    .then(() => getUserData()
+      .then(data => {
+        store.setUserData(data);
+        store.setAuthenticated(true);
+        loginState.value = "success";
+        router.replace({ name: "home" });
+      })
+    )
     .catch((err: null | SomsiadStatus) => {
       loginState.value = "error";
       if(err === null) {
