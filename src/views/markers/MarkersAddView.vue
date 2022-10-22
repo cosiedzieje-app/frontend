@@ -1,5 +1,5 @@
 <template>
-  <RouteWrapper ref="routeWrapper" :scrollable="true">
+  <RouteWrapper ref="routewrapper" :scrollable="true">
     <transition name="notice-fade" mode="out-in">
       <div
         v-if="unlockNotices && (!addAllowed || addState !== 'idle')"
@@ -48,22 +48,22 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="title"
             label-content="Tytuł"
-            :modelValue="title"
+            v-model="title"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="description"
             label-content="Opis"
-            :modelValue="description"
+            v-model="description"
             class="my-2"
+            @update="onInputUpdate"
           />
 
           <FormRadio
@@ -72,22 +72,31 @@
           />
 
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street"
             label-content="Ulica"
-            :modelValue="address.street"
+            v-model="address.street"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street-number"
             label-content="Numer domu"
-            :modelValue="address.number"
+            v-model="address.number"
             class="my-2"
+            @update="onInputUpdate"
+          />
+          <FormInput
+            :enabled="true"
+            type="text"
+            name="city"
+            label-content="Miasto"
+            v-model="address.city"
+            class="my-2"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -97,24 +106,24 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="name"
             label-content="Imię"
-            :modelValue="contactInfo.name"
+            v-model="contactInfo.name"
             class="my-2"
             autocomplete="given-name"
+            @update="onInputUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="surname"
             label-content="Nazwisko"
-            :modelValue="contactInfo.surname"
+            v-model="contactInfo.surname"
             class="my-2"
             autocomplete="family-name"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -128,26 +137,26 @@
             @update="onRadioUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             v-if="contactMethod === ContactMethod.PhoneNumber"
             :enabled="true"
             type="text"
             name="phone-number"
             label-content="Numer telefonu"
-            :modelValue="contactInfo.method.val"
+            v-model="contactInfo.method.val"
             class="my-2"
             autocomplete="tel"
+            @update="onInputUpdate"
           />
           <FormInput
-            @update="onInputUpdate"
-            v-if="contactMethod === ContactMethod.Email"
+            v-else-if="contactMethod === ContactMethod.Email"
             :enabled="true"
             type="text"
             name="email"
             label-content="Adres e-mail"
-            :modelValue="contactInfo.method.val"
+            v-model="contactInfo.method.val"
             class="my-2"
             autocomplete="email"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -157,31 +166,31 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="city"
             label-content="Miasto"
-            :modelValue="contactInfo.address.city"
+            v-model="contactInfo.address.city"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street"
             label-content="Ulica"
-            :modelValue="contactInfo.address.street"
+            v-model="contactInfo.address.street"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street-number"
             label-content="Numer domu"
-            :modelValue="contactInfo.address.number"
+            v-model="contactInfo.address.number"
             class="my-2"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -199,7 +208,7 @@ import FormInput from "@/components/general/FormInput.vue";
 import FormRadio from "@/components/general/FormRadio.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 import NoticeBox from "@/components/general/NoticeBox.vue";
-import { ref, type Ref, reactive, watch, type ComputedRef, computed, onMounted } from "vue";
+import { ref, type Ref, reactive, watch, type ComputedRef, computed, onMounted, nextTick } from "vue";
 import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker, ListingCategory } from "@/types";
 import { ContactMethod } from "@/types";
 import { addMarker } from "@/api/backend";
@@ -209,25 +218,23 @@ import { useRouter } from 'vue-router';
 import useStore from '@/store';
 
 let id= 0;
-const routeWrapper = ref<HTMLElement>();
+const routewrapper: Ref<InstanceType<typeof RouteWrapper> | null> = ref(null);
 const unlockNotices: Ref<boolean> = ref(false);
 const store = useStore();
 const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
 const address: Address = reactive({
   street: "",
-  number: "",
+  'number': "",
   city: "",
-  postalCode: ""
 });
-const contactInfo: ContactInfo = reactive({
+const contactInfo: Ref<ContactInfo> = ref({
   name: "",
   surname: "",
   address: {
-    city: "",
     street: "",
-    number: "",
-    postalCode: ""
+    'number': "",
+    city: "",
   },
   method: {
     type: ContactMethod.PhoneNumber,
@@ -296,12 +303,15 @@ const onMarkerRadioUpdate = (name: string) => {
 };
 
 const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
-   return (contactInfo.name.length > 0) 
-    && (contactInfo.surname.length > 0)
-    && (contactInfo.address.city.length > 0)
-    && (contactInfo.address.number.length > 0)
-    && (contactInfo.address.street.length > 0)
-    && (contactInfo.method.val.length > 0);
+   return (contactInfo.value.name.length > 0) 
+    && (contactInfo.value.surname.length > 0)
+    && (contactInfo.value.address.city.length > 0)
+    && (contactInfo.value.address['number'].length > 0)
+    && (contactInfo.value.address.street.length > 0)
+    && (contactInfo.value.method.val.length > 0)
+    && (address.street.length > 0)
+    && (address['number'].length > 0)
+    && (address.city.length > 0)
 });
 const addAllowed: ComputedRef<boolean> = computed(() => {
   return fieldsNotEmpty.value;    
@@ -334,10 +344,10 @@ watch(addAllowed, (v) => {
 
 //TODO: Implement backend connection
 async function submitMarker() {
+  console.log(contactInfo);
   unlockNotices.value = true;
   addState.value = "pending";
   addError.value = null;
-  (routeWrapper.value as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
 
   let adresL: any;
 
@@ -356,16 +366,36 @@ async function submitMarker() {
     description: description.value,
     type: listCategory.value,
     address: adres,
-    contactInfo: contactInfo
+    contactInfo: contactInfo.value
   }
 
   await addMarker(markerData);
   console.log(markerData);
+  await nextTick();
+  if(routewrapper.value !== null) {
+    if(routewrapper.value.wrapper !== null) {
+      routewrapper.value.wrapper.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    }
+  }
 }
 
-function disabledSubmitMarker() {
+async function disabledSubmitMarker() {
+  console.log(contactInfo);
   unlockNotices.value = true;
-  (routeWrapper.value as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
+  await nextTick();
+  if(routewrapper.value !== null) {
+    if(routewrapper.value.wrapper !== null) {
+      routewrapper.value.wrapper.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    }
+  }
 }
 </script>
 
