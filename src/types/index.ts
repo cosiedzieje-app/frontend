@@ -154,7 +154,6 @@ interface GeoData {
   latitude: string;
   longitude: string;
   street?: string | null;
-  postalCode?: string| null;
   city?: string | null;
   number?: string |null;
 }

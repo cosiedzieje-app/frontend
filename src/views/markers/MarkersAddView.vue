@@ -130,7 +130,6 @@ const description: Ref<string> = ref("");
 const address: Address = reactive({
   street: "",
   number: "",
-  postalCode: "",
   city: ""
 });
 const contactInfo: ContactInfo = reactive({
