@@ -162,7 +162,7 @@ interface GeoData {
   longitude: string;
   street?: string | null;
   city?: string | null;
-  number?: string |null;
+  number?: string | null;
 }
 
 interface Pointer {
