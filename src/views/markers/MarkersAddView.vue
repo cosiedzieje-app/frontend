@@ -37,15 +37,6 @@
             :modelValue="address.number"
             class="my-2"
           />
-          <FormInput
-            :enabled="true"
-            type="text"
-            name="postal-code"
-            label-content="Kod pocztowy"
-            :modelValue="address.postalCode"
-            class="my-2"
-            autocomplete="postal-code"
-          />
         </article>
       </section>
       <section class="w-full flex flex-col items-center px-4 my-6">
@@ -95,6 +86,14 @@
           <FormInput 
             :enabled="true"
             type="text"
+            name="city"
+            label-content="Miasto"
+            :modelValue="contactInfo.address.city"
+            class="my-2"
+          />
+          <FormInput 
+            :enabled="true"
+            type="text"
             name="street"
             label-content="Ulica"
             :modelValue="contactInfo.address.street"
@@ -107,15 +106,6 @@
             label-content="Numer domu"
             :modelValue="contactInfo.address.number"
             class="my-2"
-          />
-          <FormInput
-            :enabled="true"
-            type="text"
-            name="postal-code"
-            label-content="Kod pocztowy"
-            :modelValue="contactInfo.address.postalCode"
-            class="my-2"
-            autocomplete="postal-code"
           />
         </article>
       </section>
@@ -147,10 +137,9 @@ const contactInfo: ContactInfo = reactive({
   name: "",
   surname: "",
   address: {
+    city: "",
     street: "",
-    number: "",
-    postalCode: "",
-    city: ""
+    number: ""
   },
   method: {
   type: ContactMethod.PhoneNumber,
