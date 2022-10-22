@@ -118,8 +118,8 @@ async function sendForm() {
   await login(loginData)
     .then(() => getUserData()
       .then(data => {
-        store.setUserData(data);
         store.setAuthenticated(true);
+        store.setUserData(data);
         loginState.value = "success";
         router.replace({ name: "home" });
       })

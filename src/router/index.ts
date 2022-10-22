@@ -158,25 +158,26 @@ router.beforeEach(async (to, from, next) => {
   if(store.isAuthenticated === false) {
     await userApi.isLoggedIn()
       .then(async () => {
+        //console.log("Successfully logged in user");
         store.setAuthenticated(true);
         return await userApi.getUserData()
           .then(data => {
-            console.log("Successfully fetched user data!");
+            //console.log("Successfully fetched user data!");
             store.setUserData(data);
-            console.log("Successfully applied user data!");
+            //console.log("Successfully applied user data!");
             next();
           })
           .catch(async err => {
             console.error(err);
             return await userApi.logout()
               .then(() => {
-                console.log("Successfully logged out");
+                //console.log("Successfully logged out");
                 store.setAuthenticated(false);
                 store.clearUserData();
                 next();
               })
               .catch(err => {
-                console.error(`Could not log out: ${err}`);
+                //console.error(`Could not log out: ${err}`);
                 store.setAuthenticated(false);
                 store.clearUserData();
                 next();
@@ -184,13 +185,41 @@ router.beforeEach(async (to, from, next) => {
           });
       })
       .catch(() => {
-        console.log("User is not logged in.")
+        //console.log("User is not logged in.")
         store.setAuthenticated(false);
         store.clearUserData();
         next();
       })
   } else {
-    next();
+    //console.log("User already logged in");
+    if(store.getUserData === null) {
+      await userApi.getUserData()
+        .then(data => {
+          //console.log("Successfully fetched user data!");
+          store.setUserData(data);
+          //console.log("Successfully applied user data!");
+          next();
+        })
+        .catch(async err => {
+          console.error(err);
+          return await userApi.logout()
+            .then(() => {
+              //console.log("Successfully logged out");
+              store.setAuthenticated(false);
+              store.clearUserData();
+              next();
+            })
+            .catch(err => {
+              //console.error(`Could not log out: ${err}`);
+              store.setAuthenticated(false);
+              store.clearUserData();
+              next();
+            });
+        });
+    } else {
+      //console.log("User data already cached");
+      next();
+    }
   }
 });
 

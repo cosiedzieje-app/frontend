@@ -7,7 +7,7 @@
       'hover:bg-main-light': props.enabled !== false,
       'bg-green': props.enabled === false,
     }"
-    :disabled="props.enabled === false"
+    type="button"
     autocomplete="off"
   >
     <!-- <font-awesome-icon class="h-[20px] w-[20px]" :icon="props.icon" /> -->
@@ -27,6 +27,9 @@ const defProps = defineProps<Props>();
 const onClick = () => {
   if(defProps.props.enabled !== false) {
     defProps.props.action();
+  } else {
+    if(defProps.props.disabledAction !== undefined)
+      defProps.props.disabledAction();
   }
 }
 </script>

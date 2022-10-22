@@ -1,38 +1,40 @@
 <template>
-  <RouteWrapper :scrollable="true">
-    <div
-      v-if="!addAllowed || addState !== 'idle'"
-      class="w-full flex flex-col justify-center items-center"
-    >
-      <transition name="notice-fade" mode="out-in">
-        <NoticeBox
-          v-if="!fieldsNotEmpty"
-          level="warn"
-          message="Pola nie mogą być puste!"
-          icon="fa-solid fa-triangle-exclamation"
-        />
-      </transition>
-      <transition name="notice-fade" mode="out-in">
-        <NoticeBox
-          v-if="addState === 'pending'"
-          level="info"
-          message="Dodawanie znacznika..."
-          icon="fa-solid fa-location-dot"
-        />
-        <NoticeBox
-          v-else-if="addState === 'success'"
-          level="success"
-          message="Pomyślnie dodano znacznik!"
-          icon="fa-solid fa-location-dot"
-        />
-        <NoticeBox
-          v-else-if="addState === 'error'"
-          level="error"
-          :message="addErrorMessage"
-          icon="fa-solid fa-location-dot"
-        />
-      </transition>
-    </div>
+  <RouteWrapper ref="routeWrapper" :scrollable="true">
+    <transition name="notice-fade" mode="out-in">
+      <div
+        v-if="unlockNotices && (!addAllowed || addState !== 'idle')"
+        class="w-full flex flex-col justify-center items-center"
+      >
+        <transition name="notice-fade" mode="out-in">
+          <NoticeBox
+            v-if="!fieldsNotEmpty"
+            level="warn"
+            message="Żadne pole nie może być puste!"
+            icon="fa-solid fa-triangle-exclamation"
+          />
+        </transition>
+        <transition name="notice-fade" mode="out-in">
+          <NoticeBox
+            v-if="addState === 'pending'"
+            level="info"
+            message="Dodawanie znacznika..."
+            icon="fa-solid fa-location-dot"
+          />
+          <NoticeBox
+            v-else-if="addState === 'success'"
+            level="success"
+            message="Pomyślnie dodano znacznik!"
+            icon="fa-solid fa-location-dot"
+          />
+          <NoticeBox
+            v-else-if="addState === 'error'"
+            level="error"
+            :message="addErrorMessage"
+            icon="fa-solid fa-location-dot"
+          />
+        </transition>
+      </div>
+    </transition>
     <h1 class="w-full text-center text-white text-3xl p-4">
       Dodaj nowe ogłoszenie
     </h1>
@@ -46,6 +48,7 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="title"
@@ -54,6 +57,7 @@
             class="my-2"
           />
           <FormInput 
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="description"
@@ -62,6 +66,7 @@
             class="my-2"
           />
           <FormInput 
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street"
@@ -70,6 +75,7 @@
             class="my-2"
           />
           <FormInput
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street-number"
@@ -85,6 +91,7 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="name"
@@ -94,6 +101,7 @@
             autocomplete="given-name"
           />
           <FormInput 
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="surname"
@@ -114,6 +122,7 @@
             @update="onRadioUpdate"
           />
           <FormInput 
+            @update="onInputUpdate"
             v-if="contactMethod === ContactMethod.PhoneNumber"
             :enabled="true"
             type="text"
@@ -124,6 +133,7 @@
             autocomplete="tel"
           />
           <FormInput
+            @update="onInputUpdate"
             v-if="contactMethod === ContactMethod.Email"
             :enabled="true"
             type="text"
@@ -141,6 +151,7 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="city"
@@ -149,6 +160,7 @@
             class="my-2"
           />
           <FormInput 
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street"
@@ -157,6 +169,7 @@
             class="my-2"
           />
           <FormInput
+            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street-number"
@@ -180,10 +193,13 @@ import FormInput from "@/components/general/FormInput.vue";
 import FormRadio from "@/components/general/FormRadio.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 import NoticeBox from "@/components/general/NoticeBox.vue";
-import { ref, type Ref, reactive, watch, type ComputedRef, computed } from "vue";
+import { ref, type Ref, reactive, watch, type ComputedRef, computed, onMounted } from "vue";
 import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker } from "@/types";
 import { ContactMethod } from "@/types";
 import { addMarker } from "@/api/backend";
+
+const routeWrapper = ref<HTMLElement>();
+const unlockNotices: Ref<boolean> = ref(false);
 
 const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
@@ -222,6 +238,9 @@ const radios: Ref<FormRadioProps[]> = ref([
   }
 ]);
 
+const onInputUpdate = () => {
+  //no-op
+};
 const onRadioUpdate = (name: string) => {
   if(name === "phoneNumber") {
     contactMethod.value = ContactMethod.PhoneNumber;
@@ -251,7 +270,7 @@ const addErrorMessage: ComputedRef<string> = computed(() => {
     break;
     case "unexpected-error":
       return "Po stronie serwera wystąpił nieoczekiwany błąd. "
-        +"Spróbuj ponownie."
+        +"Spróbuj ponownie. "
         +"Jeśli problem się powtórzy, skontaktuj się z administratorem.";
     break;
   }
@@ -260,6 +279,7 @@ const addErrorMessage: ComputedRef<string> = computed(() => {
 const submitButtonProps: Ref<ButtonProps> = ref({
   caption: "Dodaj ogłoszenie",
   action: () => submitMarker(),
+  disabledAction: () => disabledSubmitMarker(),
   icon: "fa-icon fa-plus",
   enabled: addAllowed.value
 });
@@ -269,7 +289,28 @@ watch(addAllowed, (v) => {
 
 //TODO: Implement backend connection
 async function submitMarker() {
+  unlockNotices.value = true;
   addState.value = "pending";
   addError.value = null;
+  (routeWrapper.value as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function disabledSubmitMarker() {
+  unlockNotices.value = true;
+  (routeWrapper.value as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
 }
 </script>
+
+<style lang="scss" scoped>
+.notice-fade {
+  &-enter-active, &-leave-active {
+    transition: opacity .2s;
+  }
+  &-enter-to, &-leave-from {
+    opacity: 1;
+  }
+  &-enter-from, &-leave-to {
+    opacity: 0;
+  }
+}
+</style>
