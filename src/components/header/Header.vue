@@ -39,6 +39,11 @@ onMounted(() => {
         caption: "Dodaj ogłoszenie",
         action: () => router.push({ name: 'markersAdd' }),
         icon: "fa-solid fa-map-pin"
+      },
+      {
+        caption: "Wyloguj się",
+        action: () => router.replace({ name: "accountLogout" }),
+        icon: "fa-solid fa-key"
       }
     ]; 
   } else {
@@ -61,6 +66,11 @@ store.$subscribe((mutation, state) => {
         caption: "Dodaj ogłoszenie",
         action: () => router.push({ name: 'markersAdd' }),
         icon: "fa-solid fa-map-pin"
+      },
+      {
+        caption: "Wyloguj się",
+        action: () => router.replace({ name: "accountLogout" }),
+        icon: "fa-solid fa-key"
       }
     ]; 
   } else {
