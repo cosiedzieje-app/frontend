@@ -179,7 +179,8 @@ const description: Ref<string> = ref("");
 const address: Address = reactive({
   street: "",
   number: "",
-  city: ""
+  city: "",
+  postalCode: ""
 });
 const contactInfo: ContactInfo = reactive({
   name: "",
@@ -187,7 +188,8 @@ const contactInfo: ContactInfo = reactive({
   address: {
     city: "",
     street: "",
-    number: ""
+    number: "",
+    postalCode: ""
   },
   method: {
     type: ContactMethod.PhoneNumber,
