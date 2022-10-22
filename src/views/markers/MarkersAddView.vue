@@ -264,5 +264,7 @@ watch(addAllowed, (v) => {
 async function submitMarker() {
   addState.value = "pending";
   addError.value = null;
+
+  
 }
 </script>
