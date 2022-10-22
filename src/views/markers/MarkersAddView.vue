@@ -65,6 +65,12 @@
             :modelValue="description"
             class="my-2"
           />
+
+          <FormRadio
+            :radios="categoryOfMarker"
+            @update="onMarkerRadioUpdate"
+          />
+
           <FormInput 
             @update="onInputUpdate"
             :enabled="true"
@@ -194,13 +200,18 @@ import FormRadio from "@/components/general/FormRadio.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 import NoticeBox from "@/components/general/NoticeBox.vue";
 import { ref, type Ref, reactive, watch, type ComputedRef, computed, onMounted } from "vue";
-import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker } from "@/types";
+import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker, ListingCategory } from "@/types";
 import { ContactMethod } from "@/types";
 import { addMarker } from "@/api/backend";
+import type {GeoData} from '@/types/index'
+import { geocodeFromAddress } from '@/api/geocoding';
+import { useRouter } from 'vue-router';
+import useStore from '@/store';
 
+let id= 0;
 const routeWrapper = ref<HTMLElement>();
 const unlockNotices: Ref<boolean> = ref(false);
-
+const store = useStore();
 const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
 const address: Address = reactive({
@@ -224,8 +235,30 @@ const contactInfo: ContactInfo = reactive({
   }
 });
 
-
+const listCategory: Ref<ListingCategory> =  ref("Happening")
 const contactMethod: Ref<ContactMethod> = ref(ContactMethod.PhoneNumber);
+const categoryOfMarker: Ref<FormRadioProps[]> = ref([
+  {
+    name: "Happening",
+    label: "Happeningi",
+    selected: true
+  },
+  {
+    name: "Charity",
+    label: "Akcje Charytatywne",
+    selected: false
+  },
+  {
+    name: "NeighborHelp",
+    label: "Pomoc sąsiedzka",
+    selected: false
+  },
+  {
+    name: "MassEvent",
+    label: "Imprezy masowe",
+    selected: false
+  }
+]);
 const radios: Ref<FormRadioProps[]> = ref([
   {
     name: "phoneNumber",
@@ -247,6 +280,18 @@ const onRadioUpdate = (name: string) => {
     contactMethod.value = ContactMethod.PhoneNumber;
   } else {
     contactMethod.value = ContactMethod.Email;
+  }
+};
+
+const onMarkerRadioUpdate = (name: string) => {
+  if(name === "Happening") {
+    listCategory.value = "Happening";
+  } else if(name === "Charity") {
+    listCategory.value = "Charity";
+  } else if(name === "NeighborHelp") {
+    listCategory.value = "NeighborHelp";
+  } else {
+    listCategory.value = "MassEvent"
   }
 };
 
@@ -293,6 +338,29 @@ async function submitMarker() {
   addState.value = "pending";
   addError.value = null;
   (routeWrapper.value as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
+
+  let adresL: any;
+
+  adresL = await geocodeFromAddress(address.street);
+
+  const adres: Address = {
+    city: adresL.locality,
+    street: adresL.street,
+    number: adresL.number
+  }
+  
+  const markerData: NewMarker ={
+    latitude: adresL.latitude,
+    longitude: adresL.longitude,
+    title: title.value,
+    description: description.value,
+    type: listCategory.value,
+    address: adres,
+    contactInfo: contactInfo
+  }
+
+  await addMarker(markerData);
+  console.log(markerData);
 }
 
 function disabledSubmitMarker() {
