@@ -26,7 +26,15 @@
 <script lang="ts" setup>
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
 import type {  Marker } from '@/types';
-import MarkerExplorerBlock from '../../components/markers/MarkerExplorerBlock.vue';
+import type {GeoData} from '@/types/index'
+import MarkerExplorerBlock from '@/components/markers/MarkerExplorerBlock.vue';
+import { geocodeFromAddress } from '@/api/geocoding';
+import { useRouter } from 'vue-router';
+import { ref, type Ref } from 'vue';
+import useStore from '@/store';
+
+    const store = useStore();
+
 
     interface MarkerCategory {
         name: string;
@@ -90,4 +98,22 @@ import MarkerExplorerBlock from '../../components/markers/MarkerExplorerBlock.vu
             markers: allMarkers.filter(m => m.type === 'Happening')
         },
     ];
+
+    async function markerClicked(city:any,street:any,number:any) {
+        let adresL:any;
+
+        adresL = await geocodeFromAddress(`${number} ${street} ${city}`);
+  
+        const newLocalization:GeoData = {
+                latitude: adresL.latitude,
+                longitude: adresL.longitude,
+                city: adresL.locality,
+                street: adresL.street,
+                postalCode: adresL.postal_code,
+                number: adresL.number
+        }
+        
+        store.setUserGeoData(newLocalization);
+    }
+
 </script>
