@@ -158,17 +158,19 @@ import CustomButton from '@/components/general/CustomButton.vue';
 import RouteWrapper from '@/components/general/RouteWrapper.vue';
 import NoticeBox from '@/components/general/NoticeBox.vue';
 
-import { reactive, inject, ref, type Ref, computed, type ComputedRef, watch } from 'vue';
+import { reactive, ref, type Ref, computed, type ComputedRef, watch } from 'vue';
 import type { ButtonProps, UserAccountData, UserPersonalData, Address, 
-  NewAccount, AuthContext, SomsiadStatus } from '@/types';
+  NewAccount, SomsiadStatus, LoginData } from '@/types';
 import { Sex } from '@/types';
 import { useRouter } from 'vue-router';
+import useStore from '@/store';
+import { register, login, getUserData, logout } from '@/api/user';
 
 interface Props {
   initEmail?: string;
 }
 
-const authContext: AuthContext = inject("authContext") as AuthContext;
+const store = useStore();
 const router = useRouter();
 const props = defineProps<Props>();
 
@@ -254,12 +256,34 @@ async function sendForm() {
 
   registerState.value = "pending";
   registerError.value = null;
-  await authContext.register(newAccount)
-    .then(() => {
-      registerState.value = "success";
-      router.push({
-        name: 'home'
-      });
+  await register(newAccount)
+    .then(async () => {
+      const loginData: LoginData = {
+        email: newAccount.login.email,
+        password: newAccount.login.password
+      };
+
+      return login(loginData)
+        .then(() => getUserData()
+          .then(data => {
+            store.setUserData(data);
+            store.setAuthenticated(true);
+            registerState.value = "success";
+            router.push({
+              name: "home"
+            })
+          })
+          .catch(err => logout()
+            .then(() => {
+              store.clearUserData();
+              store.setAuthenticated(false);
+              registerState.value = "success";
+            })
+          )
+        )
+        .catch(err => {
+          registerState.value = "success";
+        });
     })
     .catch((err: null | SomsiadStatus) => {
       registerState.value = "error";
