@@ -50,7 +50,6 @@ interface Address {
   city: string;
   street: string;
   number: string;
-  postalCode?: string | null;
 }
 
 // User personal data format

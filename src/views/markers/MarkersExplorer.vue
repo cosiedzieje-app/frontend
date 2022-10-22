@@ -6,18 +6,15 @@
                 {{ markerCategory.name }} 
             </h2>
             <div v-if="markerCategory.markers.length !== 0" class="ml-2 overflow-x-auto text-clip whitespace-nowrap">
-                <div v-for="marker in markerCategory.markers" :class="`mr-4 p-4 w-[250px] inline-flex flex-col justify-between rounded ${markerCategory.backgroundColor} max-w-md`" >
-                    <div>
-                        <div class="text-xs pb-1 flex items-center">
-                            <div class="flex items-center justify-center">
-                                <img class="inline mr-1 w-4 h-4" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-                                <span>Jan Kowalski</span>
-                            </div>
-                        </div>
-                        <h3 class="title pb-1 font-bold whitespace-normal">{{ marker.title }}</h3>
-                    </div>
-                    <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie" @click="markerClicked(marker.address.city, marker.address.street, marker.address.number)"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ marker.address.city }}, ul. {{ marker.address.street }} {{ marker.address.number }}</span>
-                </div>
+                <MarkerExplorerBlock 
+                    v-for="marker in markerCategory.markers"
+                    :title="marker.title"
+                    :address="marker.address"
+                    :background-color="markerCategory.backgroundColor"
+
+                    :latitude="marker.latitude"
+                    :longitude="marker.longitude"
+                />
             </div>
             <div v-else>
                 <span class="text-gray-lighter m-4">brak</span>
@@ -26,25 +23,18 @@
     </RouteWrapper>
 </template>
 
-<style lang="scss" scoped>
-    .title {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-</style>
-
 <script lang="ts" setup>
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
 import type {  Marker } from '@/types';
 import type {GeoData} from '@/types/index'
-
+import MarkerExplorerBlock from '@/components/markers/MarkerExplorerBlock.vue';
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
 import { ref, type Ref } from 'vue';
 import useStore from '@/store';
 
     const store = useStore();
+
 
     interface MarkerCategory {
         name: string;

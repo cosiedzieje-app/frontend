@@ -115,6 +115,14 @@
           <h2
             class="w-full text-center text-white text-2xl mb-4"
           >Adres</h2>
+          <FormInput
+            v-model="address.city"
+            name="city"
+            type="text"
+            label-content="Miasto"
+            autocomplete="address-level2"
+            :enabled=true
+          />
           <FormInput 
             v-model="address.street"
             name="street"
@@ -128,22 +136,6 @@
             type="number"
             label-content="Numer domu"
             :enabled="true"
-          />
-          <FormInput 
-            v-model="address.postalCode"
-            name="postal-code"
-            type="text"
-            label-content="Kod pocztowy"
-            autocomplete="postal-code"
-            :enabled="true"
-          />
-          <FormInput
-            v-model="address.city"
-            name="city"
-            type="text"
-            label-content="Miasto"
-            autocomplete="address-level2"
-            :enabled=true
           />
         </div>
         <CustomButton class="mt-10 w-full" :props="buttonProps" />
@@ -183,7 +175,6 @@ const personalData = reactive<UserPersonalData>({
   sex: Sex.Other
 });
 const address = reactive<Address>({
-  postalCode: "",
   number: "",
   street: "",
   city: ""
