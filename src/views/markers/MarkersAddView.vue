@@ -1,5 +1,5 @@
 <template>
-  <RouteWrapper ref="routeWrapper" :scrollable="true">
+  <RouteWrapper ref="routewrapper" :scrollable="true">
     <transition name="notice-fade" mode="out-in">
       <div
         v-if="unlockNotices && (!addAllowed || addState !== 'idle')"
@@ -193,12 +193,12 @@ import FormInput from "@/components/general/FormInput.vue";
 import FormRadio from "@/components/general/FormRadio.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 import NoticeBox from "@/components/general/NoticeBox.vue";
-import { ref, type Ref, reactive, watch, type ComputedRef, computed, onMounted } from "vue";
+import { ref, type Ref, reactive, watch, type ComputedRef, computed, nextTick } from "vue";
 import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker } from "@/types";
 import { ContactMethod } from "@/types";
 import { addMarker } from "@/api/backend";
 
-const routeWrapper = ref<HTMLElement>();
+const routewrapper: Ref<InstanceType<typeof RouteWrapper> | null> = ref(null);
 const unlockNotices: Ref<boolean> = ref(false);
 
 const title: Ref<string> = ref("");
@@ -216,7 +216,6 @@ const contactInfo: ContactInfo = reactive({
     city: "",
     street: "",
     number: "",
-    postalCode: ""
   },
   method: {
     type: ContactMethod.PhoneNumber,
@@ -291,12 +290,30 @@ async function submitMarker() {
   unlockNotices.value = true;
   addState.value = "pending";
   addError.value = null;
-  (routeWrapper.value as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
+  await nextTick();
+  if(routewrapper.value !== null) {
+    if(routewrapper.value.wrapper !== null) {
+      routewrapper.value.wrapper.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    }
+  }
 }
 
-function disabledSubmitMarker() {
+async function disabledSubmitMarker() {
   unlockNotices.value = true;
-  (routeWrapper.value as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
+  await nextTick();
+  if(routewrapper.value !== null) {
+    if(routewrapper.value.wrapper !== null) {
+      routewrapper.value.wrapper.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    }
+  }
 }
 </script>
 
