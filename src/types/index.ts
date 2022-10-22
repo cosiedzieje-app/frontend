@@ -118,7 +118,6 @@ interface MarkerDetails {
 
 // New marker format
 interface NewMarker {
-  userID: number;
   latitude: number;
   longitude: number;
   title: string;

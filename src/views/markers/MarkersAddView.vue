@@ -48,40 +48,49 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="title"
             label-content="Tytuł"
             :modelValue="title"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="description"
             label-content="Opis"
             :modelValue="description"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street"
             label-content="Ulica"
             :modelValue="address.street"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street-number"
             label-content="Numer domu"
             :modelValue="address.number"
             class="my-2"
+            @update="onInputUpdate"
+          />
+          <FormInput
+            :enabled="true"
+            type="text"
+            name="city"
+            label-content="Miasto"
+            :modelValue="address.city"
+            class="my-2"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -91,7 +100,6 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="name"
@@ -99,9 +107,9 @@
             :modelValue="contactInfo.name"
             class="my-2"
             autocomplete="given-name"
+            @update="onInputUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="surname"
@@ -109,6 +117,7 @@
             :modelValue="contactInfo.surname"
             class="my-2"
             autocomplete="family-name"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -122,7 +131,6 @@
             @update="onRadioUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             v-if="contactMethod === ContactMethod.PhoneNumber"
             :enabled="true"
             type="text"
@@ -131,10 +139,10 @@
             :modelValue="contactInfo.method.val"
             class="my-2"
             autocomplete="tel"
+            @update="onInputUpdate"
           />
           <FormInput
-            @update="onInputUpdate"
-            v-if="contactMethod === ContactMethod.Email"
+            v-else-if="contactMethod === ContactMethod.Email"
             :enabled="true"
             type="text"
             name="email"
@@ -142,6 +150,7 @@
             :modelValue="contactInfo.method.val"
             class="my-2"
             autocomplete="email"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -151,31 +160,31 @@
         </h2>
         <article class="w-[75%] flex flex-col">
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="city"
             label-content="Miasto"
             :modelValue="contactInfo.address.city"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput 
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street"
             label-content="Ulica"
             :modelValue="contactInfo.address.street"
             class="my-2"
+            @update="onInputUpdate"
           />
           <FormInput
-            @update="onInputUpdate"
             :enabled="true"
             type="text"
             name="street-number"
             label-content="Numer domu"
             :modelValue="contactInfo.address.number"
             class="my-2"
+            @update="onInputUpdate"
           />
         </article>
       </section>
@@ -205,17 +214,16 @@ const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
 const address: Address = reactive({
   street: "",
-  number: "",
+  'number': "",
   city: "",
-  postalCode: ""
 });
-const contactInfo: ContactInfo = reactive({
+const contactInfo: Ref<ContactInfo> = ref({
   name: "",
   surname: "",
   address: {
-    city: "",
     street: "",
-    number: "",
+    'number': "",
+    city: "",
   },
   method: {
     type: ContactMethod.PhoneNumber,
@@ -249,12 +257,15 @@ const onRadioUpdate = (name: string) => {
 };
 
 const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
-   return (contactInfo.name.length > 0) 
-    && (contactInfo.surname.length > 0)
-    && (contactInfo.address.city.length > 0)
-    && (contactInfo.address.number.length > 0)
-    && (contactInfo.address.street.length > 0)
-    && (contactInfo.method.val.length > 0);
+   return (contactInfo.value.name.length > 0) 
+    && (contactInfo.value.surname.length > 0)
+    && (contactInfo.value.address.city.length > 0)
+    && (contactInfo.value.address.number.length > 0)
+    && (contactInfo.value.address.street.length > 0)
+    && (contactInfo.value.method.val.length > 0)
+    && (address.street.length > 0)
+    && (address.number.length > 0)
+    && (address.city.length > 0)
 });
 const addAllowed: ComputedRef<boolean> = computed(() => {
   return fieldsNotEmpty.value;    
@@ -287,6 +298,7 @@ watch(addAllowed, (v) => {
 
 //TODO: Implement backend connection
 async function submitMarker() {
+  console.log(contactInfo);
   unlockNotices.value = true;
   addState.value = "pending";
   addError.value = null;
@@ -303,6 +315,7 @@ async function submitMarker() {
 }
 
 async function disabledSubmitMarker() {
+  console.log(contactInfo);
   unlockNotices.value = true;
   await nextTick();
   if(routewrapper.value !== null) {
