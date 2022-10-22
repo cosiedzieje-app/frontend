@@ -4,7 +4,7 @@
     class="flex flex-col items-center justify-center text-center text-white"
     :scrollable="false"
   >
-    <font-awesome-icon icon="fa-solid fa-circle-exclamation" class="text-red-600 text-6xl mb-5" />
+    <font-awesome-icon icon="fa-solid fa-circle-question" class="text-gray-lighter text-6xl mb-5" />
     <h1 class="text-3xl mb-2">Nie wiemy, dla jakiego regionu<br />mamy wyświetlać Ci ogłoszenia!</h1>
     <h2 class="text-2xl">Proszę, podaj swoją lokalizację w pasku powyżej.</h2>
   </RouteWrapper>

@@ -1,5 +1,5 @@
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
-type ListingCategory = "NeighborHelp" | "Happening" | "Charity";
+type ListingCategory = "NeighborHelp" | "Happening" | "Charity" | "MassEvent";
 
 // Contact method format
 enum ContactMethod {
@@ -47,10 +47,10 @@ interface UserAccountData {
 
 // Address format
 interface Address {
+  city: string;
   street: string;
   number: string;
-  postalCode: string;
-  city: string;
+  postalCode?: string | null;
 }
 
 // User personal data format
@@ -91,6 +91,7 @@ interface Marker {
   longitude: number;
   title: string;
   type: ListingCategory;
+  address: Address;
 }
 
 // Marker details format

@@ -30,3 +30,19 @@ html, body, #app {
   padding: 0;
   @apply bg-gray;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #505050; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a7a7a; 
+}

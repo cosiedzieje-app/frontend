@@ -1,5 +1,5 @@
 <template>
-  <RouteWrapper class="flex flex-col justify-center items-center flex-[0_0_50%] md:flex-row">
+  <RouteWrapper class="flex flex-col justify-center overflow-auto items-center flex-[0_0_50%] md:flex-row">
     <section
       class="flex flex-col w-full h-full"
     >
