@@ -253,7 +253,6 @@ const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
    return (contactInfo.name.length > 0) 
     && (contactInfo.surname.length > 0)
     && (contactInfo.address.city.length > 0)
-    && (contactInfo.address.postalCode.length > 0)
     && (contactInfo.address.number.length > 0)
     && (contactInfo.address.street.length > 0)
     && (contactInfo.method.val.length > 0);
