@@ -3,11 +3,11 @@
     <section
       class="flex flex-col w-full h-full"
     >
-      <AddressBar 
+      <AddressBar
         v-model="address"
-        @enter="onAddressEnter"
+        :distance="distance"
         :enabled="store.isAddressBarEnabled"
-        :placeholder="addressBarPlaceholder"
+        @enter="onAddressEnter"
       />
       <transition name="view-fade" mode="out-in">
         <MarkersGeocodingPending 
@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
-import AddressBar from '@/components/categories/AddressBar.vue';
+import AddressBar from '@/components/markers/AddressBar.vue';
 import { RouterView } from 'vue-router';
 import Map from "@/components/markers/Map.vue";
 import MarkersGeocodingPending from '@/components/markers/MarkersGeocodingPending.vue';
@@ -41,46 +41,42 @@ import type {GeoData} from '@/types/index'
 
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
-import { ref, type Ref } from 'vue';
+import { ref } from 'vue';
 import useStore from '@/store';
 
 const router = useRouter();
 const store = useStore();
-const address: Ref<string> = ref("");
-const addressBarPlaceholder: Ref<string | undefined> = ref(undefined);
 
-store.$subscribe((mutation, state) => {
-  if(state.addressGeocodingState === 'pending') {
-    addressBarPlaceholder.value = "Trwa geokodowanie...";
-  } else {
-    addressBarPlaceholder.value = undefined;
-  }
-});
+const address = ref("");
+const distance = ref("5");
 
 const onAddressEnter = async () => {
-  //console.log("Enter pressed on AddressBar");
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
-  const addressVal = address.value;
-  address.value = "";
-  let adresL: any;
 
-  adresL = await geocodeFromAddress(addressVal);
+  // GET /
+  if(distance.value === '0') {
+
+  } 
   
-  const newLocalization:GeoData = {
-        latitude: adresL.latitude,
-        longitude: adresL.longitude,
-        city: adresL.locality,
-        street: adresL.street,
-        number: adresL.number
+  // GET /
+  else {
+    const adresL = await geocodeFromAddress(address.value);
+    if(!adresL) {
+      store.setAddressGeocodingState("error");
+      store.toggleAddressBar(true);
+      return;
+    }
+
+    const newLocalization: GeoData = {
+      latitude: adresL.latitude.toString(),
+      longitude: adresL.longitude.toString(),
+      city: adresL.locality,
+      street: adresL.street,
+      number: adresL.number
+    }
+
+    store.setUserGeoData(newLocalization);
   }
-  
-  store.setUserGeoData(newLocalization);
-  console.log(adresL);
-
-  setTimeout(() => {
-    store.setAddressGeocodingState("error");
-    store.toggleAddressBar(true);
-  }, 3000);
 };
 </script>

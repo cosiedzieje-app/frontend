@@ -1,10 +1,16 @@
 <template>
-    <div :class="`mr-4 p-4 w-[250px] inline-flex flex-col justify-between rounded ${backgroundColor} max-w-md`" >
+    <div @click="showDetails" class="mr-4 p-4 w-[250px] inline-flex flex-col justify-between rounded max-w-md hover:cursor-pointer" 
+    :class="{
+        'bg-green-700': type === 'NeighborHelp',
+        'bg-red-700': type === 'Charity',
+        'bg-yellow-700': type === 'MassEvent',
+        'bg-violet-700': type === 'Happening'
+    }">
         <div>
             <div class="text-xs pb-1 flex items-center">
                 <div class="flex items-center justify-center">
                     <img class="inline mr-1 w-4 h-4" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-                    <span>{{ authorName }}</span>
+                    <span>{{ userData.name }} {{ userData.surname }}</span>
                 </div>
             </div>
             <h3 class="title pb-1 font-bold whitespace-normal">{{ title }}</h3>
@@ -22,36 +28,47 @@
 </style>
 
 <script setup lang="ts">
-    import type { Address, GeoData } from '@/types';
-    import useStore from '@/store';
-    import { convertLen } from '@/views/markers/ConvertLenght';
+import { Sex, type Address, type GeoData, type ListingCategory, type UserPublicData } from '@/types';
+import useStore from '@/store';
+import { useRouter } from 'vue-router';
 
-    const store = useStore();
+const store = useStore();
+const router = useRouter();
 
-    interface Props {
-        title: string;
-        authorName?: string;
-        backgroundColor: string;
-        address: Address,
-        latitude: number,
-        longitude: number,
-    }
+interface Props {
+    markerId: number;
+    authorId: number;
+    title: string;
+    address: Address,
+    latitude: number,
+    longitude: number,
+    type: ListingCategory;
+}
+
+const props = defineProps<Props>();
+
+// GET /user/${authorId}
+const userData: UserPublicData = {
+    username: 'annakowalska1',
+    name: 'Anna',
+    surname: 'Kowalska',
+    sex: Sex.Male,
+    reputation: 0
+};
+
+async function markerClicked() {
+    const newLocalization: GeoData = {
+        latitude: `${props.latitude}`,
+        longitude: `${props.longitude}`,
+        city: props.address.city,
+        street: props.address.street,
+        number: props.address.number
+    };
     
-    const props = withDefaults(defineProps<Props>(), {
-        authorName: 'Jan Kowalski'
-    });
+    store.setUserGeoData(newLocalization);
+}
 
-    async function markerClicked() {
-        const newLocalization:GeoData = {
-                latitude: `${props.latitude}`,
-                longitude: `${props.longitude}`,
-                city: props.address.city,
-                street: props.address.street,
-                number: props.address.number
-        }
-        
-        store.setUserGeoData(newLocalization);
-    }
-
-
+function showDetails() {
+    router.push(`/markers/explorer/${props.markerId}`);
+}
 </script>

@@ -59,6 +59,14 @@ interface UserPersonalData {
   sex: Sex;
 }
 
+interface UserPublicData {
+  username: string;
+  name: string;
+  surname: string;
+  sex: Sex;
+  reputation: number;
+}
+
 // Registration form format
 interface NewAccount {
   login: {
@@ -86,6 +94,7 @@ interface ContactInfo {
 // Marker format
 interface Marker {
   id: number;
+  userID: number;
   latitude: number;
   longitude: number;
   title: string;
@@ -137,6 +146,7 @@ interface GeolocationData {
   confidence: number;
   region: string;
   region_code: string;
+  locality: string;
   administrative_area: string | null;
   neighbourhood: string;
   country: string;
@@ -193,6 +203,20 @@ interface AuthContext {
   applyUserData: () => Promise<void>;
 };
 
+interface MarkerCategory {
+  name: string;
+  icon: string;
+  lightColor: string;
+  darkColor: string;
+  darkHoverColor: string;
+}
+
+interface FilteredMarkersData {
+  data: MarkerCategory;
+  type: ListingCategory;
+  markers: Marker[];
+}
+
 export type {
   ButtonProps,
   Store,
@@ -214,7 +238,10 @@ export type {
   LoginData,
   UserData,
   Localization,
-  AuthContext
+  AuthContext,
+  MarkerCategory,
+  FilteredMarkersData,
+  UserPublicData
 };
 export {
   Sex,
