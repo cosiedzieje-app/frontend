@@ -9,7 +9,7 @@
             </div>
             <h3 class="title pb-1 font-bold whitespace-normal">{{ title }}</h3>
         </div>
-        <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ address.city }}, ul. {{ address.street }} {{ address.number }}</span>
+        <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie" @click="markerClicked"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ address.city }}, ul. {{ address.street }} {{ address.number }}</span>
     </div>
 </template>
   
@@ -22,7 +22,11 @@
 </style>
 
 <script setup lang="ts">
-    import type { Address } from '@/types';
+    import type { Address, GeoData } from '@/types';
+    import useStore from '@/store';
+    import { convertLen } from '@/views/markers/ConvertLenght';
+
+    const store = useStore();
 
     interface Props {
         title: string;
@@ -32,8 +36,22 @@
         latitude: number,
         longitude: number,
     }
-
+    
     const props = withDefaults(defineProps<Props>(), {
         authorName: 'Jan Kowalski'
     });
+
+    async function markerClicked() {
+        const newLocalization:GeoData = {
+                latitude: `${props.latitude}`,
+                longitude: `${props.longitude}`,
+                city: props.address.city,
+                street: props.address.street,
+                number: props.address.number
+        }
+        
+        store.setUserGeoData(newLocalization);
+    }
+
+
 </script>

@@ -48,8 +48,8 @@ import useStore from '@/store';
     const allMarkers: Marker[] = [
         {
             id: 0,
-            latitude: 0,
-            longitude: 0,
+            latitude:21.37,
+            longitude: 21.37,
             title: "Wyprowadzę psa",
             type: "NeighborHelp",
             address: {
@@ -99,21 +99,6 @@ import useStore from '@/store';
         },
     ];
 
-    async function markerClicked(city:any,street:any,number:any) {
-        let adresL:any;
-
-        adresL = await geocodeFromAddress(`${number} ${street} ${city}`);
-  
-        const newLocalization:GeoData = {
-                latitude: adresL.latitude,
-                longitude: adresL.longitude,
-                city: adresL.locality,
-                street: adresL.street,
-                postalCode: adresL.postal_code,
-                number: adresL.number
-        }
-        
-        store.setUserGeoData(newLocalization);
-    }
+    
 
 </script>
