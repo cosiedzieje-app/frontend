@@ -1,4 +1,4 @@
-import type { Store, GeoData, AddressGeocodingState, LoginData, UserData } from "@/types";
+import type { Store, GeoData, AddressGeocodingState, LoginData, UserData, NewMarker } from "@/types";
 import { defineStore } from 'pinia';
 
 const useStore = defineStore("main", {
@@ -6,6 +6,7 @@ const useStore = defineStore("main", {
     return {
       authenticated: false,
       userGeoData: null,
+      pointres: null,
       addressBarEnabled: true,
       addressGeocodingState: "idle",
       userLocalization: null,
@@ -19,9 +20,14 @@ const useStore = defineStore("main", {
     isAddressBarEnabled: (state) => state.addressBarEnabled,
     getAddressGeocodingState: (state) => state.addressGeocodingState,
     getUserLocalizaton: (state) => state.userLocalization,
-    getUserData: (state) => state.userData
+    getUserData: (state) => state.userData,
+    getPointres: (state) => state.pointres
   },
   actions: {
+    setPointres(marker: NewMarker) {
+      this.pointres = marker;
+    },
+
     setAuthenticated(toggle: boolean) {
       this.authenticated = toggle;
     },

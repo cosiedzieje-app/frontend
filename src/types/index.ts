@@ -42,6 +42,7 @@ enum ContactMethod {
 interface Store {
   authenticated: boolean;
   userGeoData: GeoData | null;
+  pointres: NewMarker | null;
   addressBarEnabled: boolean;
   addressGeocodingState: AddressGeocodingState;
   userLocalization: Localization | null;
