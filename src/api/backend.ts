@@ -2,10 +2,7 @@ import type {
   Marker, 
   MarkerDetails, 
   NewMarker,
-  NewAccount, 
   SomsiadStatus, 
-  LoginData,
-  UserData
 } from '@/types';
 
 /**
