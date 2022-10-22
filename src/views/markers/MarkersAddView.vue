@@ -124,7 +124,13 @@ import CustomButton from "@/components/general/CustomButton.vue";
 import { ref, type Ref, reactive } from "vue";
 import type { ContactInfo, Address, ButtonProps } from "@/types";
 import {ContactMethod} from "@/types";
+import type {GeoData} from '@/types/index'
 
+import { geocodeFromAddress } from '@/api/geocoding';
+import { useRouter } from 'vue-router';
+import useStore from '@/store';
+
+const store = useStore();
 const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
 const address: Address = reactive({
@@ -147,9 +153,27 @@ const contactInfo: ContactInfo = reactive({
   }
 });
 
+console.log(contactInfo.address.city)
+
 //TODO: Implement backend connection
 function submitMarker() {
+  console.log(contactInfo.address.city)
+  // const addressVal = address.value;
+  // address.value = "";
+  // let adresL: any;
 
+  // adresL = await geocodeFromAddress(addressVal);
+  
+  // const newLocalization:GeoData = {
+  //       latitude: adresL.latitude,
+  //       longitude: adresL.longitude,
+  //       city: adresL.locality,
+  //       street: adresL.street,
+  //       postalCode: adresL.postal_code,
+  //       number: adresL.number
+  // }
+  
+  // store.setUserGeoData(newLocalization);
 }
 
 const submitButtonProps: ButtonProps = {

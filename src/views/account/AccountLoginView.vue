@@ -79,6 +79,7 @@ const route = useRoute();
 const router = useRouter();
 const authContext: AuthContext = inject<AuthContext>("authContext") as AuthContext;
 
+
 const redirected = ref<boolean>(route.query.redirect === 'true');
 const loginState: Ref<"idle" | "pending" | "success" | "error"> = ref("idle");
 const loginErrorState: Ref<null | "fetch-error" | "invalid-data" | "unexpected-error"> = ref(null);
