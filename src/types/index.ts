@@ -25,6 +25,13 @@ interface ButtonProps {
   enabled?: boolean;
 }
 
+// Form radio format
+interface FormRadioProps {
+  name: string;
+  label: string;
+  selected: boolean;
+}
+
 // Login data format
 interface LoginData {
   email: string;
@@ -184,17 +191,9 @@ interface UserData {
   reputation: number;
 }
 
-// AuthContext provided data format
-interface AuthContext {
-  login: (loginData: LoginData) => Promise<void>;
-  logout: () => Promise<void>;
-  register: (registerData: NewAccount) => Promise<void>;
-  isLoggedIn: () => Promise<void>;
-  applyUserData: () => Promise<void>;
-};
-
 export type {
   ButtonProps,
+  FormRadioProps,
   Store,
   AddressGeocodingState,
   UserAccountData,
@@ -213,8 +212,7 @@ export type {
   SomsiadStatus,
   LoginData,
   UserData,
-  Localization,
-  AuthContext
+  Localization
 };
 export {
   Sex,

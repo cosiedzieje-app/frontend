@@ -1,5 +1,38 @@
 <template>
   <RouteWrapper :scrollable="true">
+    <div
+      v-if="!addAllowed || addState !== 'idle'"
+      class="w-full flex flex-col justify-center items-center"
+    >
+      <transition name="notice-fade" mode="out-in">
+        <NoticeBox
+          v-if="!fieldsNotEmpty"
+          level="warn"
+          message="Pola nie mogą być puste!"
+          icon="fa-solid fa-triangle-exclamation"
+        />
+      </transition>
+      <transition name="notice-fade" mode="out-in">
+        <NoticeBox
+          v-if="addState === 'pending'"
+          level="info"
+          message="Dodawanie znacznika..."
+          icon="fa-solid fa-location-dot"
+        />
+        <NoticeBox
+          v-else-if="addState === 'success'"
+          level="success"
+          message="Pomyślnie dodano znacznik!"
+          icon="fa-solid fa-location-dot"
+        />
+        <NoticeBox
+          v-else-if="addState === 'error'"
+          level="error"
+          :message="addErrorMessage"
+          icon="fa-solid fa-location-dot"
+        />
+      </transition>
+    </div>
     <h1 class="w-full text-center text-white text-3xl p-4">Dodaj nowe ogłoszenie</h1>
     <form @submit.prevent="" class="min-h-full w-full flex flex-col items-center py-4">
       <section class="w-full flex flex-col items-center px-4 mb-6">
@@ -60,7 +93,19 @@
             class="my-2"
             autocomplete="family-name"
           />
+        </article>
+      </section>
+      <section class="w-full flex flex-col items-center px-4 my-6">
+        <h2
+          class="w-full text-center text-white text-2xl pb-2"
+        >Forma kontaktu</h2>
+        <article class="w-[75%] flex flex-col">
+          <FormRadio
+            :radios="radios"
+            @update="onRadioUpdate"
+          />
           <FormInput 
+            v-if="contactMethod === ContactMethod.PhoneNumber"
             :enabled="true"
             type="text"
             name="phone-number"
@@ -70,6 +115,7 @@
             autocomplete="tel"
           />
           <FormInput
+            v-if="contactMethod === ContactMethod.Email"
             :enabled="true"
             type="text"
             name="email"
@@ -120,10 +166,13 @@
 <script setup lang="ts">
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
 import FormInput from "@/components/general/FormInput.vue";
+import FormRadio from "@/components/general/FormRadio.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
-import { ref, type Ref, reactive } from "vue";
-import type { ContactInfo, Address, ButtonProps } from "@/types";
-import {ContactMethod} from "@/types";
+import NoticeBox from "@/components/general/NoticeBox.vue";
+import { ref, type Ref, reactive, watch, type ComputedRef, computed } from "vue";
+import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker } from "@/types";
+import { ContactMethod } from "@/types";
+import { addMarker } from "@/api/backend";
 
 const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
@@ -141,19 +190,71 @@ const contactInfo: ContactInfo = reactive({
     number: ""
   },
   method: {
-  type: ContactMethod.PhoneNumber,
-  val: ""
+    type: ContactMethod.PhoneNumber,
+    val: ""
   }
 });
 
-//TODO: Implement backend connection
-function submitMarker() {
+const contactMethod: Ref<ContactMethod> = ref(ContactMethod.PhoneNumber);
+const radios: Ref<FormRadioProps[]> = ref([
+  {
+    name: "phoneNumber",
+    label: "Numer telefonu",
+    selected: true
+  },
+  {
+    name: "email",
+    label: "E-mail",
+    selected: false
+  }
+]);
 
-}
+const onRadioUpdate = (name: string) => {
+  if(name === "phoneNumber") {
+    contactMethod.value = ContactMethod.PhoneNumber;
+  } else {
+    contactMethod.value = ContactMethod.Email;
+  }
+};
 
-const submitButtonProps: ButtonProps = {
+const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
+   return (contactInfo.name.length > 0) 
+    && (contactInfo.surname.length > 0)
+    && (contactInfo.address.city.length > 0)
+    && (contactInfo.address.postalCode.length > 0)
+    && (contactInfo.address.number.length > 0)
+    && (contactInfo.address.street.length > 0)
+    && (contactInfo.method.val.length > 0);
+});
+const addAllowed: ComputedRef<boolean> = computed(() => {
+  return fieldsNotEmpty.value;    
+});
+const addState: Ref<"idle" | "pending" | "success" | "error"> = ref("idle");
+const addError: Ref<"unexpected-error" | null> = ref(null);
+const addErrorMessage: ComputedRef<string> = computed(() => {
+  switch(addError.value) {
+    case null:
+      return "Nie udało się dodać ogłoszenia. Spróbuj ponownie. Jeśli problem się powtórzy, skontaktuj się z administratorem.";
+    break;
+    case "unexpected-error":
+      return "Po stronie serwera wystąpił nieoczekiwany błąd. Spróbuj ponownie. Jeśli problem się powtórzy, skontaktuj się z administratorem.";
+    break;
+  }
+});
+
+const submitButtonProps: Ref<ButtonProps> = ref({
   caption: "Dodaj ogłoszenie",
   action: () => submitMarker(),
-  icon: "fa-icon fa-plus"
-};
+  icon: "fa-icon fa-plus",
+  enabled: addAllowed.value
+});
+watch(addAllowed, (v) => {
+  submitButtonProps.value.enabled = v;
+});
+
+//TODO: Implement backend connection
+async function submitMarker() {
+  addState.value = "pending";
+  addError.value = null;
+}
 </script>
