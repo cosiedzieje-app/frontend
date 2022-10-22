@@ -53,8 +53,9 @@ interface Props {
 
 
 const props = defineProps<Props>();
-const emit = defineEmits(['update:modelValue', 'enter']);
+const emit = defineEmits(['update:modelValue', 'enter', 'update']);
 const updateValue = (e: Event) => {
+  emit('update');
   emit('update:modelValue', (e.target as HTMLInputElement).value)
 };
 const keyDown = (e: KeyboardEvent) => {

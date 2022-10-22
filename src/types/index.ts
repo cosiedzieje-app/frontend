@@ -21,6 +21,7 @@ interface Store {
 interface ButtonProps {
   caption: string;
   action: () => void;
+  disabledAction?: () => void;
   icon: string;
   enabled?: boolean;
 }
@@ -57,7 +58,6 @@ interface Address {
   city: string;
   street: string;
   number: string;
-  postalCode: string;
 }
 
 // User personal data format

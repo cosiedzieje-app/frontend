@@ -55,8 +55,7 @@ import useStore from '@/store';
             address: {
                 city: 'Sosnowiec',
                 street: 'Jagiellońska',
-                number: '13',
-                postalCode: ""
+                number: '13'
             }
         },
     ];
