@@ -15,6 +15,10 @@ import MarkersExplorerDetails from '@/views/markers/MarkersExplorerDetails.vue';
 
 import AccountView from '@/views/account/AccountView.vue';
 import AccountIndexView from '@/views/account/AccountIndexView.vue';
+import AccountIndexOverviewView from '@/views/account/AccountIndexOverviewView.vue';
+import AccountIndexMarkersManagementView from '@/views/account/AccountIndexMarkersManagementView.vue';
+import AccountIndexPasswordChangeView from '@/views/account/AccountIndexPasswordChangeView.vue';
+import AccountIndexVerificationView from '@/views/account/AccountIndexVerificationView.vue';
 import AccountLoginView from '@/views/account/AccountLoginView.vue';
 import AccountLogoutView from '@/views/account/AccountLogoutView.vue';
 import AccountRegisterView from '@/views/account/AccountRegisterView.vue';
@@ -115,7 +119,33 @@ const router = createRouter({
           path: '',
           name: 'account',
           component: AccountIndexView,
-          beforeEnter: [ requiresAuth ]
+          beforeEnter: [ requiresAuth ],
+          children: [
+            {
+              path: '',
+              name: 'accountIndexOverview',
+              component: AccountIndexOverviewView,
+              beforeEnter: [ requiresAuth ]
+            },
+            {
+              path: 'markersManagement',
+              name: 'accountIndexMarkersManagement',
+              component: AccountIndexMarkersManagementView,
+              beforeEnter: [ requiresAuth ]
+            },
+            {
+              path: 'passwordChange',
+              name: 'accountIndexPasswordChange',
+              component: AccountIndexPasswordChangeView,
+              beforeEnter: [ requiresAuth ]
+            },
+            {
+              path: 'verification',
+              name: 'accountIndexVerification',
+              component: AccountIndexVerificationView,
+              beforeEnter: [ requiresAuth ]
+            }
+          ]
         },
         {
           path: 'login',

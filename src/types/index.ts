@@ -33,6 +33,14 @@ interface FormRadioProps {
   selected: boolean;
 }
 
+// Account sidebar item props format
+interface AccountSidebarItemProps {
+  name: string;
+  label: string;
+  action: () => void;
+  currentCondition: boolean;
+}
+
 // Login data format
 interface LoginData {
   email: string;
