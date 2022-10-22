@@ -52,7 +52,7 @@
             type="text"
             name="title"
             label-content="Tytuł"
-            :modelValue="title"
+            v-model="title"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -61,7 +61,7 @@
             type="text"
             name="description"
             label-content="Opis"
-            :modelValue="description"
+            v-model="description"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -70,7 +70,7 @@
             type="text"
             name="street"
             label-content="Ulica"
-            :modelValue="address.street"
+            v-model="address.street"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -79,7 +79,7 @@
             type="text"
             name="street-number"
             label-content="Numer domu"
-            :modelValue="address.number"
+            v-model="address.number"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -88,7 +88,7 @@
             type="text"
             name="city"
             label-content="Miasto"
-            :modelValue="address.city"
+            v-model="address.city"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -104,7 +104,7 @@
             type="text"
             name="name"
             label-content="Imię"
-            :modelValue="contactInfo.name"
+            v-model="contactInfo.name"
             class="my-2"
             autocomplete="given-name"
             @update="onInputUpdate"
@@ -114,7 +114,7 @@
             type="text"
             name="surname"
             label-content="Nazwisko"
-            :modelValue="contactInfo.surname"
+            v-model="contactInfo.surname"
             class="my-2"
             autocomplete="family-name"
             @update="onInputUpdate"
@@ -136,7 +136,7 @@
             type="text"
             name="phone-number"
             label-content="Numer telefonu"
-            :modelValue="contactInfo.method.val"
+            v-model="contactInfo.method.val"
             class="my-2"
             autocomplete="tel"
             @update="onInputUpdate"
@@ -147,7 +147,7 @@
             type="text"
             name="email"
             label-content="Adres e-mail"
-            :modelValue="contactInfo.method.val"
+            v-model="contactInfo.method.val"
             class="my-2"
             autocomplete="email"
             @update="onInputUpdate"
@@ -164,7 +164,7 @@
             type="text"
             name="city"
             label-content="Miasto"
-            :modelValue="contactInfo.address.city"
+            v-model="contactInfo.address.city"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -173,7 +173,7 @@
             type="text"
             name="street"
             label-content="Ulica"
-            :modelValue="contactInfo.address.street"
+            v-model="contactInfo.address.street"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -182,7 +182,7 @@
             type="text"
             name="street-number"
             label-content="Numer domu"
-            :modelValue="contactInfo.address.number"
+            v-model="contactInfo.address.number"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -260,11 +260,11 @@ const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
    return (contactInfo.value.name.length > 0) 
     && (contactInfo.value.surname.length > 0)
     && (contactInfo.value.address.city.length > 0)
-    && (contactInfo.value.address.number.length > 0)
+    && (contactInfo.value.address['number'].length > 0)
     && (contactInfo.value.address.street.length > 0)
     && (contactInfo.value.method.val.length > 0)
     && (address.street.length > 0)
-    && (address.number.length > 0)
+    && (address['number'].length > 0)
     && (address.city.length > 0)
 });
 const addAllowed: ComputedRef<boolean> = computed(() => {

@@ -90,8 +90,8 @@ async function getMarkerDetails(id: number) {
  * @throws SomsiadStatus on API error, null on fetch error 
  */
 async function addMarker(markerData: NewMarker): Promise<void> {
-  return fetch(`${import.meta.env.BACKEND_URL}/add_marker`, {
-    method: "POST",
+  return fetch(`${import.meta.env.BACKEND_URL}/markers`, {
+    method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
