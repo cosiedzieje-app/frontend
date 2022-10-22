@@ -16,7 +16,7 @@
                         </div>
                         <h3 class="title pb-1 font-bold whitespace-normal">{{ marker.title }}</h3>
                     </div>
-                    <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ marker.address.city }}, ul. {{ marker.address.street }} {{ marker.address.number }}</span>
+                    <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie" @click="markerClicked(marker.address.city, marker.address.street, marker.address.number)"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ marker.address.city }}, ul. {{ marker.address.street }} {{ marker.address.number }}</span>
                 </div>
             </div>
             <div v-else>
@@ -37,6 +37,14 @@
 <script lang="ts" setup>
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
 import type {  Marker } from '@/types';
+import type {GeoData} from '@/types/index'
+
+import { geocodeFromAddress } from '@/api/geocoding';
+import { useRouter } from 'vue-router';
+import { ref, type Ref } from 'vue';
+import useStore from '@/store';
+
+    const store = useStore();
 
     interface MarkerCategory {
         name: string;
@@ -100,4 +108,22 @@ import type {  Marker } from '@/types';
             markers: allMarkers.filter(m => m.type === 'Happening')
         },
     ];
+
+    async function markerClicked(city:any,street:any,number:any) {
+        let adresL:any;
+
+        adresL = await geocodeFromAddress(`${number} ${street} ${city}`);
+  
+        const newLocalization:GeoData = {
+                latitude: adresL.latitude,
+                longitude: adresL.longitude,
+                city: adresL.locality,
+                street: adresL.street,
+                postalCode: adresL.postal_code,
+                number: adresL.number
+        }
+        
+        store.setUserGeoData(newLocalization);
+    }
+
 </script>

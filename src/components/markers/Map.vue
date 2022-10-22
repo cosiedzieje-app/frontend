@@ -56,6 +56,7 @@
   store.$subscribe((mutation, state) => {
     if(state.userGeoData != null) {
       center.value = convertLen(state.userGeoData.longitude, state.userGeoData.latitude);
+      
       if(state.userGeoData.street != null || state.userGeoData.number != null ) {
         zoom.value = 17;
       }else if(state.userGeoData.city != null){
