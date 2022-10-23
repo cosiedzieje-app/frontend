@@ -88,13 +88,14 @@
 
   function showMarkers(){
     let markers = store.exploredMarkers as Marker[]
-    console.log(markers)
+
     markers.forEach(marker => {
-      let position = convertLen(marker.longitude, marker.latitude)
+      let position = convertLen(marker.latitude, marker.longitude)
       let mark: PointerProps = {
         category: marker.type,
         caption: marker.title,
-        position: [`${position[0]}`, `${position[1]}`]
+        position: [`${position[0]}`, `${position[1]}`],
+        marker: marker
       }
 
       if(!todos.value.includes({id: marker.id, props: mark})) {

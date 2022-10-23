@@ -198,6 +198,7 @@ interface PointerProps{
   category: ListingCategory;
   caption: string;
   position: [string, string];
+  marker: Marker;
 }
 
 // SomsiadStatus format (https://github.com/somsiad-app/api#somsiadstatus-type)
