@@ -2,10 +2,7 @@ import type {
   Marker, 
   MarkerDetails, 
   NewMarker,
-  NewAccount, 
   SomsiadStatus, 
-  LoginData,
-  UserData
 } from '@/types';
 
 /**
@@ -15,7 +12,7 @@ import type {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function getMarkers(): Promise<Marker[]> {
-  return fetch(`${import.meta.env.BACKEND_URL}/markers`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -87,7 +84,7 @@ async function getMarkers(): Promise<Marker[]> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function getUserMarkers(): Promise<MarkerDetails[]> {
-  return fetch(`${import.meta.env.BACKEND_URL}/user_markers`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/user_markers`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -116,7 +113,7 @@ async function getUserMarkers(): Promise<MarkerDetails[]> {
  * error
  */
 async function getMarkerDetails(id: number) {
-  return fetch(`${import.meta.env.BACKEND_URL}/markers/${id}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${id}`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -141,8 +138,8 @@ async function getMarkerDetails(id: number) {
  * @throws SomsiadStatus on API error, null on fetch error 
  */
 async function addMarker(markerData: NewMarker): Promise<void> {
-  return fetch(`${import.meta.env.BACKEND_URL}/add_marker`, {
-    method: "POST",
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers`, {
+    method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
@@ -168,7 +165,7 @@ async function addMarker(markerData: NewMarker): Promise<void> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function deleteMarker(id: number): Promise<MarkerDetails> {
-  return fetch(`${import.meta.env.BACKEND_URL}/markers/${id}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${id}`, {
     method: "DELETE",
     headers: {
       Accept: "application/json"

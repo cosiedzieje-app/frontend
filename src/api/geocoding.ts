@@ -9,7 +9,7 @@ import type { GeolocationData } from "@/types";
  * format was received or fetch API threw an error
 */
 async function geocodeFromAddress(address: string): Promise<GeolocationData | null> {
-  return fetch(`http://api.positionstack.com/v1/forward?access_key=ce9537b64bef057324f119eb266c01ad&query=${address}&limit=1`)
+  return fetch(`http://api.positionstack.com/v1/forward?access_key=${import.meta.env.VITE_GEO_API_KEY }&query=${address}&limit=1`)
     .then(res => res.json()
       .catch(() => Promise.reject(null))
     )
@@ -39,7 +39,7 @@ async function geocodeFromAddress(address: string): Promise<GeolocationData | nu
  * format was received or fetch API threw an error
 */
 async function geocodeFromCoords(lat: number, lon: number): Promise<GeolocationData | null> {
-  return fetch(`http://api.positionstack.com/v1/reverse?access_key=${import.meta.env.POSITIONSTACK_API_KEY}&query=${lat},${lon}&limit=1`)
+  return fetch(`http://api.positionstack.com/v1/reverse?access_key=${import.meta.env.VITE_GEO_API_KEY}&query=${lat},${lon}&limit=1`)
     .then(res => res.json()
       .catch(() => Promise.reject(null))
     )

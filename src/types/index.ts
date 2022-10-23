@@ -1,3 +1,34 @@
+//░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+//░░░░░░░░░░░░░░░▓████████▓░░░░░░░░░░░░░░░░
+//░░░░░░░░░░░░░░▒█████████▓▒░░░░░░░░░░░░░░░
+//░░░░░░░░░░░░░░░▓██▓▓▓▓▓▓███░░░░░░░░░░░░░░
+//░░░░░░░░░░░░░░░▓██▓▓▓▓▓▓▓██▓░░░░░░░░░░░░░
+//░░░░░░░░░░░░░░░░▓█▓▓▓▓▓▓▓▓█▓░░░░░░░░░░░░░
+//░░░░░░░░░░░░░░░░▓█▓▓▓▓▓▓▓▓█▓▒░░░░░░░░░░░░
+//░░░░░░░░░░░░░░░▓██▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░
+//░░░░░░░░░░░▒▓▓█████▓▓▓▓▓▓▓▓██▓░░░░░░░░░░░
+//░░░░░░░░░▓█████████▓▓▓▓▓▓▓▓███▓▒░░░░░░░░░
+//░░░░░░░░▓███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▓░░░░░░░░
+//░░░░░░▒████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███▓░░░░░░░
+//░░░░░░▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓░░░░░░
+//░░░░░░▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓░░░░░░
+//░░░░░░███▓▓▓█████▓▓▓▓▓▓▓█████▓▓▓██▓░░░░░░
+//░░░░░░████▓█▓░░▒▓▓▓▓█▓██▓░░▒▓█▓███▓░░░░░░
+//░░░░░▒█████▓░░░░▒▓█████▓░░░░▒▓█████▒░░░░░
+//░░░░▓████▓▒░░▒█░░░▓███▒░░█▒░░░▓█████▓░░░░
+//░░▒▓███▓▓▓░░░██▒░░▒▓█▓░░░██▒░░░▓▓▓███▓▒░░
+//░▓████▓▓▓▓▓░░░░░░░▓▓▓▓▒░░░░░░░▓▓▓▓▓████░░
+//░███▓▓▓▓▓▓▓▓▒░░░▓▓▓▓▓▓▓▓▒░░░▓▓▓▓▓▓▓▓▓██▓░
+//░███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓░
+//░███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓░
+//░███▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░▓▓▓▓▓▓██▓░
+//░███▓▓▓▓▓▓▓▓░░▓▓▓▓▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓░
+//░█████▓▓▓▓▓▓░░▓▓▓▓▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓███▒░
+//░▒█████▓▓▓▓▓▓░░░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓████░░░
+//░░░▓████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▒░░░
+//░░░░▒▓█████████████████████████████▓▒░░░░
+//░░░░░▒▓███████████████████████████▓░░░░░░
+
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
 type ListingCategory = "NeighborHelp" | "Happening" | "Charity" | "MassEvent";
 
@@ -11,6 +42,7 @@ enum ContactMethod {
 interface Store {
   authenticated: boolean;
   userGeoData: GeoData | null;
+  pointres: NewMarker | null;
   addressBarEnabled: boolean;
   addressGeocodingState: AddressGeocodingState;
   userLocalization: Localization | null;
@@ -22,8 +54,23 @@ interface Store {
 interface ButtonProps {
   caption: string;
   action: () => void;
+  disabledAction?: () => void;
   icon: string;
   enabled?: boolean;
+}
+
+// Form radio format
+interface FormRadioProps {
+  name: string;
+  label: string;
+  selected: boolean;
+}
+
+// Account sidebar item props format
+interface AccountSidebarItemProps {
+  name: string;
+  label: string;
+  action: () => void;
 }
 
 // Login data format
@@ -112,7 +159,6 @@ interface MarkerDetails {
 
 // New marker format
 interface NewMarker {
-  userID: number;
   latitude: number;
   longitude: number;
   title: string;
@@ -158,7 +204,7 @@ interface GeoData {
   longitude: string;
   street?: string | null;
   city?: string | null;
-  number?: string |null;
+  number?: string | null;
 }
 
 interface Pointer {
@@ -212,6 +258,8 @@ interface FilteredMarkersData {
 
 export type {
   ButtonProps,
+  FormRadioProps,
+  AccountSidebarItemProps,
   Store,
   AddressGeocodingState,
   UserAccountData,
@@ -233,7 +281,8 @@ export type {
   Localization,
   AuthContext,
   MarkerCategory,
-  FilteredMarkersData
+  FilteredMarkersData,
+  Localization
 };
 export {
   Sex,

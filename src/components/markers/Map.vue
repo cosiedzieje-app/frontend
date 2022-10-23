@@ -32,8 +32,9 @@
   import { ref } from 'vue';
   import Pointer from './CustomPointer.vue';
   import type { Ref } from 'vue';
-  import type { Pointer as IPointer, PointerProps } from '@/types';
+  import type { Pointer as IPointer, PointerProps, Marker } from '@/types';
   import { convertLen } from '@/views/markers/ConvertLenght';
+  import { getMarkers } from '@/api/backend';
   import type {ListingCategory} from '@/types';
   import { watch } from 'vue';
   import useStore from '@/store';
@@ -52,8 +53,7 @@
   const center = ref(centerConverted);
 
 
-
-  store.$subscribe((mutation, state) => {
+  store.$subscribe(async(mutation, state) => {
     if(state.userGeoData != null) {
       center.value = convertLen(state.userGeoData.longitude, state.userGeoData.latitude);
       
@@ -64,6 +64,12 @@
       }else{
         zoom.value = 10;
       }
+
+      await showMarkers();
+    }
+
+    if(state.pointres != null) {
+      await showMarkers();
     }
   });
 
@@ -77,6 +83,23 @@
 
   function changeLocated() {
     located.value= !located.value; 
+  }
+
+  async function showMarkers(){
+    let markers:Marker[] = await getMarkers()
+      console.log(markers)
+      markers.forEach(marker => {
+        console.log(marker)
+        let pointer: PointerProps = 
+        {
+        category: marker.type,
+        caption: marker.title,
+        position: [`${marker.longitude}`, `${marker.latitude}`]
+        }
+        if(!todos.value.includes({id: marker.id, props: pointer})){
+        todos.value.push({id: marker.id, props: pointer})}
+      });
+
   }
 
   const todos: Ref<IPointer[]> = ref([]);

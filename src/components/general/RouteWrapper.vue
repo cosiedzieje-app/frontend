@@ -1,5 +1,6 @@
 <template>
   <div 
+    ref="wrapper"
     class="h-full w-full"
     :class="{
       'overflow-auto': props.scrollable
@@ -10,11 +11,20 @@
 </template>
 
 <script setup lang="ts">
-  interface Props {
-    scrollable?: boolean; 
-  }
+import { ref, defineExpose } from "vue";
+import type { Ref } from "vue";
 
-  const props = withDefaults(defineProps<Props>(), {
-    scrollable: false
-  });
+interface Props {
+  scrollable?: boolean; 
+}
+
+const wrapper: Ref<HTMLDivElement | null> = ref(null);
+
+const props = withDefaults(defineProps<Props>(), {
+  scrollable: false
+});
+
+defineExpose({
+  wrapper
+});
 </script>

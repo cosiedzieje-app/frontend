@@ -27,11 +27,6 @@ const baseNavbarItems: ButtonProps[] = [
     action: () => router.push("/markers"),
     icon: "fa-solid fa-location-dot"
   },
-  {
-    caption: "Załóż konto",
-    action: () => router.push("/account/register"),
-    icon: ""
-  }
 ];
 
 const navbarItems: Ref<ButtonProps[]> = ref([]);
@@ -44,10 +39,22 @@ onMounted(() => {
         caption: "Dodaj ogłoszenie",
         action: () => router.push({ name: 'markersAdd' }),
         icon: "fa-solid fa-map-pin"
+      },
+      {
+        caption: "Wyloguj się",
+        action: () => router.replace({ name: "accountLogout" }),
+        icon: "fa-solid fa-key"
       }
     ]; 
   } else {
-    navbarItems.value = [ ...baseNavbarItems ];
+    navbarItems.value = [ 
+      ...baseNavbarItems, 
+      {
+        caption: "Załóż konto",
+        action: () => router.push("/account/register"),
+        icon: ""
+      }
+    ];
   }
 });
 
@@ -59,10 +66,22 @@ store.$subscribe((mutation, state) => {
         caption: "Dodaj ogłoszenie",
         action: () => router.push({ name: 'markersAdd' }),
         icon: "fa-solid fa-map-pin"
+      },
+      {
+        caption: "Wyloguj się",
+        action: () => router.replace({ name: "accountLogout" }),
+        icon: "fa-solid fa-key"
       }
     ]; 
   } else {
-    navbarItems.value = [ ...baseNavbarItems ];
+    navbarItems.value = [ 
+      ...baseNavbarItems,
+      {
+        caption: "Załóż konto",
+        action: () => router.push("/account/register"),
+        icon: ""
+      }
+    ];
   }
 });
 </script>

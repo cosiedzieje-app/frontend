@@ -11,6 +11,10 @@
             <div v-else-if="props.category == 'Happening'" class="overlay-content flex justify-center items-center rounded-full bg-violet-600 h-[30px] w-[30px]">
                 <font-awesome-icon  class="h-[20px] w-[20px] cursor-pointer " icon="fa-solid fa-hand-point-up"/>
             </div>
+
+            <div v-else-if="props.category == 'MassEvent'" class="overlay-content flex justify-center items-center rounded-full bg-yellow-700 h-[30px] w-[30px]">
+                <font-awesome-icon  class="h-[20px] w-[20px] cursor-pointer " icon="fa-solid fa-star"/>
+            </div>
     </ol-overlay>
 </template>
   

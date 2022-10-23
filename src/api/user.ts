@@ -120,7 +120,7 @@ async function getUserData(): Promise<UserData> {
         const d = data.res as Record<string, any>;
 
         return {
-          loginName: d["login_name"],
+          loginName: d["username"],
           name: d["name"],
           surname: d["surname"],
           email: d["email"],
@@ -160,8 +160,6 @@ async function isLoggedIn(): Promise<void> {
     .then((res: SomsiadStatus) => {
       if(res.status === "error")
         return Promise.reject(res);
-      else
-        return Promise.resolve();
     });
 }
 
