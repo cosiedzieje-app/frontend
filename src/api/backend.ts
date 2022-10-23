@@ -11,7 +11,7 @@ import type {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function getMarkers(): Promise<Marker[]> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers`, {
+  return fetch(`/api/markers`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -35,7 +35,7 @@ async function getMarkers(): Promise<Marker[]> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
  async function getMarkersByCity(city: string): Promise<Marker[]> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${city}`, {
+  return fetch(`/api/markers/${city}`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -59,7 +59,7 @@ async function getMarkers(): Promise<Marker[]> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
  async function getMarkersWithinDistance(lat: number, long: number, dist: string): Promise<Marker[]> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers?lat=${lat}&long=${long}&dist=${dist}`, {
+  return fetch(`/api/markers?lat=${lat}&long=${long}&dist=${dist}`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -83,7 +83,7 @@ async function getMarkers(): Promise<Marker[]> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function getUserMarkers(): Promise<Marker[]> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/user_markers`, {
+  return fetch(`/api/user_markers`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -112,7 +112,7 @@ async function getUserMarkers(): Promise<Marker[]> {
  * error
  */
 async function getMarkerById(id: number): Promise<Marker> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${id}`, {
+  return fetch(`/api/markers/${id}`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -137,7 +137,7 @@ async function getMarkerById(id: number): Promise<Marker> {
  * @throws SomsiadStatus on API error, null on fetch error 
  */
 async function addMarker(markerData: NewMarker): Promise<void> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers`, {
+  return fetch(`/api/markers`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -164,7 +164,7 @@ async function addMarker(markerData: NewMarker): Promise<void> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function deleteMarker(id: number): Promise<Marker> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${id}`, {
+  return fetch(`/api/markers/${id}`, {
     method: "DELETE",
     headers: {
       Accept: "application/json"
