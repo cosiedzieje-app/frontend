@@ -98,7 +98,7 @@ import RouteWrapper from "@/components/general/RouteWrapper.vue";
 import AccountMarker from "@/components/account/AccountMarker.vue";
 import type { Ref } from "vue";
 import { ref, onMounted, nextTick } from "vue";
-import { getMarkers } from "@/api/backend";
+import { getUserMarkers } from "@/api/backend";
 import type { Marker, SomsiadStatus } from "@/types";
 
 interface MarkerDeletionState {
@@ -223,7 +223,7 @@ function onMarkerDeleteError(marker: Marker, error: SomsiadStatus | null) {
 
 onMounted(() => {
   markersFetchState.value = "pending";
-  getMarkers()
+  getUserMarkers()
     .then(data => {
       markers.value = data;    
       markersFetchState.value = "success";
