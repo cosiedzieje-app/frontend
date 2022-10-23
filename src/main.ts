@@ -37,6 +37,8 @@ import {
   faAddressBook,
   faGenderless,
   faTrash,
+  faChevronLeft,
+  faChevronRight,
   faCalendarDays
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -71,6 +73,8 @@ library.add(
   faAddressBook,
   faGenderless,
   faTrash,
+  faChevronLeft,
+  faChevronRight,
   faCalendarDays
 );
 
