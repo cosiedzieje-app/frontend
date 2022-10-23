@@ -23,6 +23,7 @@
 import type {  GeoData, Marker } from '@/types';
 import useStore from '@/store';
 import { useRouter } from 'vue-router';
+import { convertLen } from '@/views/markers/ConvertLenght';
 
 const store = useStore();
 const router = useRouter();
@@ -33,9 +34,10 @@ interface Props {
 const props = defineProps<Props>();
 
 async function markerClicked() {
+    let position = convertLen(props.marker.latitude, props.marker.longitude)
     const newLocalization: GeoData = {
-        latitude: `${props.marker.latitude}`,
-        longitude: `${props.marker.longitude}`,
+        latitude: `${position[1]}`,
+        longitude: `${position[0]}`,
         city: props.marker.address.city,
         street: props.marker.address.street,
         number: props.marker.address.number
