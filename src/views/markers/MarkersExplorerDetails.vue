@@ -16,6 +16,16 @@
         <h1 class="font-bold text-2xl">{{ marker.title }}</h1>
         <p class="my-3 text-lg text-justify">{{ marker.description }}</p>
         <div>
+          <div v-if="marker.startTime || marker.endTime">
+            <p v-if="marker.startTime">
+              <font-awesome-icon icon="fa-regular fa-calendar-days" />
+              Data początkowa: {{ marker.startTime }}
+            </p>
+            <p v-if="marker.endTime">
+              <font-awesome-icon icon="fa-regular fa-calendar-days" />
+              Data końcowa: {{ marker.endTime }}
+            </p>
+          </div>
           <p>
             <font-awesome-icon icon="fa-solid fa-address-book" />
             Kontakt: 

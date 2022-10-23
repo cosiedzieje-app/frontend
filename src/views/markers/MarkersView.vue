@@ -49,7 +49,7 @@ const store = useStore();
 
 const adressBarData = ref({
   address: "",
-  distance: "5"
+  distance: "0"
 });
 
 const onAddressEnter = async () => {

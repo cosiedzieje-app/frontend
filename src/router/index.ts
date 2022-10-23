@@ -108,13 +108,12 @@ const router = createRouter({
           name: 'markersExplore',
           component: MarkersExplorer,
           beforeEnter: [ checkExploredMarkers ],
-          children: [
-            {
-              path: 'details',
-              name: 'markersExploreDetails',
-              component: MarkersExplorerDetails,
-            }
-          ]
+        },
+        {
+          path: 'explorer/details',
+          name: 'markersExploreDetails',
+          component: MarkersExplorerDetails,
+          beforeEnter: [ checkExploredMarkers ],
         },
         {
           path: ':pathMatch(.*)*',

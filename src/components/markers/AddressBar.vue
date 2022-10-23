@@ -18,7 +18,7 @@
       :enabled="enabled"
       required
     >
-      <option value="0">0 km</option>
+      <option value="0">Miejscowość</option>
       <option value="1">1 km</option>
       <option value="1">2 km</option>
       <option value="3">3 km</option>
@@ -54,7 +54,7 @@ const props = defineProps<Props>();
 const emit = defineEmits(['update:modelValue', 'enter']);
 const onEnter = () => emit('enter');
 
-const placeholder = ref('Twój adres');
+const placeholder = ref('Nazwa miejscowości');
 const autocomplete = ref('street-address');
 const onChange = () => {
   if(props.modelValue.distance === '0') {
