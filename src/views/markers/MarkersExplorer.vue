@@ -7,12 +7,12 @@
             v-for="markersData in filteredMarkers" 
             class="h-[25%] w-full flex flex-col items-center text-white px-8 my-6 text-xl"
           >
-              <h2 class="`w-full text-left my-2 font-bold`"
+              <h2 class="w-full text-left my-2 font-bold"
               :class="{
-                  'bg-green-400': markersData.type === 'NeighborHelp',
-                  'bg-red-400': markersData.type === 'Charity',
-                  'bg-yellow-400': markersData.type === 'MassEvent',
-                  'bg-violet-400': markersData.type === 'Happening'
+                  'text-green-400': markersData.type === 'NeighborHelp',
+                  'text-red-400': markersData.type === 'Charity',
+                  'text-yellow-400': markersData.type === 'MassEvent',
+                  'text-violet-400': markersData.type === 'Happening'
               }"> 
                   <font-awesome-icon class="mr-1" :icon="markersData.data.icon" />
                   {{ markersData.data.name }} 
