@@ -104,18 +104,19 @@ interface ContactInfo {
 }
 
 // Marker format
-interface Marker {
-  id: number;
-  userID: number;
-  latitude: number;
-  longitude: number;
-  title: string;
-  type: ListingCategory;
-  address: Address;
-}
+//interface Marker {
+//  id: number;
+//  userID: number;
+//  latitude: number;
+//  longitude: number;
+//  title: string;
+//  type: ListingCategory;
+//  address: Address;
+//}
 
-// Marker details format
-interface MarkerDetails {
+//// Marker details format
+// Marker format
+interface Marker {
   id: number;
   userID: number;
   latitude: number;
@@ -123,6 +124,7 @@ interface MarkerDetails {
   title: string;
   description: string;
   addTime: string;
+  startTime?: string;
   endTime?: string;
   address: Address;
   contactInfo: ContactInfo;
@@ -240,7 +242,7 @@ export type {
   NewAccount,
   ContactInfo,
   Marker,
-  MarkerDetails,
+  //MarkerDetails,
   NewMarker,
   GeolocationData,
   GeoData,

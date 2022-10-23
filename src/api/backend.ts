@@ -1,6 +1,5 @@
 import type { 
   Marker, 
-  MarkerDetails, 
   NewMarker,
   SomsiadStatus, 
 } from '@/types';
@@ -83,7 +82,7 @@ async function getMarkers(): Promise<Marker[]> {
  * @returns list of markers' details
  * @throws SomsiadStatus on API error, null on fetch error
  */
-async function getUserMarkers(): Promise<MarkerDetails[]> {
+async function getUserMarkers(): Promise<Marker[]> {
   return fetch(`${import.meta.env.VITE_BACKEND_URL}/user_markers`, {
     method: "GET",
     headers: {
@@ -108,11 +107,11 @@ async function getUserMarkers(): Promise<MarkerDetails[]> {
  * Get details of marker
  * 
  * @param id Marker id
- * @returns MarkerDetails 
+ * @returns Marker
  * @throws SomsiadStatus on API error, null on fetch
  * error
  */
-async function getMarkerDetails(id: number) {
+async function getMarkerById(id: number): Promise<Marker> {
   return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${id}`, {
     method: "GET",
     headers: {
@@ -125,7 +124,7 @@ async function getMarkerDetails(id: number) {
     )
     .then((data: SomsiadStatus) => {
       if(data.status === 'ok')
-        return (data.res as MarkerDetails);
+        return (data.res as Marker);
       else
         return Promise.reject(data);
     });
@@ -161,10 +160,10 @@ async function addMarker(markerData: NewMarker): Promise<void> {
  * Deletes marker from database if current user has added it
  *
  * @param id {number} ID of marker that's being deleted
- * @returns {MarkerDetails} Details of marker that has been deleted
+ * @returns {Marker} Details of marker that has been deleted
  * @throws SomsiadStatus on API error, null on fetch error
  */
-async function deleteMarker(id: number): Promise<MarkerDetails> {
+async function deleteMarker(id: number): Promise<Marker> {
   return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${id}`, {
     method: "DELETE",
     headers: {
@@ -178,7 +177,7 @@ async function deleteMarker(id: number): Promise<MarkerDetails> {
     )
     .then((data: SomsiadStatus) => {
       if(data.status === 'ok')
-        return (data.res as MarkerDetails);
+        return (data.res as Marker);
       else
         return Promise.reject(data);
     });
@@ -187,7 +186,7 @@ async function deleteMarker(id: number): Promise<MarkerDetails> {
 export {
   getMarkers,
   getUserMarkers,
-  getMarkerDetails,
+  getMarkerById,
   getMarkersByCity,
   getMarkersWithinDistance,
   addMarker,
