@@ -22,6 +22,8 @@
     import type { PointerProps } from "@/types";
     import useStore from '@/store';
     import { useRouter } from 'vue-router';
+    import type {GeoData} from '@/types/index';
+    import { convertLen } from "@/views/markers/ConvertLenght";
 
     const router = useRouter();
     const store = useStore();
@@ -34,7 +36,17 @@
     const defProps = defineProps<Props>();
 
     function showDetails() {
+        const newLocalization: GeoData = {
+            latitude: `${defProps.props.position[1]}`,
+            longitude: `${defProps.props.position[0]}`,
+            city: defProps.props.marker.address.street,
+            street: defProps.props.marker.address.street,
+            number: defProps.props.marker.address.number
+        };
+        
+        store.setUserGeoData(newLocalization);
         router.push(`/markers/explorer/details`);
         store.setCurrentlyExploredMarker(defProps.props.marker);
+
     }
 </script>
