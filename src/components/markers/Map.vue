@@ -21,7 +21,7 @@
       </ul>
     </ol-map>
 
-    <button @click="changeLocated" class="fixed z-10 text-xl p-3 mb-7 mr-7 rounded-md bg-green">
+    <button @click="changeLocated" class="fixed z-10 text-xl p-3 mb-7 mr-7 rounded-md transition-colors bg-main hover:bg-main-light">
       <font-awesome-icon class="h-[20px] w-[20px]" icon="fa-solid fa-location-crosshairs" />
       Zlokalizuj mnie
     </button>

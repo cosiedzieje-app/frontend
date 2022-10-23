@@ -5,7 +5,7 @@
     :class="{
       'bg-main': props.enabled !== false,
       'hover:bg-main-light': props.enabled !== false,
-      'bg-green': props.enabled === false,
+      'bg-main-dark': props.enabled === false,
     }"
     type="button"
     autocomplete="off"
