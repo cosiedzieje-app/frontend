@@ -34,6 +34,7 @@ import {
   faFaceFrown,
   faMagnifyingGlass,
   faCircleQuestion,
+  faAddressBook,
   faGenderless
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -65,6 +66,7 @@ library.add(
   faFaceFrown,
   faMagnifyingGlass,
   faCircleQuestion,
+  faAddressBook,
   faGenderless
 );
 
