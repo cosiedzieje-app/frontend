@@ -51,6 +51,8 @@
   const map = ref();
   let centerConverted = convertLen(19.37775993347168,52.147850036621094)
   const center = ref(centerConverted);
+  
+  const todos: Ref<IPointer[]> = ref([]);
 
   store.$subscribe(async(mutation, state) => {
     todos.value = []
@@ -85,13 +87,14 @@
   }
 
   function showMarkers(){
-    let markers = store.exploredMarkers
+    let markers = store.exploredMarkers as Marker[]
     console.log(markers)
     markers.forEach(marker => {
+      let position = convertLen(marker.longitude, marker.latitude)
       let mark: PointerProps = {
         category: marker.type,
         caption: marker.title,
-        position: [`${marker.longitude}`, `${marker.latitude}`]
+        position: [`${position[0]}`, `${position[1]}`]
       }
 
       if(!todos.value.includes({id: marker.id, props: mark})) {
@@ -100,7 +103,6 @@
     });
   }
 
-  const todos: Ref<IPointer[]> = ref([]);
 
 
 

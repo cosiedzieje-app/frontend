@@ -364,7 +364,6 @@ async function submitMarker() {
   let adresL: any;
 
   adresL = await geocodeFromAddress(`${address.street} ${address.number} ${address.city}`);
-  let position:any = convertLen(adresL.longitude, adresL.latitude);
   console.log(adresL)
   const adres: Address = {
     city: adresL.locality,
@@ -373,8 +372,8 @@ async function submitMarker() {
   }
   
   const markerData: NewMarker ={
-    latitude: position[1],
-    longitude: position[0],
+    latitude: adresL.longitude,
+    longitude: adresL.latitude,
     title: title.value,
     description: description.value,
     type: listCategory.value,
