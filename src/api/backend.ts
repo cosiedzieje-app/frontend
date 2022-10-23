@@ -36,7 +36,7 @@ async function getMarkers(): Promise<Marker[]> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
  async function getMarkersByCity(city: string): Promise<Marker[]> {
-  return fetch(`${import.meta.env.BACKEND_URL}/markers/${city}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${city}`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -60,7 +60,7 @@ async function getMarkers(): Promise<Marker[]> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
  async function getMarkersWithinDistance(lat: number, long: number, dist: string): Promise<Marker[]> {
-  return fetch(`${import.meta.env.BACKEND_URL}/markers?lat=${lat}&long=${long}&dist=${dist}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers?lat=${lat}&long=${long}&dist=${dist}`, {
     method: "GET",
     headers: {
       Accept: "application/json"

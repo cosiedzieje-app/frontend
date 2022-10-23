@@ -61,7 +61,24 @@ const onAddressEnter = async () => {
   console.log(adressBarData.value.distance, adressBarData.value.address);
   if(adressBarData.value.distance === '0') {
     markers = await getMarkersByCity(adressBarData.value.address);
-  } else {
+    const adresL = await geocodeFromAddress(adressBarData.value.address);
+    if(!adresL) {
+      store.setAddressGeocodingState("error");
+      store.toggleAddressBar(true);
+      return;
+    }
+
+    const newLocalization: GeoData = {
+      latitude: adresL.latitude.toString(),
+      longitude: adresL.longitude.toString(),
+      city: adresL.locality,
+      street: adresL.street,
+      number: adresL.number
+    }
+
+    store.setUserGeoData(newLocalization);
+
+  } else { 
     const adresL = await geocodeFromAddress(adressBarData.value.address);
     if(!adresL) {
       store.setAddressGeocodingState("error");
@@ -86,7 +103,15 @@ const onAddressEnter = async () => {
     store.setUserGeoData(newLocalization);
   }
 
-  store.setExploredMarkers(markers);
+  console.log(markers)
+  const newMarkers = markers.map(m => {
+  return {...m, address: {
+    city: 'Sosnowiec',
+    street: 'Kwiatowa',
+    number: '1',
+  }};
+});
+  store.setExploredMarkers(newMarkers);
   store.setAddressGeocodingState("success");
   store.toggleAddressBar(true);
   router.push('/markers/explorer');
