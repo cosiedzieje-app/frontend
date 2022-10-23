@@ -15,7 +15,7 @@
             </div>
             <h3 class="title pb-1 font-bold whitespace-normal">{{ title }}</h3>
         </div>
-        <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie" @click="markerClicked"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ address.city }}, ul. {{ address.street }} {{ address.number }}</span>
+        <span class="text-xs cursor-pointer hover:underline" title="Pokaż na mapie" @click.stop="markerClicked"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ address.city }}, ul. {{ address.street }} {{ address.number }}</span>
     </div>
 </template>
 
