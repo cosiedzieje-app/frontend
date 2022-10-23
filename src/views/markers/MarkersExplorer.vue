@@ -7,16 +7,8 @@
             </h2>
             <div v-if="markersData.markers.length !== 0" class="ml-2 w-full overflow-x-auto text-clip whitespace-nowrap" v-dragscroll>
                 <MarkerExplorerBlock 
-                    :customCSS="`bg-${markersData.data.darkColor}`"
                     v-for="marker in markersData.markers"
-
-                    :marker-id="marker.id"
-                    :title="marker.title"
-                    :address="marker.address"
-                    :author-id="marker.userID"
-                    :latitude="marker.latitude"
-                    :longitude="marker.longitude"
-                    :type="markersData.type"
+                    :marker="marker"
                 />
             </div>
             <div v-else>
@@ -37,12 +29,14 @@ const store = useStore();
 const allMarkers = store.getExploredMarkers;
 
 const filteredMarkers: FilteredMarkersData[] = [];
-Object.entries(markersCategories).forEach(([categoryName, data]) => {
-    let categoryName1 = categoryName as ListingCategory;
-    filteredMarkers.push({
-        data,
-        type: categoryName1,
-        markers: allMarkers.filter(m => m.type === categoryName)
+if(allMarkers) {
+    Object.entries(markersCategories).forEach(([categoryRawName, data]) => {
+        const categoryName = categoryRawName as ListingCategory;
+        filteredMarkers.push({
+            data,
+            type: categoryName,
+            markers: allMarkers.filter(m => m.type === categoryName)
+        });
     });
-});
+}
 </script>

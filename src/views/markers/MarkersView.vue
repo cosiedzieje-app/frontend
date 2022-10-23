@@ -53,67 +53,40 @@ const adressBarData = ref({
 });
 
 const onAddressEnter = async () => {
-  console.log(adressBarData);
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
 
   let markers: Marker[];
-  console.log(adressBarData.value.distance, adressBarData.value.address);
+
+  const adresL = await geocodeFromAddress(adressBarData.value.address);
+  if(!adresL) {
+    store.setAddressGeocodingState("error");
+    store.toggleAddressBar(true);
+    return;
+  }
+
+  const newLocalization: GeoData = {
+    latitude: adresL.latitude.toString(),
+    longitude: adresL.longitude.toString(),
+    city: adresL.locality,
+    street: adresL.street,
+    number: adresL.number
+  }
+
   if(adressBarData.value.distance === '0') {
     markers = await getMarkersByCity(adressBarData.value.address);
-    const adresL = await geocodeFromAddress(adressBarData.value.address);
-    if(!adresL) {
-      store.setAddressGeocodingState("error");
-      store.toggleAddressBar(true);
-      return;
-    }
-
-    const newLocalization: GeoData = {
-      latitude: adresL.latitude.toString(),
-      longitude: adresL.longitude.toString(),
-      city: adresL.locality,
-      street: adresL.street,
-      number: adresL.number
-    }
-
-    store.setUserGeoData(newLocalization);
-
   } else { 
-    const adresL = await geocodeFromAddress(adressBarData.value.address);
-    if(!adresL) {
-      store.setAddressGeocodingState("error");
-      store.toggleAddressBar(true);
-      return;
-    }
-
     markers = await getMarkersWithinDistance(
       adresL.latitude,
       adresL.longitude,
       adressBarData.value.distance
     );
-
-    const newLocalization: GeoData = {
-      latitude: adresL.latitude.toString(),
-      longitude: adresL.longitude.toString(),
-      city: adresL.locality,
-      street: adresL.street,
-      number: adresL.number
-    }
-
-    store.setUserGeoData(newLocalization);
   }
 
-  console.log(markers)
-  const newMarkers = markers.map(m => {
-  return {...m, address: {
-    city: 'Sosnowiec',
-    street: 'Kwiatowa',
-    number: '1',
-  }};
-});
-  store.setExploredMarkers(newMarkers);
+  store.setExploredMarkers(markers);
   store.setAddressGeocodingState("success");
   store.toggleAddressBar(true);
   router.push('/markers/explorer');
+  store.setUserGeoData(newLocalization);
 };
 </script>

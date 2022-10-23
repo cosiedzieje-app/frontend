@@ -65,6 +65,15 @@ function authRedirect(to: RouteLocationNormalized) {
   }
 }
 
+function checkExploredMarkers() {
+  const store = useStore();
+  if(!store.exploredMarkers) {
+    return { 
+      name: 'markers',
+    };
+  }
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -97,12 +106,15 @@ const router = createRouter({
         {
           path: 'explorer',
           name: 'markersExplore',
-          component: MarkersExplorer
-        },
-        {
-          path: 'explorer/:id',
-          name: 'markersExploreDetails',
-          component: MarkersExplorerDetails
+          component: MarkersExplorer,
+          beforeEnter: [ checkExploredMarkers ],
+          children: [
+            {
+              path: 'details',
+              name: 'markersExploreDetails',
+              component: MarkersExplorerDetails,
+            }
+          ]
         },
         {
           path: ':pathMatch(.*)*',
