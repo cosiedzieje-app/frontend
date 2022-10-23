@@ -1,5 +1,5 @@
 <template>
-    <div @click="showDetails" class="mr-4 p-4 w-[250px] inline-flex flex-col justify-between rounded max-w-md hover:cursor-pointer" 
+    <div @click="showDetails" class="marker-explorer-block mr-4 p-4 w-[250px] inline-flex flex-col justify-between rounded max-w-md hover:cursor-pointer" 
     :class="{
         'bg-green-700': marker.type === 'NeighborHelp',
         'bg-red-700': marker.type === 'Charity',

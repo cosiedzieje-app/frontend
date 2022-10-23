@@ -7,7 +7,7 @@
       <span
         class="text-gray-light text-xl mt-2"
       >
-        {{ `${marker.latitude}, ${marker.longitude}` }}
+        {{ marker.latitude }},&nbsp;&nbsp;{{marker.longitude}}
       </span>
     </section>
     <section class="my-4 w-full flex flex-col justify-center items-center text-white text-center text-2xl">

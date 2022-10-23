@@ -1,19 +1,33 @@
 <template>
     <RouteWrapper :scrollable="true">
-        <div v-for="markersData in filteredMarkers" class="text-white mx-8 my-6 text-xl">
-            <h2 :class="`my-2 font-bold ${markersData.data.lightColor}`"> 
-                <font-awesome-icon class="mr-1" :icon="markersData.data.icon" />
-                {{ markersData.data.name }} 
-            </h2>
-            <div v-if="markersData.markers.length !== 0" class="ml-2 w-full overflow-x-auto text-clip whitespace-nowrap" v-dragscroll>
-                <MarkerExplorerBlock 
-                    v-for="marker in markersData.markers"
-                    :marker="marker"
-                />
-            </div>
-            <div v-else>
-                <span class="text-gray-lighter m-4">brak</span>
-            </div>
+        <div
+          class="w-full min-h-full flex flex-col items-center"
+        >
+          <div
+            v-for="markersData in filteredMarkers" 
+            class="h-[25%] w-full flex flex-col items-center text-white px-8 my-6 text-xl"
+          >
+              <h2 :class="`w-full text-left my-2 font-bold ${markersData.data.lightColor}`"> 
+                  <font-awesome-icon class="mr-1" :icon="markersData.data.icon" />
+                  {{ markersData.data.name }} 
+              </h2>
+              <div
+                class="marker-explorer-scrollable h-full w-full overflow-x-auto ml-2"
+              >
+                <div 
+                  v-if="markersData.markers.length !== 0" 
+                  class="marker-explorer-block-wrapper min-w-full w-fit flex flex-row items-center" 
+                >
+                    <MarkerExplorerBlock 
+                        v-for="marker in markersData.markers"
+                        :marker="marker"
+                    />
+                </div>
+                <div v-else>
+                    <span class="text-gray-lighter m-4">brak</span>
+                </div>
+              </div>
+          </div>
         </div>
     </RouteWrapper>
 </template>
@@ -24,6 +38,7 @@ import MarkerExplorerBlock from '@/components/markers/MarkerExplorerBlock.vue';
 import useStore from "@/store";
 import type { FilteredMarkersData, ListingCategory } from "@/types";
 import markersCategories from "./MarkersCategories";
+import { ref, type Ref } from 'vue';
 
 const store = useStore();
 const allMarkers = store.getExploredMarkers;
