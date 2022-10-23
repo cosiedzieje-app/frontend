@@ -36,7 +36,8 @@ import {
   faCircleQuestion,
   faAddressBook,
   faGenderless,
-  faTrash
+  faTrash,
+  faCalendarDays
 } from "@fortawesome/free-solid-svg-icons";
 
 import './styles/index.scss';
@@ -69,7 +70,8 @@ library.add(
   faCircleQuestion,
   faAddressBook,
   faGenderless,
-  faTrash
+  faTrash,
+  faCalendarDays
 );
 
 const pinia = createPinia();

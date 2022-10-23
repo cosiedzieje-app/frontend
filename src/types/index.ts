@@ -133,8 +133,8 @@ interface Marker {
   title: string;
   description: string;
   addTime: string;
-  startTime: string | null;
-  endTime: string | null;
+  startTime: number | null;
+  endTime: number | null;
   address: Address;
   contactInfo: ContactInfo;
   type: ListingCategory;
@@ -147,6 +147,7 @@ interface NewMarker {
   title: string;
   description: string;
   type: ListingCategory;
+  startTime?: number;
   endTime?: number;
   address: Address;
   contactInfo: ContactInfo;

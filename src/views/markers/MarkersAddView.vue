@@ -105,6 +105,33 @@
           />
         </article>
       </section>
+      <section class="w-full flex flex-col items-center px-4 my-6" v-if="listCategory != 'NeighborHelp'">
+        <h2 class="w-full text-center text-white text-2xl pb-4">
+          Długość trwania ogłoszenia (opcjonalne)
+        </h2>
+        <article class="w-[75%] flex flex-col">
+          <FormInput 
+            :enabled="true"
+            type="datetime-local"
+            name="dateStart"
+            label-content="Data początkowa"
+            v-model="startTime"
+            class="my-2"
+            autocomplete="given-name"
+            @update="onInputUpdate"
+          />
+          <FormInput 
+            :enabled="true"
+            type="datetime-local"
+            name="dateEnd"
+            label-content="Data końcowa"
+            v-model="endTime"
+            class="my-2"
+            autocomplete="family-name"
+            @update="onInputUpdate"
+          />
+        </article>
+      </section>
       <section class="w-full flex flex-col items-center px-4 my-6">
         <h2 class="w-full text-center text-white text-2xl pb-4">
           Dane kontaktowe
@@ -227,6 +254,9 @@ let id= 0;
 const routewrapper: Ref<InstanceType<typeof RouteWrapper> | null> = ref(null);
 const unlockNotices: Ref<boolean> = ref(false);
 const store = useStore();
+const startTime: Ref<any> = ref();
+const endTime: Ref<any> = ref();
+
 const title: Ref<string> = ref("");
 const description: Ref<string> = ref("");
 const address: Address = reactive({
@@ -382,6 +412,9 @@ async function submitMarker() {
     }
   };
 
+  let start = Math.round((new Date(startTime.value.replace('T', " ")).getTime()) / 1000)
+  let end =  Math.round((new Date(endTime.value.replace('T', " ")).getTime()) / 1000)
+
   const markerData: NewMarker ={
     latitude: adresL.longitude,
     longitude: adresL.latitude,
@@ -389,6 +422,8 @@ async function submitMarker() {
     description: description.value,
     type: listCategory.value,
     address: address,
+    startTime: start,
+    endTime: end,
     contactInfo: contactInfo
   }
   //console.log(adres);
