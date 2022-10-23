@@ -77,10 +77,11 @@ const onAddressEnter = async () => {
     markers = await getMarkersByCity(adressBarData.value.address);
   } else { 
     markers = await getMarkersWithinDistance(
-      adresL.latitude,
       adresL.longitude,
+      adresL.latitude,
       adressBarData.value.distance
     );
+    console.log()
   }
 
   store.setExploredMarkers(markers);

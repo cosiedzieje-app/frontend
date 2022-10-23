@@ -297,6 +297,7 @@ async function sendForm() {
               store.clearUserData();
               store.setAuthenticated(false);
               registerState.value = "success";
+
             })
           )
         )
