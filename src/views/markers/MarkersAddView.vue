@@ -98,7 +98,7 @@
             :enabled="true"
             type="text"
             name="city"
-            label-content="Miasto"
+            label-content="Miejscowość"
             v-model="address.city"
             class="my-2"
             @update="onInputUpdate"
@@ -200,15 +200,6 @@
           <FormInput 
             :enabled="true"
             type="text"
-            name="city"
-            label-content="Miasto"
-            v-model="contactAddress.city"
-            class="my-2"
-            @update="onInputUpdate"
-          />
-          <FormInput 
-            :enabled="true"
-            type="text"
             name="street"
             label-content="Ulica"
             v-model="contactAddress.street"
@@ -221,6 +212,15 @@
             name="street-number"
             label-content="Numer domu"
             v-model="contactAddress.number"
+            class="my-2"
+            @update="onInputUpdate"
+          />
+          <FormInput 
+            :enabled="true"
+            type="text"
+            name="city"
+            label-content="Miejscowość"
+            v-model="contactAddress.city"
             class="my-2"
             @update="onInputUpdate"
           />

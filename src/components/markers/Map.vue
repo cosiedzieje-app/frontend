@@ -88,20 +88,22 @@
 
   function showMarkers(){
     let markers = store.exploredMarkers as Marker[]
-    console.log(markers)
-    markers.forEach(marker => {
-      let position = convertLen(marker.latitude, marker.longitude)
-      let mark: PointerProps = {
-        category: marker.type,
-        caption: marker.title,
-        position: [`${position[0]}`, `${position[1]}`],
-        marker: marker
-      }
+    //console.log(markers)
+    if(markers !== null && markers.length > 0) {
+      markers.forEach(marker => {
+        let position = convertLen(marker.latitude, marker.longitude)
+        let mark: PointerProps = {
+          category: marker.type,
+          caption: marker.title,
+          position: [`${position[0]}`, `${position[1]}`],
+          marker: marker
+        }
 
-      if(!todos.value.includes({id: marker.id, props: mark})) {
-        todos.value.push({id: marker.id, props: mark});
-      }
-    });
+        if(!todos.value.includes({id: marker.id, props: mark})) {
+          todos.value.push({id: marker.id, props: mark});
+        }
+      });
+    }
   }
 
 
