@@ -1,7 +1,7 @@
 # Warstwa frontendowa aplikacji
 
 # Jak uruchomić część frontendową:
-1. Upewnij się, że masz zainstalowane środowisko uruchomieniowe `Node.js` w wersji LTS (w projekcie użyto wersji 16.17.1).
+1. Upewnij się, że masz zainstalowane środowisko uruchomieniowe `Node.js` (w projekcie użyto wersji 16.17.1).
 2. Zainstaluj package manager `yarn`, który posłuży do zainstalowania niezbędnych bibliotek.
 ```
 npm install yarn@1.22.19 -g
