@@ -1,6 +1,6 @@
 <template>
-  <RouteWrapper class="flex justify-center items-center text-4xl text-white text-center">
-    <h1>Obecnie zmiana hasła nie jest jeszcze możliwa. Przepraszamy za niedogodności.</h1>
+  <RouteWrapper class="flex justify-center items-center text-2xl md:text-4xl text-white text-center">
+    <p>Obecnie zmiana hasła nie jest jeszcze możliwa.<br />Przepraszamy za niedogodności.</p>
   </RouteWrapper>
 </template>
 
