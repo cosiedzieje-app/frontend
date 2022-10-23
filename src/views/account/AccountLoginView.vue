@@ -2,7 +2,7 @@
   <RouteWrapper :scrollable="true">
     <transition name="notice-fade" mode="out-in">
       <div
-        v-if="redirected || loginState !== 'idle'"
+        v-if="unlockNotices || redirected || loginState !== 'idle'"
         class="w-full flex flex-col items-center justify-center"
       >
         <transition name="notice-fade" mode="out-in">
@@ -13,21 +13,29 @@
             level="warn"
           />
         </Transition>
+        <transition name="notice-fade" mode="out-in">
+          <NoticeBox 
+            v-if="unlockNotices && !fieldsNotEmpty"
+            message="Pola nie mogą być puste"
+            icon="fa-solid fa-triangle-exclamation"
+            level="warn"
+          />
+        </transition>
         <Transition name="notice-fade" mode="out-in">
           <NoticeBox
-            v-if="loginState === 'pending'"
+            v-if="unlockNotices === true && loginState === 'pending'"
             message="Trwa logowanie..."
             icon="fa-solid fa-key"
             level="info"
           />
           <NoticeBox
-            v-else-if="loginState === 'success'"
+            v-else-if="unlockNotices === true && loginState === 'success'"
             message="Pomyślnie zalogowano. Trwa przekierowanie..."
             icon="fa-solid fa-check"
             level="success"
           />
           <NoticeBox
-            v-else-if="loginState === 'error'"
+            v-else-if="unlockNotices === true && loginState === 'error'"
             :message="loginErrorMessage"
             icon="fa-solid fa-triangle-exclamation"
             level="error"
@@ -74,7 +82,7 @@ import FormInput from "@/components/general/FormInput.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 
 import { useRoute, useRouter } from "vue-router";
-import { ref, type Ref, computed, type ComputedRef } from "vue";
+import { ref, type Ref, computed, type ComputedRef, watch } from "vue";
 import type { ButtonProps,LoginData, SomsiadStatus } from "@/types";
 import { login, getUserData } from "@/api/user";
 import useStore from "@/store";
@@ -83,7 +91,7 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-
+const unlockNotices: Ref<boolean> = ref(false);
 const redirected = ref<boolean>(route.query.redirect === 'true');
 const loginState: Ref<"idle" | "pending" | "success" | "error"> = ref("idle");
 const loginErrorState: Ref<null | "fetch-error" | "invalid-data" | "unexpected-error"> = ref(null);
@@ -106,10 +114,21 @@ const loginErrorMessage: ComputedRef<string> = computed(() => {
   }
 });
 
-const email = ref<string>('m@m.pl');
-const password = ref<string>('123');
+const email: Ref<string> = ref("");
+const password: Ref<string> = ref("");
 
+const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
+  return email.value.length > 0 && password.value.length > 0;
+});
+const loginAllowed: ComputedRef<boolean> = computed(() => {
+  return fieldsNotEmpty.value;
+});
+
+async function disabledSendForm() {
+  unlockNotices.value = true;
+}
 async function sendForm() {
+  unlockNotices.value = true;
   const loginData: LoginData = {
     email: email.value,
     password: password.value
@@ -141,12 +160,14 @@ async function sendForm() {
     });
 }
 
-const buttonProps: ButtonProps = {
+const buttonProps: Ref<ButtonProps> = ref({
   caption: 'Prześlij',
   action: () => sendForm(),
   icon: 'fa-solid fa-check',
-  enabled: true
-}
+  enabled: loginAllowed.value,
+  disabledAction: () => disabledSendForm(),
+  type: "submit"
+});
 
 const registerButtonProps: ButtonProps = {
   caption: "Zarejestruj się",
@@ -159,6 +180,10 @@ const registerButtonProps: ButtonProps = {
   icon: 'fa-solid fa-pen',
   enabled: true
 }
+
+watch(loginAllowed, v => {
+  buttonProps.value.enabled = v;
+});
 </script>
 
 <style scoped lang="scss">

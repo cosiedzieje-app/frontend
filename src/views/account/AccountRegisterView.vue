@@ -1,8 +1,8 @@
 <template>
-  <RouteWrapper :scrollable="true">
+  <RouteWrapper ref="routewrapper" :scrollable="true">
     <transition name="notice-fade" mode="out-in">
       <div
-        v-if="!registerAllowed || registerState !== 'idle'"
+        v-if="unlockNotices && (!registerAllowed || registerState !== 'idle')"
         class="w-full flex flex-col justify-center items-center"
       >
         <transition name="notice-fade" mode="out-in">
@@ -133,7 +133,7 @@
           <FormInput 
             v-model="address.number"
             name="number"
-            type="number"
+            type="text"
             label-content="Numer domu"
             :enabled="true"
           />
@@ -150,7 +150,7 @@ import CustomButton from '@/components/general/CustomButton.vue';
 import RouteWrapper from '@/components/general/RouteWrapper.vue';
 import NoticeBox from '@/components/general/NoticeBox.vue';
 
-import { reactive, ref, type Ref, computed, type ComputedRef, watch } from 'vue';
+import { reactive, ref, type Ref, computed, type ComputedRef, watch, nextTick } from 'vue';
 import type { ButtonProps, UserAccountData, UserPersonalData, Address, 
   NewAccount, SomsiadStatus, LoginData } from '@/types';
 import { Sex } from '@/types';
@@ -165,6 +165,7 @@ interface Props {
 const store = useStore();
 const router = useRouter();
 const props = defineProps<Props>();
+const routewrapper: Ref<InstanceType<typeof RouteWrapper> | null> = ref(null);
 
 const accountData = reactive<UserAccountData>({
   username: "",
@@ -182,6 +183,7 @@ const address = reactive<Address>({
   city: ""
 });
 
+const unlockNotices: Ref<boolean> = ref(false);
 const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
   const accData = Object.values(accountData)
     .map((v: string) => v.length > 0)
@@ -232,7 +234,33 @@ const registerErrorMessage: ComputedRef<string> = computed(() => {
   }
 });
 
+async function disabledSendForm() {
+  unlockNotices.value = true;
+  await nextTick();
+  if(routewrapper.value !== null) {
+    if(routewrapper.value.wrapper !== null)
+      routewrapper.value.wrapper.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+  }
+}
 async function sendForm() {
+  unlockNotices.value = true;
+  
+  unlockNotices.value = true;
+  nextTick(() => {
+    if(routewrapper.value !== null) {
+      if(routewrapper.value.wrapper !== null)
+        routewrapper.value.wrapper.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
+    }
+  });
+
   const newAccount: NewAccount = {
     login: {
       email: accountData.email,
@@ -247,7 +275,7 @@ async function sendForm() {
 
   registerState.value = "pending";
   registerError.value = null;
-  await register(newAccount)
+  register(newAccount)
     .then(async () => {
       const loginData: LoginData = {
         email: newAccount.login.email,
@@ -296,7 +324,9 @@ const buttonProps: Ref<ButtonProps> = ref({
   caption: "Utwórz konto",
   action: () => sendForm(),
   icon: "fa-solid fa-pen",
-  enabled: registerAllowed.value
+  enabled: registerAllowed.value,
+  disabledAction: () => disabledSendForm(),
+  type: "submit"
 });
 const loginButtonProps: ButtonProps = {
   caption: "Zaloguj się",

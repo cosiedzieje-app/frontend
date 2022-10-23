@@ -6,7 +6,7 @@
       class="text-center text-main-light hover:text-main-superlight transition-colors duration-200 cursor-pointer p-2 flex flex-col justify-center items-center text-4xl md:text-3xl font-bold"
       @click="() => router.push('/')"
     >
-      Somsiad
+      CoSięDzieje
     </span>
     <NavBar :items="navbarItems"/>
   </header>

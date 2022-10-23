@@ -9,7 +9,7 @@
       'hover:bg-main-light': props.enabled !== false && props.mobile !== true,
       'bg-gray-light': props.enabled === false
     }"
-    type="button"
+    :type="props.type ?? 'button'"
     autocomplete="off"
   >
     <!-- <font-awesome-icon class="h-[20px] w-[20px]" :icon="props.icon" /> -->

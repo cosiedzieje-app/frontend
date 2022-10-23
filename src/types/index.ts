@@ -35,6 +35,7 @@ interface ButtonProps {
   icon: string;
   enabled?: boolean;
   mobile?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 // Form radio format
