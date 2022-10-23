@@ -11,17 +11,17 @@
       <div class=" mx-4 my-2">
         <div class="flex items-center my-1.5">
           <img class="inline mr-1 w-4 h-4" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-          <span class="text-sm">{{ data.contactInfo.name }} {{ data.contactInfo.surname }}</span>
+          <span class="text-sm">{{ marker.contactInfo.name }} {{ marker.contactInfo.surname }}</span>
         </div>
-        <h1 class="font-bold text-2xl">{{ data.title }}</h1>
-        <p class="my-3 text-lg text-justify">{{ data.description }}</p>
+        <h1 class="font-bold text-2xl">{{ marker.title }}</h1>
+        <p class="my-3 text-lg text-justify">{{ marker.description }}</p>
         <div>
           <p>
             <font-awesome-icon icon="fa-solid fa-address-book" />
             Kontakt: 
-            <a :href="href">{{ data.contactInfo.method.val }}</a>
+            <a :href="href">{{ marker.contactInfo.method.val }}</a>
           </p>
-          <p class="cursor-pointer hover:underline" title="Pokaż na mapie"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ data.address.city }}, ul. {{ data.address.street }} {{ data.address.number }}</p>
+          <p class="cursor-pointer hover:underline" title="Pokaż na mapie"><font-awesome-icon class="mr-1" icon="fa-solid fa-location-dot" />{{ marker.address.city }}, ul. {{ marker.address.street }} {{ marker.address.number }}</p>
         </div>
       </div>
     </div>
@@ -30,52 +30,23 @@
   
 <script setup lang="ts">
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
-import { useRouter, useRoute } from "vue-router";
-import type { MarkerDetails } from '@/types';
-import { ContactMethod } from '@/types';
+import { useRouter } from "vue-router";
+import { ContactMethod, type Marker } from '@/types';
 import markersCategories from "./MarkersCategories";
-import { getMarkerDetails } from "@/api/backend";
+import useStore from "@/store";
 
+const store = useStore();
 const router = useRouter();
-
-const route = useRoute(); 
-// const data = await getMarkerDetails(route.params.id);
-
-const data: MarkerDetails = {
-  id: 1,
-  userID: 2,
-  latitude: 0,
-  longitude: 0,
-  title: "Moja córka wyprowadza psy",
-  description: "Moja trzynastoletnia córka, która uwielbia zwierzęta, chciałaby zarobić pierwsze pieniądze. Oferujemy wyprowadzanie psów w weekendy (sobota i niedziela) w godzinach popołudniowych (14:00 - 18:00). Za 10min spaceru - 10 zł, za 20min - 15zł, za 30min - 20zł. Oferta obowiązuje jedynie na osiedlu przy ul. Długosza i jego okolicach do maksymalnie 2km. Gorąco zapraszamy do kontaktu!",
-  addTime: "123",
-  endTime: "456",
-  address: {
-    city: "Sosnowiec",
-    street: "Jana Długosza",
-    number: "5"
-  },
-  contactInfo: {
-    name: "Anna",
-    surname: "Kowalska",
-    address: {
-      city: "Sosnowiec",
-      street: "Jana Długosza",
-      number: "5"
-    },
-    method: {
-      type: ContactMethod.PhoneNumber,
-      val: "123456789"
-    }
-  },
-  type: 'Charity'
-};
 
 const goBack = () => {
   router.push('/markers/explorer');
+  store.setCurrentlyExploredMarker(null);
 }
 
-const markerCategory = markersCategories[data.type];
-const value = data.contactInfo.method.val;
-const href = data.contactInfo.method.type === ContactMethod.PhoneNumber ? `tel:${value}` : `mailto:${value}`;
+const marker = store.getCurrentlyExploredMakrer as Marker;
+if(!marker) goBack();
+
+const markerCategory = markersCategories[marker.type];
+const value = marker.contactInfo.method.val;
+const href = marker.contactInfo.method.type === ContactMethod.PhoneNumber ? `tel:${value}` : `mailto:${value}`;
 </script>

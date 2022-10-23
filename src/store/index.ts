@@ -11,7 +11,8 @@ const useStore = defineStore("main", {
       addressGeocodingState: "idle",
       userLocalization: null,
       userData: null,
-      exploredMarkers: []
+      exploredMarkers: null,
+      currentlyExploredMarker: null
     } as Store;
   },
   getters: {
@@ -22,8 +23,9 @@ const useStore = defineStore("main", {
     getAddressGeocodingState: (state) => state.addressGeocodingState,
     getUserLocalizaton: (state) => state.userLocalization,
     getUserData: (state) => state.userData,
+    getPointres: (state) => state.pointres,
     getExploredMarkers: (state) => state.exploredMarkers,
-    getPointres: (state) => state.pointres
+    getCurrentlyExploredMakrer: (state) => state.currentlyExploredMarker
   },
   actions: {
     setPointres(marker: NewMarker) {
@@ -55,6 +57,9 @@ const useStore = defineStore("main", {
     },
     setExploredMarkers(newMarkers: Marker[]) {
       this.exploredMarkers = newMarkers;
+    },
+    setCurrentlyExploredMarker(newMarker: Marker | null) {
+      this.currentlyExploredMarker = newMarker;
     }
   }
 });

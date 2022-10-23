@@ -16,7 +16,8 @@ interface Store {
   addressGeocodingState: AddressGeocodingState;
   userLocalization: Localization | null;
   userData: null | UserData;
-  exploredMarkers: Marker[];
+  exploredMarkers: Marker[] | null;
+  currentlyExploredMarker: Marker | null;
 }
 
 // CustomButton props format
