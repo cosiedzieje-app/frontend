@@ -228,10 +228,10 @@ interface AuthContext {
 
 interface MarkerCategory {
   name: string;
+  type: ListingCategory;
   icon: string;
   lightColor: string;
   darkColor: string;
-  darkHoverColor: string;
 }
 
 interface FilteredMarkersData {

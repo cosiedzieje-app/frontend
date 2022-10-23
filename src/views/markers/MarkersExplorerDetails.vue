@@ -1,14 +1,14 @@
 <template>
   <RouteWrapper :scrollable="true">
     <div class="text-white">
-      <div :class="`bg-${markerCategory.darkColor} hover:bg-${markerCategory.darkHoverColor} flex items-center relative`">
+      <div :class="`bg-${markerCategory.darkColor} flex items-center relative`">
         <button class="m-2 absolute" title="Wróć do ogłoszeń" @click="goBack"><font-awesome-icon class="w-6 h-6 hover:text-gray-lighter transition-colors duration-200" icon="fa-solid fa-arrow-left" /></button>
         <span class="font-bold py-2 px-2 text-xl text-center w-full"> 
             <font-awesome-icon class="mr-1" icon="fa-solid fa-handshake" />
             {{ markerCategory.name }}
         </span>
       </div>
-      <div class=" mx-4 my-2">
+      <div class="mx-4 my-2">
         <div class="flex items-center my-1.5">
           <img class="inline mr-1 w-4 h-4" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
           <span class="text-sm">{{ marker.contactInfo.name }} {{ marker.contactInfo.surname }}</span>
@@ -19,11 +19,11 @@
           <div v-if="marker.startTime || marker.endTime">
             <p v-if="marker.startTime">
               <font-awesome-icon icon="fa-regular fa-calendar-days" />
-              Data początkowa: {{ marker.startTime }}
+              Data początkowa: {{ new Date(parseInt(marker.startTime) * 1000).toLocaleString() }}
             </p>
             <p v-if="marker.endTime">
               <font-awesome-icon icon="fa-regular fa-calendar-days" />
-              Data końcowa: {{ marker.endTime }}
+              Data końcowa: {{ new Date(parseInt(marker.endTime) * 1000).toLocaleString() }}
             </p>
           </div>
           <p>
