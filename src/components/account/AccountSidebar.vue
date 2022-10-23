@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="w-full md:w-[250px] md:h-full flex flex-col items-center border-0 border-black border-solid border-r-4"
+    class="w-full md:w-[250px] md:h-full flex flex-col items-center"
   >
     <AccountSidebarItem
       v-for="item in items"
@@ -47,6 +47,12 @@ watchPostEffect(() => {
       label: "Weryfikacja konta",
       action: () => router.push({ name: "accountIndexVerification" }),
       currentCondition: route.name === "accountIndexVerification"
+    },
+    {
+      name: "logout",
+      label: "Wyloguj się",
+      action: () => router.replace({ name: "accountLogout" }),
+      alwaysCurrent: true
     }
   ];
 });
