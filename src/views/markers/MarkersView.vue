@@ -36,23 +36,38 @@ import { RouterView } from 'vue-router';
 import Map from "@/components/markers/Map.vue";
 import MarkersGeocodingPending from '@/components/markers/MarkersGeocodingPending.vue';
 import MarkersGeocodingFailure from '@/components/markers/MarkersGeocodingFailure.vue';
-import type { GeoData, Marker } from '@/types/index'
+import type { GeoData, Marker, AddressBarValue } from '@/types'
 
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, type Ref, onMounted } from 'vue';
 import useStore from '@/store';
 import { getMarkersByCity, getMarkersWithinDistance } from "@/api/backend";
 import { convertLen } from '@/views/markers/ConvertLenght';
+
 const router = useRouter();
 const store = useStore();
 
-const adressBarData = ref({
+const adressBarData: Ref<AddressBarValue> = ref({
   address: "",
   distance: "0"
 });
 
+onMounted(() => {
+  if(store.getAddressBarValue !== null)
+    adressBarData.value = { ...store.getAddressBarValue };
+});
+
+store.$subscribe((mut, state) => {
+  if(state.addressBarValue !== null) {
+    if(adressBarData.value.address !== state.addressBarValue.address || adressBarData.value.distance !== state.addressBarValue.address) {
+      adressBarData.value = { ...state.addressBarValue };
+    }
+  }
+});
+
 const onAddressEnter = async () => {
+  store.setAddressBarValue(adressBarData.value);
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
 
@@ -87,7 +102,7 @@ const onAddressEnter = async () => {
   store.setExploredMarkers(markers);
   store.setAddressGeocodingState("success");
   store.toggleAddressBar(true);
-  router.push('/markers/explorer');
   store.setUserGeoData(newLocalization);
+  router.push({ name: 'markersExplore' });
 };
 </script>

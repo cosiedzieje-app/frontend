@@ -42,10 +42,11 @@
 
 <script setup lang="ts">
 import FormInput from '@/components/general/FormInput.vue';
-import { ref } from '@vue/reactivity';
+import { ref } from 'vue';
+import type { AddressBarValue } from '@/types';
 
 interface Props {
-  modelValue: Record<string, string>;
+  modelValue: AddressBarValue;
   enabled: boolean;
 }
 

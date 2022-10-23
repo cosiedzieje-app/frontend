@@ -65,9 +65,10 @@ function authRedirect(to: RouteLocationNormalized) {
   }
 }
 
-function checkExploredMarkers() {
+function checkExploredMarkers(to: RouteLocationNormalized) {
   const store = useStore();
-  if(!store.exploredMarkers) {
+  console.log(store.exploredMarkers);
+  if(store.exploredMarkers === null) {
     return { 
       name: 'markers',
     };

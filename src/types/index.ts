@@ -14,12 +14,19 @@ enum ListingCategory {
   MassEvent = "MassEvent"
 };
 
+// Address bar value format
+interface AddressBarValue {
+  address: string;
+  distance: string;
+}
+
 // Store format
 interface Store {
   authenticated: boolean;
   userGeoData: GeoData | null;
   pointres: NewMarker | null;
   addressBarEnabled: boolean;
+  addressBarValue: AddressBarValue | null;
   addressGeocodingState: AddressGeocodingState;
   userLocalization: Localization | null;
   userData: null | UserData;
@@ -244,6 +251,7 @@ interface FilteredMarkersData {
 }
 
 export type {
+  AddressBarValue,
   ButtonProps,
   CustomButtonType,
   FormRadioProps,

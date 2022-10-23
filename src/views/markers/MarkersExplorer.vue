@@ -23,7 +23,7 @@
                 :data-index="index"
                 class="marker-explorer-scrollable h-full w-full mx-2"
               >
-              <button class="absolute top-24 left-4" @click="swipeLeft(index)"><font-awesome-icon icon="fa-solid fa-chevron-left" /></button>
+              <button class="absolute top-20 left-4" @click="swipeLeft(index)"><font-awesome-icon icon="fa-solid fa-chevron-left" /></button>
                 <div 
                   v-if="markersData.markers.length !== 0" 
                   class="marker-explorer-block-wrapper min-w-full w-fit flex flex-row items-center" 
@@ -36,7 +36,7 @@
                 <div v-else>
                     <span class="text-gray-lighter m-4">brak</span>
                 </div>
-              <button class="absolute top-24 right-3" @click="swipeRight(index)"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
+              <button class="absolute top-20 right-3" @click="swipeRight(index)"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
               </div>
           </div>
         </div>

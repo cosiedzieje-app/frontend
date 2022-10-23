@@ -10,8 +10,14 @@
   </RouteWrapper>
   <RouteWrapper
     v-else
-    :scrollable="true"
+    class="flex flex-col justify-center items-center w-full h-full"
   >
+    <font-awesome-icon
+      icon="fa-solid fa-location-dot"
+      class="text-5xl text-white mb-4"
+      fade
+    />
+    <h1 class="text-white text-3xl md:text-5xl">Wczytywanie ogłoszeń...</h1>
   </RouteWrapper>
 </template>
 
@@ -20,7 +26,14 @@ import RouteWrapper from "@/components/general/RouteWrapper.vue";
 
 import { useRouter } from 'vue-router';
 import useStore from '@/store';
+import { onBeforeMount } from 'vue';
 
 const router = useRouter();
 const store = useStore();
+
+onBeforeMount(() => {
+  if(store.userGeoData !== null) {
+    router.replace({ name: "markersExplore" });
+  }
+});
 </script>
