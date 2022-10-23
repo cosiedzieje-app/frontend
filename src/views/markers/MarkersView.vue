@@ -107,7 +107,6 @@ const onAddressEnter = async () => {
     store.setUserGeoData(newLocalization);
   }
 
-  console.log(markers)
   const newMarkers = markers.map(m => {
   return {...m, address: {
     city: 'Sosnowiec',
