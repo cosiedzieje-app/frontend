@@ -26,12 +26,12 @@
       <AccountStat
         v-if="marker.startTime !== null"
         label="Data rozpoczęcia"
-        :value="`${new Date(parseInt(marker.startTime) * 1000).toLocaleString()}`"
+        :value="`${new Date(marker.startTime * 1000).toLocaleString()}`"
       />
       <AccountStat
         v-if="marker.endTime !== null"
         label="Data zakończenia"
-        :value="`${new Date(parseInt(marker.endTime) * 1000).toLocaleString()}`"
+        :value="`${new Date(marker.endTime * 1000).toLocaleString()}`"
       />
     </section>
     <section class="my-2 w-full flex flex-col justify-center items-center text-white text-center text-2xl">
