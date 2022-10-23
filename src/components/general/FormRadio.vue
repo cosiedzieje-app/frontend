@@ -1,14 +1,14 @@
 <template>
   <div
-    class="w-full flex flex-row justify-center items-center"
+    class="w-full flex flex-col justify-center items-center"
   >
     <button
       v-for="radio in radios"
       :key="radio.name"
-      class="flex justify-center items-center p-2 m-2 text-center text-white text-base rounded-md"
+      class="flex w-full justify-center items-center p-2 m-2 text-center text-white text-base rounded-md"
       :class="{
         'bg-main': radio.selected === true,
-        'bg-green': radio.selected === false
+        'bg-gray-light': radio.selected === false
       }"
       @click="() => onClick(radio.name)"
       type="button"

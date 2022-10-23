@@ -1,6 +1,6 @@
 <template>
   <CustomButton 
-    class="w-full"
+    class="w-full md:w-auto"
     :props="buttonProps"
   />
 </template>

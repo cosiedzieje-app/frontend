@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onEnter" class="flex flex-row justify-around mx-6 my-2">
+  <form @submit.prevent="onEnter" class="flex flex-row justify-around md:mx-6 md:my-2">
     <FormInput 
       name="address"
       type="text"
@@ -14,7 +14,7 @@
     <select 
       v-model="modelValue.distance" 
       @change="onChange" 
-      class="text-white bg-gray py-2 px-4 w-2/7 border-solid border-gray-400 rounded focus:border-main" 
+      class="text-white text-center bg-gray w-1/5 md:py-2 md:px-4 md:ml-4 border-solid border-gray-400 md:rounded focus:border-main" 
       :enabled="enabled"
       required
     >
@@ -31,7 +31,7 @@
     </select>
     <button
       type="submit"
-      class="flex flex-row justify-center items-center text-center bg-main hover:bg-main-light duration-200 rounded-xl text-white px-4"
+      class="flex w-1/5 md:w-auto flex-row justify-center items-center text-center bg-main hover:bg-main-light duration-200 md:rounded-xl text-white py-4 md:py-0 px-4 md:ml-4"
       :enabled="enabled"
     >
       <font-awesome-icon class="h-[20px] w-[20px]" icon="fa-solid fa-magnifying-glass"/>

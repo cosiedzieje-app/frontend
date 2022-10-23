@@ -10,7 +10,7 @@
       {{ labelContent }}
     </label>
     <input 
-      class="text-white bg-gray py-2 px-4 w-full border-solid"
+      class="text-white bg-gray py-2 px-4 w-full border-solid text-lg md:text-base"
       :class="{
         rounded: notRounded !== true,
         'border-2': customBorder === undefined,
