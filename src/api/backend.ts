@@ -96,7 +96,7 @@ async function getUserMarkers(): Promise<Marker[]> {
     )
     .then((data: SomsiadStatus) => {
       if(data.status === 'ok') {
-        return data.res as MarkerDetails[];
+        return data.res as Marker[];
       } else {
         return Promise.reject(data);
       }
