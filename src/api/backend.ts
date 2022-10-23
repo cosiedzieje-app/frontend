@@ -137,6 +137,7 @@ async function getMarkerById(id: number): Promise<Marker> {
  * @throws SomsiadStatus on API error, null on fetch error 
  */
 async function addMarker(markerData: NewMarker): Promise<void> {
+  console.log(JSON.stringify(markerData))
   return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers`, {
     method: "PUT",
     headers: {

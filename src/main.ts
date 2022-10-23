@@ -38,7 +38,8 @@ import {
   faGenderless,
   faTrash,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
+  faCalendarDays
 } from "@fortawesome/free-solid-svg-icons";
 
 import './styles/index.scss';
@@ -73,7 +74,8 @@ library.add(
   faGenderless,
   faTrash,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
+  faCalendarDays
 );
 
 const pinia = createPinia();

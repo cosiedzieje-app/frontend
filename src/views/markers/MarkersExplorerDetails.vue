@@ -19,11 +19,11 @@
           <div v-if="marker.startTime || marker.endTime">
             <p v-if="marker.startTime">
               <font-awesome-icon icon="fa-regular fa-calendar-days" />
-              Data początkowa: {{ new Date(parseInt(marker.startTime) * 1000).toLocaleString() }}
+              Data początkowa: {{ new Date(marker.startTime * 1000).toLocaleString() }}
             </p>
             <p v-if="marker.endTime">
               <font-awesome-icon icon="fa-regular fa-calendar-days" />
-              Data końcowa: {{ new Date(parseInt(marker.endTime) * 1000).toLocaleString() }}
+              Data końcowa: {{ new Date(marker.endTime * 1000).toLocaleString() }}
             </p>
           </div>
           <p>
