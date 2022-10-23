@@ -3,11 +3,10 @@
     <section
       class="flex flex-col w-full h-full"
     >
-      <AddressBar 
-        v-model="address"
-        @enter="onAddressEnter"
+      <AddressBar
+        v-model="adressBarData"
         :enabled="store.isAddressBarEnabled"
-        :placeholder="addressBarPlaceholder"
+        @enter="onAddressEnter"
       />
       <transition name="view-fade" mode="out-in">
         <MarkersGeocodingPending 
@@ -32,55 +31,89 @@
 
 <script setup lang="ts">
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
-import AddressBar from '@/components/categories/AddressBar.vue';
+import AddressBar from '@/components/markers/AddressBar.vue';
 import { RouterView } from 'vue-router';
 import Map from "@/components/markers/Map.vue";
 import MarkersGeocodingPending from '@/components/markers/MarkersGeocodingPending.vue';
 import MarkersGeocodingFailure from '@/components/markers/MarkersGeocodingFailure.vue';
-import type {GeoData} from '@/types/index'
+import type { GeoData, Marker } from '@/types/index'
 
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
-import { ref, type Ref } from 'vue';
+import { ref } from 'vue';
 import useStore from '@/store';
+import { getMarkersByCity, getMarkersWithinDistance } from "@/api/backend";
 
 const router = useRouter();
 const store = useStore();
-const address: Ref<string> = ref("");
-const addressBarPlaceholder: Ref<string | undefined> = ref(undefined);
 
-store.$subscribe((mutation, state) => {
-  if(state.addressGeocodingState === 'pending') {
-    addressBarPlaceholder.value = "Trwa geokodowanie...";
-  } else {
-    addressBarPlaceholder.value = undefined;
-  }
+const adressBarData = ref({
+  address: "",
+  distance: "5"
 });
 
 const onAddressEnter = async () => {
-  //console.log("Enter pressed on AddressBar");
+  console.log(adressBarData);
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
-  const addressVal = address.value;
-  address.value = "";
-  let adresL: any;
 
-  adresL = await geocodeFromAddress(addressVal);
-  
-  const newLocalization:GeoData = {
-        latitude: adresL.latitude,
-        longitude: adresL.longitude,
-        city: adresL.locality,
-        street: adresL.street,
-        number: adresL.number
+  let markers: Marker[];
+  console.log(adressBarData.value.distance, adressBarData.value.address);
+  if(adressBarData.value.distance === '0') {
+    markers = await getMarkersByCity(adressBarData.value.address);
+    const adresL = await geocodeFromAddress(adressBarData.value.address);
+    if(!adresL) {
+      store.setAddressGeocodingState("error");
+      store.toggleAddressBar(true);
+      return;
+    }
+
+    const newLocalization: GeoData = {
+      latitude: adresL.latitude.toString(),
+      longitude: adresL.longitude.toString(),
+      city: adresL.locality,
+      street: adresL.street,
+      number: adresL.number
+    }
+
+    store.setUserGeoData(newLocalization);
+
+  } else { 
+    const adresL = await geocodeFromAddress(adressBarData.value.address);
+    if(!adresL) {
+      store.setAddressGeocodingState("error");
+      store.toggleAddressBar(true);
+      return;
+    }
+
+    markers = await getMarkersWithinDistance(
+      adresL.latitude,
+      adresL.longitude,
+      adressBarData.value.distance
+    );
+
+    const newLocalization: GeoData = {
+      latitude: adresL.latitude.toString(),
+      longitude: adresL.longitude.toString(),
+      city: adresL.locality,
+      street: adresL.street,
+      number: adresL.number
+    }
+
+    store.setUserGeoData(newLocalization);
   }
-  
-  store.setUserGeoData(newLocalization);
-  console.log(adresL);
 
-  setTimeout(() => {
-    store.setAddressGeocodingState("error");
-    store.toggleAddressBar(true);
-  }, 3000);
+  console.log(markers)
+  const newMarkers = markers.map(m => {
+  return {...m, address: {
+    city: 'Sosnowiec',
+    street: 'Kwiatowa',
+    number: '1',
+  }};
+});
+  store.setExploredMarkers(newMarkers);
+  store.setAddressGeocodingState("success");
+  store.toggleAddressBar(true);
+  router.push('/markers/explorer');
 };
 </script>

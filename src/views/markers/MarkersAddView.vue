@@ -216,6 +216,7 @@ import type {GeoData} from '@/types/index'
 import { geocodeFromAddress } from '@/api/geocoding';
 import { useRouter } from 'vue-router';
 import useStore from '@/store';
+import { convertLen } from '@/views/markers/ConvertLenght';
 
 let id= 0;
 const routewrapper: Ref<InstanceType<typeof RouteWrapper> | null> = ref(null);
@@ -363,6 +364,7 @@ async function submitMarker() {
   let adresL: any;
 
   adresL = await geocodeFromAddress(`${address.street} ${address.number} ${address.city}`);
+  let position:any = convertLen(adresL.longitude, adresL.latitude);
   console.log(adresL)
   const adres: Address = {
     city: adresL.locality,
@@ -371,8 +373,8 @@ async function submitMarker() {
   }
   
   const markerData: NewMarker ={
-    latitude: adresL.latitude,
-    longitude: adresL.longitude,
+    latitude: position[1],
+    longitude: position[0],
     title: title.value,
     description: description.value,
     type: listCategory.value,
@@ -382,6 +384,7 @@ async function submitMarker() {
   console.log(adres);
   console.log(markerData);
   await addMarker(markerData);
+  store.pointres = markerData;
 }
 
 async function disabledSubmitMarker() {

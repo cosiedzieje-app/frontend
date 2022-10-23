@@ -30,6 +30,54 @@ async function getMarkers(): Promise<Marker[]> {
 }
 
 /**
+ * Get markers by city
+ * 
+ * @returns list of markers on success
+ * @throws SomsiadStatus on API error, null on fetch error
+ */
+ async function getMarkersByCity(city: string): Promise<Marker[]> {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers/${city}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json"
+    }
+  })
+    .catch(() => Promise.reject(null))
+    .then(res => res.json()
+      .catch(() => Promise.reject(null))
+    )
+    .then((data: SomsiadStatus) => {
+      if(data.status === 'ok') {
+        return (data.res as Marker[]);
+      } else return Promise.reject(data);
+    });
+}
+
+/**
+ * Get markers within given distance of given coordinates
+ * 
+ * @returns list of markers on success
+ * @throws SomsiadStatus on API error, null on fetch error
+ */
+ async function getMarkersWithinDistance(lat: number, long: number, dist: string): Promise<Marker[]> {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/markers?lat=${lat}&long=${long}&dist=${dist}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json"
+    }
+  })
+    .catch(() => Promise.reject(null))
+    .then(res => res.json()
+      .catch(() => Promise.reject(null))
+    )
+    .then((data: SomsiadStatus) => {
+      if(data.status === 'ok') {
+        return (data.res as Marker[]);
+      } else return Promise.reject(data);
+    });
+}
+
+/**
  * Get all markers of currently logged in user
  *
  * @returns list of markers' details
@@ -140,5 +188,8 @@ export {
   getMarkers,
   getUserMarkers,
   getMarkerDetails,
-  addMarker
+  getMarkersByCity,
+  getMarkersWithinDistance,
+  addMarker,
+  deleteMarker
 };

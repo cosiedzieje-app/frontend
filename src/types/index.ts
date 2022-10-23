@@ -11,10 +11,12 @@ enum ContactMethod {
 interface Store {
   authenticated: boolean;
   userGeoData: GeoData | null;
+  pointres: NewMarker | null;
   addressBarEnabled: boolean;
   addressGeocodingState: AddressGeocodingState;
   userLocalization: Localization | null;
   userData: null | UserData;
+  exploredMarkers: Marker[];
 }
 
 // CustomButton props format
@@ -104,6 +106,7 @@ interface ContactInfo {
 // Marker format
 interface Marker {
   id: number;
+  userID: number;
   latitude: number;
   longitude: number;
   title: string;
@@ -154,6 +157,7 @@ interface GeolocationData {
   confidence: number;
   region: string;
   region_code: string;
+  locality: string;
   administrative_area: string | null;
   neighbourhood: string;
   country: string;
@@ -201,6 +205,29 @@ interface UserData {
   reputation: number;
 }
 
+// AuthContext provided data format
+interface AuthContext {
+  login: (loginData: LoginData) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (registerData: NewAccount) => Promise<void>;
+  isLoggedIn: () => Promise<void>;
+  applyUserData: () => Promise<void>;
+};
+
+interface MarkerCategory {
+  name: string;
+  icon: string;
+  lightColor: string;
+  darkColor: string;
+  darkHoverColor: string;
+}
+
+interface FilteredMarkersData {
+  data: MarkerCategory;
+  type: ListingCategory;
+  markers: Marker[];
+}
+
 export type {
   ButtonProps,
   FormRadioProps,
@@ -223,7 +250,10 @@ export type {
   SomsiadStatus,
   LoginData,
   UserData,
-  Localization
+  Localization,
+  AuthContext,
+  MarkerCategory,
+  FilteredMarkersData
 };
 export {
   Sex,
