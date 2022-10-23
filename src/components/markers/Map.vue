@@ -21,7 +21,7 @@
       </ul>
     </ol-map>
 
-    <button @click="changeLocated" class="fixed z-10 text-xl p-3 mb-7 mr-7 rounded-md bg-green">
+    <button @click="changeLocated" class="fixed z-10 text-xl p-3 mb-7 mr-7 rounded-md transition-colors bg-main hover:bg-main-light">
       <font-awesome-icon class="h-[20px] w-[20px]" icon="fa-solid fa-location-crosshairs" />
       Zlokalizuj mnie
     </button>
@@ -51,25 +51,26 @@
   const map = ref();
   let centerConverted = convertLen(19.37775993347168,52.147850036621094)
   const center = ref(centerConverted);
-
+  
+  const todos: Ref<IPointer[]> = ref([]);
 
   store.$subscribe(async(mutation, state) => {
+    todos.value = []
     if(state.userGeoData != null) {
-      center.value = convertLen(state.userGeoData.longitude, state.userGeoData.latitude);
-      
+      center.value = [`${state.userGeoData.longitude}`, `${state.userGeoData.latitude}`];
       if(state.userGeoData.street != null || state.userGeoData.number != null ) {
         zoom.value = 17;
       }else if(state.userGeoData.city != null){
-      zoom.value = 12
+      zoom.value = 13.7
       }else{
         zoom.value = 10;
       }
 
-      await showMarkers();
+      showMarkers();
     }
 
     if(state.pointres != null) {
-      await showMarkers();
+      showMarkers();
     }
   });
 
@@ -85,35 +86,37 @@
     located.value= !located.value; 
   }
 
-  async function showMarkers(){
-    let markers:Marker[] = await getMarkers()
-      console.log(markers)
-      markers.forEach(marker => {
-        console.log(marker)
-        let pointer: PointerProps = 
-        {
+  function showMarkers(){
+    let markers = store.exploredMarkers as Marker[]
+
+    markers.forEach(marker => {
+      let position = convertLen(marker.latitude, marker.longitude)
+      let mark: PointerProps = {
         category: marker.type,
         caption: marker.title,
-        position: [`${marker.longitude}`, `${marker.latitude}`]
-        }
-        if(!todos.value.includes({id: marker.id, props: pointer})){
-        todos.value.push({id: marker.id, props: pointer})}
-      });
+        position: [`${position[0]}`, `${position[1]}`],
+        marker: marker
+      }
 
+      if(!todos.value.includes({id: marker.id, props: mark})) {
+        todos.value.push({id: marker.id, props: mark});
+      }
+    });
   }
 
-  const todos: Ref<IPointer[]> = ref([]);
 
-  function newPointer(l2:any,l1:any): void{
-    let position = convertLen(l2, l1);
-    let chujCyc: PointerProps = 
-    {
-    category: "NeighborHelp",
-    caption: "",
-    position: [`${position[0]}`, `${position[1]}`]
-    }
-    todos.value.push({id: id++, props: chujCyc})
-  }
+
+
+  // function newPointer(l2:any,l1:any): void{
+  //   let position = convertLen(l2, l1);
+  //   let chujCyc: PointerProps = 
+  //   {
+  //   category: "NeighborHelp",
+  //   caption: "",
+  //   position: [`${position[0]}`, `${position[1]}`]
+  //   }
+  //   todos.value.push({id: id++, props: chujCyc})
+  // }
 
   // newPointer(19.1198,50.278502)
 </script>

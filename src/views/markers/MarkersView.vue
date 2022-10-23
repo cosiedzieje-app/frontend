@@ -43,7 +43,7 @@ import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import useStore from '@/store';
 import { getMarkersByCity, getMarkersWithinDistance } from "@/api/backend";
-
+import { convertLen } from '@/views/markers/ConvertLenght';
 const router = useRouter();
 const store = useStore();
 
@@ -64,10 +64,10 @@ const onAddressEnter = async () => {
     store.toggleAddressBar(true);
     return;
   }
-
+  let position = convertLen(adresL.longitude, adresL.latitude)
   const newLocalization: GeoData = {
-    latitude: adresL.latitude.toString(),
-    longitude: adresL.longitude.toString(),
+    latitude: position[1],
+    longitude: position[0],
     city: adresL.locality,
     street: adresL.street,
     number: adresL.number
