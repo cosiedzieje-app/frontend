@@ -12,9 +12,7 @@ import type {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function register(newAccount: NewAccount): Promise<void> {
-  console.log(import.meta.env.VITE_BACKEND_URL);
-
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/register`, {
+  return fetch(`${import.meta.env.DEV ? import.meta.env.VITE_BACKEND_URL : "/api"}/register`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -40,7 +38,7 @@ async function register(newAccount: NewAccount): Promise<void> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function login(data: LoginData): Promise<void> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
+  return fetch(`${import.meta.env.DEV ? import.meta.env.VITE_BACKEND_URL : "/api"}/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -72,7 +70,7 @@ async function login(data: LoginData): Promise<void> {
  * @throws SomsiadStatus on API error, null on fetch error
  */
 async function logout(): Promise<void> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/logout`, {
+  return fetch(`${import.meta.env.DEV ? import.meta.env.VITE_BACKEND_URL : "/api"}/logout`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -104,7 +102,7 @@ async function logout(): Promise<void> {
  * @throws SomsiadError on API error, null on fetch error
  */
 async function getUserData(): Promise<UserData> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/user_data`, {
+  return fetch(`${import.meta.env.DEV ? import.meta.env.VITE_BACKEND_URL : "/api"}/user_data`, {
     method: "GET",
     headers: {
       Accept: "application/json"
@@ -140,7 +138,7 @@ async function getUserData(): Promise<UserData> {
  * null on fetch error
  */
 async function isLoggedIn(): Promise<void> {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/is_logged`, {
+  return fetch(`${import.meta.env.DEV ? import.meta.env.VITE_BACKEND_URL : "/api"}/is_logged`, {
     method: "GET",
     headers: {
       Accept: "application/json"
