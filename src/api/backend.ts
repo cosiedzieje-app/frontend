@@ -177,7 +177,7 @@ async function deleteMarker(id: number): Promise<Marker> {
     )
     .then((data: SomsiadStatus) => {
       if(data.status === 'ok')
-        return (data.res as Marker);
+        return Promise.resolve(data.res as Marker);
       else
         return Promise.reject(data);
     });

@@ -115,7 +115,7 @@
             type="text"
             name="name"
             label-content="Imię"
-            v-model="contactInfo.name"
+            v-model="name"
             class="my-2"
             autocomplete="given-name"
             @update="onInputUpdate"
@@ -125,7 +125,7 @@
             type="text"
             name="surname"
             label-content="Nazwisko"
-            v-model="contactInfo.surname"
+            v-model="surname"
             class="my-2"
             autocomplete="family-name"
             @update="onInputUpdate"
@@ -147,7 +147,7 @@
             type="text"
             name="phone-number"
             label-content="Numer telefonu"
-            v-model="contactInfo.method.val"
+            v-model="contactVal"
             class="my-2"
             autocomplete="tel"
             @update="onInputUpdate"
@@ -158,7 +158,7 @@
             type="text"
             name="email"
             label-content="Adres e-mail"
-            v-model="contactInfo.method.val"
+            v-model="contactVal"
             class="my-2"
             autocomplete="email"
             @update="onInputUpdate"
@@ -175,7 +175,7 @@
             type="text"
             name="city"
             label-content="Miasto"
-            v-model="contactInfo.address.city"
+            v-model="contactAddress.city"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -184,7 +184,7 @@
             type="text"
             name="street"
             label-content="Ulica"
-            v-model="contactInfo.address.street"
+            v-model="contactAddress.street"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -193,7 +193,7 @@
             type="text"
             name="street-number"
             label-content="Numer domu"
-            v-model="contactInfo.address.number"
+            v-model="contactAddress.number"
             class="my-2"
             @update="onInputUpdate"
           />
@@ -214,8 +214,8 @@ import FormRadio from "@/components/general/FormRadio.vue";
 import CustomButton from "@/components/general/CustomButton.vue";
 import NoticeBox from "@/components/general/NoticeBox.vue";
 import { ref, type Ref, reactive, watch, type ComputedRef, computed, onMounted, nextTick } from "vue";
-import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker, ListingCategory } from "@/types";
-import { ContactMethod } from "@/types";
+import type { ContactInfo, Address, ButtonProps, FormRadioProps, NewMarker, SomsiadStatus } from "@/types";
+import { ContactMethod, ListingCategory } from "@/types";
 import { addMarker } from "@/api/backend";
 import type {GeoData} from '@/types/index'
 import { geocodeFromAddress } from '@/api/geocoding';
@@ -234,22 +234,17 @@ const address: Address = reactive({
   'number': "",
   city: "",
 });
-const contactInfo: Ref<ContactInfo> = ref({
-  name: "",
-  surname: "",
-  address: {
-    street: "",
-    'number': "",
-    city: "",
-  },
-  method: {
-    type: ContactMethod.PhoneNumber,
-    val: ""
-  }
+const name: Ref<string> = ref("");
+const surname: Ref<string> = ref("");
+const contactAddress: Ref<Address> = ref({
+  street: "",
+  'number': "",
+  city: ""
 });
-
-const listCategory: Ref<ListingCategory> =  ref("Happening")
 const contactMethod: Ref<ContactMethod> = ref(ContactMethod.PhoneNumber);
+const contactVal: Ref<string> = ref("");
+
+const listCategory: Ref<ListingCategory> =  ref(ListingCategory.Happening);
 const categoryOfMarker: Ref<FormRadioProps[]> = ref([
   {
     name: "Happening",
@@ -289,6 +284,7 @@ const onInputUpdate = () => {
   //no-op
 };
 const onRadioUpdate = (name: string) => {
+  console.log(name);
   if(name === "phoneNumber") {
     contactMethod.value = ContactMethod.PhoneNumber;
   } else {
@@ -298,23 +294,23 @@ const onRadioUpdate = (name: string) => {
 
 const onMarkerRadioUpdate = (name: string) => {
   if(name === "Happening") {
-    listCategory.value = "Happening";
+    listCategory.value = ListingCategory.Happening;
   } else if(name === "Charity") {
-    listCategory.value = "Charity";
+    listCategory.value = ListingCategory.Charity;
   } else if(name === "NeighborHelp") {
-    listCategory.value = "NeighborHelp";
+    listCategory.value = ListingCategory.NeighborHelp;
   } else {
-    listCategory.value = "MassEvent"
+    listCategory.value = ListingCategory.MassEvent;
   }
 };
 
 const fieldsNotEmpty: ComputedRef<boolean> = computed(() => {
-   return (contactInfo.value.name.length > 0) 
-    && (contactInfo.value.surname.length > 0)
-    && (contactInfo.value.address.city.length > 0)
-    && (contactInfo.value.address['number'].length > 0)
-    && (contactInfo.value.address.street.length > 0)
-    && (contactInfo.value.method.val.length > 0)
+   return (name.value.length > 0) 
+    && (surname.value.length > 0)
+    && (contactAddress.value.city.length > 0)
+    && (contactAddress.value['number'].length > 0)
+    && (contactAddress.value.street.length > 0)
+    && (contactVal.value.length > 0)
     && (address.street.length > 0)
     && (address['number'].length > 0)
     && (address.city.length > 0)
@@ -350,7 +346,7 @@ watch(addAllowed, (v) => {
 
 //TODO: Implement backend connection
 async function submitMarker() {
-  console.log(contactInfo);
+  //console.log(contactInfo);
   unlockNotices.value = true;
   addState.value = "pending";
   addError.value = null;
@@ -370,30 +366,47 @@ async function submitMarker() {
 
   adresL = await geocodeFromAddress(`${address.street} ${address.number} ${address.city}`);
   let position:any = convertLen(adresL.longitude, adresL.latitude);
-  console.log(adresL)
-  const adres: Address = {
-    city: adresL.locality,
-    street: adresL.street,
-    number: adresL.number
-  }
+  //console.log(adresL)
+  //const adres: Address = {
+  //  city: adresL.locality,
+  //  street: adresL.street,
+  //  number: adresL.number
+  //}
   
+  const contactInfo: ContactInfo = {
+    name: name.value,
+    surname: surname.value,
+    address: contactAddress.value,
+    method: {
+      type: contactMethod.value,
+      val: contactVal.value
+    }
+  };
+
   const markerData: NewMarker ={
     latitude: position[1],
     longitude: position[0],
     title: title.value,
     description: description.value,
     type: listCategory.value,
-    address: adres,
-    contactInfo: contactInfo.value
+    address: address,
+    contactInfo: contactInfo
   }
-  console.log(adres);
+  //console.log(adres);
   console.log(markerData);
-  await addMarker(markerData);
-  store.pointres = markerData;
+  await addMarker(markerData)
+    .then(() => {
+      store.pointres = markerData;
+      addState.value = "success";
+    })
+    .catch((err: SomsiadStatus | null) => {
+      console.error(err);
+      addState.value = "error";
+    });
 }
 
 async function disabledSubmitMarker() {
-  console.log(contactInfo);
+  //console.log(contactInfo);
   unlockNotices.value = true;
   await nextTick();
   if(routewrapper.value !== null) {

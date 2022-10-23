@@ -1,11 +1,18 @@
 type AddressGeocodingState = "idle" | "pending" | "error" | "success";
-type ListingCategory = "NeighborHelp" | "Happening" | "Charity" | "MassEvent";
 
 // Contact method format
 enum ContactMethod {
   Email = "Email",
   PhoneNumber = "PhoneNumber"
 }
+
+// Listing categories
+enum ListingCategory {
+  NeighborHelp = "NeighborHelp",
+  Happening = "Happening",
+  Charity = "Charity",
+  MassEvent = "MassEvent"
+};
 
 // Store format
 interface Store {
@@ -125,8 +132,8 @@ interface Marker {
   title: string;
   description: string;
   addTime: string;
-  startTime?: string;
-  endTime?: string;
+  startTime: string | null;
+  endTime: string | null;
   address: Address;
   contactInfo: ContactInfo;
   type: ListingCategory;
@@ -249,7 +256,6 @@ export type {
   GeoData,
   Pointer,
   PointerProps,
-  ListingCategory,
   SomsiadStatus,
   LoginData,
   UserData,
@@ -260,5 +266,6 @@ export type {
 };
 export {
   Sex,
-  ContactMethod
+  ContactMethod,
+  ListingCategory
 };
