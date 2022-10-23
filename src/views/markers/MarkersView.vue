@@ -4,8 +4,7 @@
       class="flex flex-col w-full h-full"
     >
       <AddressBar
-        v-model="address"
-        :distance="distance"
+        v-model="adressBarData"
         :enabled="store.isAddressBarEnabled"
         @enter="onAddressEnter"
       />
@@ -48,18 +47,22 @@ import { getMarkersByCity, getMarkersWithinDistance } from "@/api/backend";
 const router = useRouter();
 const store = useStore();
 
-const address = ref("");
-const distance = ref("5");
+const adressBarData = ref({
+  address: "",
+  distance: "5"
+});
 
 const onAddressEnter = async () => {
+  console.log(adressBarData);
   store.setAddressGeocodingState("pending");
   store.toggleAddressBar(false);
 
   let markers: Marker[];
-  if(distance.value === '0') {
-    markers = await getMarkersByCity(address.value);
+  console.log(adressBarData.value.distance, adressBarData.value.address);
+  if(adressBarData.value.distance === '0') {
+    markers = await getMarkersByCity(adressBarData.value.address);
   } else {
-    const adresL = await geocodeFromAddress(address.value);
+    const adresL = await geocodeFromAddress(adressBarData.value.address);
     if(!adresL) {
       store.setAddressGeocodingState("error");
       store.toggleAddressBar(true);
@@ -69,7 +72,7 @@ const onAddressEnter = async () => {
     markers = await getMarkersWithinDistance(
       adresL.latitude,
       adresL.longitude,
-      distance.value
+      adressBarData.value.distance
     );
 
     const newLocalization: GeoData = {
@@ -83,6 +86,9 @@ const onAddressEnter = async () => {
     store.setUserGeoData(newLocalization);
   }
 
-  // zapisanie markerów do store'a
+  store.setExploredMarkers(markers);
+  store.setAddressGeocodingState("success");
+  store.toggleAddressBar(true);
+  router.push('/markers/explorer');
 };
 </script>

@@ -29,32 +29,12 @@
 <script lang="ts" setup>
 import RouteWrapper from "@/components/general/RouteWrapper.vue";
 import MarkerExplorerBlock from '@/components/markers/MarkerExplorerBlock.vue';
-import type { FilteredMarkersData, ListingCategory, Marker } from "@/types";
+import useStore from "@/store";
+import type { FilteredMarkersData, ListingCategory } from "@/types";
 import markersCategories from "./MarkersCategories";
 
-// to będzie fetchowane
-const allMarkers: Marker[] = [
-    {
-        id: 0,
-        userID: 1,
-        latitude: 21.37,
-        longitude: 21.37,
-        title: "Wyprowadzę psa",
-        type: "NeighborHelp",
-        address: {
-            city: 'Sosnowiec',
-            street: 'Jagiellońska',
-            number: '13'
-        }
-    },
-];
-
-allMarkers[1] = { ...allMarkers[0], title: 'Białaczka wykańcza Adasia', type: 'Charity' };
-allMarkers[2] = { ...allMarkers[0], title: 'bardzo długi title żeby wszystko się zesrało ardzo długi title żeby wszystko się zesrało', type: 'Happening' };
-allMarkers[3] = { ...allMarkers[0], title: 'inba w parku marii stupak', type: 'MassEvent' };
-for(let i = 4; i < 10; i++) {
-    allMarkers[i] = { ...allMarkers[0], type: 'NeighborHelp' };
-}
+const store = useStore();
+const allMarkers = store.getExploredMarkers;
 
 const filteredMarkers: FilteredMarkersData[] = [];
 Object.entries(markersCategories).forEach(([categoryName, data]) => {

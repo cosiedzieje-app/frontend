@@ -4,8 +4,7 @@
       name="address"
       type="text"
       class="w-3/5"
-      :modelValue="modelValue"
-      @update:model-value="updateValue"
+      v-model="modelValue.address"
       :autocomplete="autocomplete !== undefined ? autocomplete : 'off'"
       :placeholder="placeholder !== undefined ? placeholder : 'Twój adres'"
       custom-text-align="text-center"
@@ -13,7 +12,7 @@
       required
     />
     <select 
-      v-model="distance" 
+      v-model="modelValue.distance" 
       @change="onChange" 
       class="text-white bg-gray py-2 px-4 w-2/7 border-solid border-gray-400 rounded focus:border-main" 
       :enabled="enabled"
@@ -46,23 +45,19 @@ import FormInput from '@/components/general/FormInput.vue';
 import { ref } from '@vue/reactivity';
 
 interface Props {
-  modelValue: string;
-  distance: string;
+  modelValue: Record<string, string>;
   enabled: boolean;
 }
 
 const props = defineProps<Props>();
 
 const emit = defineEmits(['update:modelValue', 'enter']);
-const updateValue = (v: string) => {
-  emit('update:modelValue', v);
-}
 const onEnter = () => emit('enter');
 
 const placeholder = ref('Twój adres');
 const autocomplete = ref('street-address');
 const onChange = () => {
-  if(props.distance === '0') {
+  if(props.modelValue.distance === '0') {
     placeholder.value = 'Nazwa miejscowości';
     autocomplete.value = 'address-level2';
   } else {

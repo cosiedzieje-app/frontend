@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import type {  Address, GeoData, ListingCategory, UserData } from '@/types';
+import { Sex } from '@/types';
 import useStore from '@/store';
 import { useRouter } from 'vue-router';
-import { getUserData } from '@/api/user';
 
 const store = useStore();
 const router = useRouter();
@@ -40,15 +40,14 @@ interface Props {
 
 const props = defineProps<Props>();
 
-// GET /user/${authorId}
-const userData: UserData = await getUserData();
-// const userData = {
-//     username: 'annakowalska1',
-//     name: 'Anna',
-//     surname: 'Kowalska',
-//     sex: Sex.Male,
-//     reputation: 0
-// };
+// const userData = await getUserData();
+const userData = {
+    username: 'annakowalska1',
+    name: 'Anna',
+    surname: 'Kowalska',
+    sex: Sex.Female,
+    reputation: 0
+};
 
 async function markerClicked() {
     const newLocalization: GeoData = {

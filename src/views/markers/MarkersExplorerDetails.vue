@@ -39,7 +39,7 @@ import { getMarkerDetails } from "@/api/backend";
 const router = useRouter();
 
 const route = useRoute(); 
-// const data = getMarkerDetails(route.params.id);
+// const data = await getMarkerDetails(route.params.id);
 
 const data: MarkerDetails = {
   id: 1,
