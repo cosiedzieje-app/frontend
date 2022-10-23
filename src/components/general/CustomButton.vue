@@ -6,9 +6,8 @@
       'min-w-[100px]': !props.mobile,
       'md:min-w-[100px]': props.mobile,
       'bg-main': props.enabled !== false,
-      'hover:bg-main-light': props.enabled !== false && props.mobile !== true,
-      'bg-green': props.enabled === false,
-      'hover:bg-green-light': props.enabled === false && props.mobile !== true
+      'hover:bg-main-light': props.enabled !== false,
+      'bg-main-dark': props.enabled === false,
     }"
     type="button"
     autocomplete="off"

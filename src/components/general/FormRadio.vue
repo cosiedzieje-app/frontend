@@ -8,7 +8,7 @@
       class="flex justify-center items-center p-2 m-2 text-center text-white text-base rounded-md"
       :class="{
         'bg-main': radio.selected === true,
-        'bg-green': radio.selected === false
+        'bg-gray-light': radio.selected === false
       }"
       @click="() => onClick(radio.name)"
       type="button"
