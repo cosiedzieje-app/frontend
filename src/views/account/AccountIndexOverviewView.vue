@@ -38,7 +38,7 @@
         <article class="w-[75%] flex flex-col items-center">
           <AccountStat
             label="Reputacja"
-            :value="userData.reputation"
+            :value="userData.reputation.toString()"
           />
           <AccountStat
             label="Ilość dodanych ogłoszeń"

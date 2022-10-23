@@ -151,7 +151,7 @@ import RouteWrapper from '@/components/general/RouteWrapper.vue';
 import NoticeBox from '@/components/general/NoticeBox.vue';
 
 import { reactive, ref, type Ref, computed, type ComputedRef, watch, nextTick } from 'vue';
-import type { ButtonProps, UserAccountData, UserPersonalData, Address, 
+import type { ButtonProps, CustomButtonType, UserAccountData, UserPersonalData, Address, 
   NewAccount, SomsiadStatus, LoginData } from '@/types';
 import { Sex } from '@/types';
 import { useRouter } from 'vue-router';
@@ -321,13 +321,14 @@ async function sendForm() {
     });
 }
 
+const buttonType: CustomButtonType = "submit";
 const buttonProps: Ref<ButtonProps> = ref({
   caption: "Utwórz konto",
   action: () => sendForm(),
   icon: "fa-solid fa-pen",
   enabled: registerAllowed.value,
   disabledAction: () => disabledSendForm(),
-  type: "submit"
+  type: buttonType
 });
 const loginButtonProps: ButtonProps = {
   caption: "Zaloguj się",

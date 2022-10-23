@@ -1,33 +1,34 @@
-import type { ListingCategory, MarkerCategory } from "@/types";
+import type { MarkerCategory } from "@/types";
+import { ListingCategory } from "@/types";
 
 const markersCategories: Record<ListingCategory, MarkerCategory> = {
-    'NeighborHelp':  {
+    [ListingCategory.NeighborHelp]:  {
         name: 'Pomoc sąsiedzka',
+        type: ListingCategory.NeighborHelp,
         icon: 'fa-solid fa-handshake',
         lightColor: 'green-400',
-        darkColor: 'green-700',
-        darkHoverColor: 'green-800',
+        darkColor: 'green-700'
     },
-    'Charity': {
+    [ListingCategory.Charity]: {
         name: 'Akcje charytatywne',
+        type: ListingCategory.Charity,
         icon: 'fa-solid fa-hand-holding-heart',
         lightColor: 'red-400',
-        darkColor: 'red-700',
-        darkHoverColor: 'red-800',
+        darkColor: 'red-700'
     },
-    'MassEvent': {
+    [ListingCategory.MassEvent]: {
         name: 'Imprezy masowe',
+        type: ListingCategory.MassEvent,
         icon: 'fa-solid fa-star',
         lightColor: 'yellow-400',
-        darkColor: 'yellow-700',
-        darkHoverColor: 'yellow-800',
+        darkColor: 'yellow-700'
     },
-    'Happening': {
+    [ListingCategory.Happening]: {
         name: 'Happeningi',
+        type: ListingCategory.Happening,
         icon: 'fa-solid fa-hand-point-up',
         lightColor: 'violet-400',
-        darkColor: 'violet-700',
-        darkHoverColor: 'violet-800',
+        darkColor: 'violet-700'
     },
 };
 

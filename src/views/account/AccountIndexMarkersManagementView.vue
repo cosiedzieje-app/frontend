@@ -122,7 +122,21 @@ const markerStopwatchState: Ref<MarkerStopwatchState[]> = ref([]);
 const markerDeletionStateCounter: Ref<number> = ref(0);
 
 function getErrorMessage(marker: Marker, err: SomsiadStatus | null): string {
-  
+  if(err === null) {
+    return `Nie udało się usunąć ogłoszenia "${marker.title}". `
+      +`Spróbuj ponownie. Jeśli problem się powtórzy, skontaktuj się z `
+      +`administratorem.`;
+  } else {
+    if(err.res[0] === "Nieoczekiwany błąd") {
+      return `Po stronie serwera wystąpił nieoczekiwany błąd. `
+        +`Spróbuj ponownie. Jeśli problem się powtórzy, skontaktuj się z `
+        +`administratorem.`;
+    } else {
+      return `Nie udało się usunąć ogłoszenia "${marker.title}". `
+        +`Spróbuj ponownie. Jeśli problem się powtórzy, skontaktuj się z `
+        +`administratorem.`;
+    }
+  }
 }
 
 function onMarkerDeleteStart(marker: Marker) {

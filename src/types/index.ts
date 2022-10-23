@@ -27,6 +27,8 @@ interface Store {
   currentlyExploredMarker: Marker | null;
 }
 
+type CustomButtonType = "button" | "submit" | "reset";
+
 // CustomButton props format
 interface ButtonProps {
   caption: string;
@@ -35,7 +37,7 @@ interface ButtonProps {
   icon: string;
   enabled?: boolean;
   mobile?: boolean;
-  type?: "button" | "submit" | "reset";
+  type?: CustomButtonType;
 }
 
 // Form radio format
@@ -229,10 +231,10 @@ interface AuthContext {
 
 interface MarkerCategory {
   name: string;
+  type: ListingCategory;
   icon: string;
   lightColor: string;
   darkColor: string;
-  darkHoverColor: string;
 }
 
 interface FilteredMarkersData {
@@ -243,6 +245,7 @@ interface FilteredMarkersData {
 
 export type {
   ButtonProps,
+  CustomButtonType,
   FormRadioProps,
   AccountSidebarItemProps,
   Store,
