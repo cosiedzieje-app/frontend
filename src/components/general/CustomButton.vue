@@ -1,11 +1,14 @@
 <template>
   <button 
-    class="flex flex-row justify-center items-center text-center duration-200 rounded-xl text-white min-w-[100px] min-h-[30px] px-4 py-2"
+    class="flex flex-row justify-center items-center text-center duration-200 text-xl md:text-base md:rounded-xl text-white min-h-[30px] px-4 py-2"
     @click="() => onClick()"
     :class="{
+      'min-w-[100px]': !props.mobile,
+      'md:min-w-[100px]': props.mobile,
       'bg-main': props.enabled !== false,
-      'hover:bg-main-light': props.enabled !== false,
+      'hover:bg-main-light': props.enabled !== false && props.mobile !== true,
       'bg-green': props.enabled === false,
+      'hover:bg-green-light': props.enabled === false && props.mobile !== true
     }"
     type="button"
     autocomplete="off"

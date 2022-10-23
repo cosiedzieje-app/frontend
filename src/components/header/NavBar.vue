@@ -1,13 +1,13 @@
 <template>
   <nav class="navbar w-full">
-    <div class="border-main flex justify-end items-center p-2">
+    <div class="border-main flex flex-col md:flex-row md:justify-end items-center md:p-2">
       <NavBarItem 
         v-for="item in items"
         :key="item.caption"
         :props="item"
       />
       <AccountBox 
-        class="ml-4"
+        class="md:ml-4"
       />
     </div>
   </nav>

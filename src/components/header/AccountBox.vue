@@ -1,5 +1,6 @@
 <template>
   <CustomButton 
+    class="w-full"
     :props="buttonProps"
   />
 </template>
@@ -16,14 +17,16 @@ const router = useRouter();
 const buttonProps: Ref<ButtonProps> = ref({
   caption: (store.isAuthenticated && store.getUserData !== null) ? store.getUserData.loginName : "Zaloguj się",
   action: () => store.isAuthenticated ? router.push('/account') : router.push('/account/login'),
-  icon: store.isAuthenticated ? "fa-solid fa-user" : "fa-solid fa-key"
+  icon: store.isAuthenticated ? "fa-solid fa-user" : "fa-solid fa-key",
+  mobile: true
 } as ButtonProps);
 
 store.$subscribe((_mut, state) => {
   buttonProps.value = {
     caption: (state.authenticated && state.userData !== null) ? state.userData.loginName : "Zaloguj się",
     action: () => state.authenticated ? router.push('/account') : router.push('/account/login'),
-    icon: state.authenticated ? "fa-solid fa-user" : "fa-solid fa-key"
+    icon: state.authenticated ? "fa-solid fa-user" : "fa-solid fa-key",
+    mobile: true
   };
 });
 </script>

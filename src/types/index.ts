@@ -24,6 +24,7 @@ interface ButtonProps {
   disabledAction?: () => void;
   icon: string;
   enabled?: boolean;
+  mobile?: boolean;
 }
 
 // Form radio format
@@ -38,7 +39,8 @@ interface AccountSidebarItemProps {
   name: string;
   label: string;
   action: () => void;
-  currentCondition: boolean;
+  currentCondition?: boolean;
+  alwaysCurrent?: boolean;
 }
 
 // Login data format
@@ -202,6 +204,7 @@ interface UserData {
 export type {
   ButtonProps,
   FormRadioProps,
+  AccountSidebarItemProps,
   Store,
   AddressGeocodingState,
   UserAccountData,
