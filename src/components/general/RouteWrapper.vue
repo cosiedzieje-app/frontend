@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineExpose } from "vue";
+import { ref } from "vue";
 import type { Ref } from "vue";
 
 interface Props {

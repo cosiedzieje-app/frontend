@@ -43,6 +43,15 @@
       class="min-h-full w-full flex flex-col items-center py-4"
     >
       <section class="w-full flex flex-col items-center px-4 mb-6">
+        <h2 class="w-full text-center text-white text-2xl pb-4">Typ ogłoszenia</h2>
+        <article class="w-[75%] flex flex-col">
+          <FormRadio
+            :radios="categoryOfMarker"
+            @update="onMarkerRadioUpdate"
+          />
+        </article>
+      </section>
+      <section class="w-full flex flex-col items-center px-4 mb-6">
         <h2 class="w-full text-center text-white text-2xl pb-4">
           Podstawowe dane
         </h2>
@@ -66,10 +75,6 @@
             @update="onInputUpdate"
           />
 
-          <FormRadio
-            :radios="categoryOfMarker"
-            @update="onMarkerRadioUpdate"
-          />
 
           <FormInput 
             :enabled="true"

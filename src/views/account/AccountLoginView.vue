@@ -1,38 +1,40 @@
 <template>
   <RouteWrapper :scrollable="true">
-    <div
-      v-if="redirected || loginState !== 'idle'"
-      class="w-full flex flex-col items-center justify-center"
-    >
-      <Transition name="notice-fade" mode="out-in">
-        <NoticeBox 
-          v-if="redirected"
-          message="Zaloguj się, aby kontynuować"
-          icon="fa-solid fa-key"
-          level="warn"
-        />
-      </Transition>
-      <Transition name="notice-fade" mode="out-in">
-        <NoticeBox
-          v-if="loginState === 'pending'"
-          message="Trwa logowanie..."
-          icon="fa-solid fa-key"
-          level="info"
-        />
-        <NoticeBox
-          v-else-if="loginState === 'success'"
-          message="Pomyślnie zalogowano. Trwa przekierowanie..."
-          icon="fa-solid fa-check"
-          level="success"
-        />
-        <NoticeBox
-          v-else-if="loginState === 'error'"
-          :message="loginErrorMessage"
-          icon="fa-solid fa-triangle-exclamation"
-          level="error"
-        />
-      </Transition>
-    </div>
+    <transition name="notice-fade" mode="out-in">
+      <div
+        v-if="redirected || loginState !== 'idle'"
+        class="w-full flex flex-col items-center justify-center"
+      >
+        <transition name="notice-fade" mode="out-in">
+          <NoticeBox 
+            v-if="redirected"
+            message="Zaloguj się, aby kontynuować"
+            icon="fa-solid fa-key"
+            level="warn"
+          />
+        </Transition>
+        <Transition name="notice-fade" mode="out-in">
+          <NoticeBox
+            v-if="loginState === 'pending'"
+            message="Trwa logowanie..."
+            icon="fa-solid fa-key"
+            level="info"
+          />
+          <NoticeBox
+            v-else-if="loginState === 'success'"
+            message="Pomyślnie zalogowano. Trwa przekierowanie..."
+            icon="fa-solid fa-check"
+            level="success"
+          />
+          <NoticeBox
+            v-else-if="loginState === 'error'"
+            :message="loginErrorMessage"
+            icon="fa-solid fa-triangle-exclamation"
+            level="error"
+          />
+        </transition>
+      </div>
+    </transition>
     <form class="p-4 w-full flex flex-col items-center" @submit.prevent="">
       <h1
         class="w-full text-center text-white text-4xl mb-10"

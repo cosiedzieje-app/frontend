@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
+import type { RouteLocationNormalized } from "vue-router";
 import * as userApi from "@/api/user";
 
 import useStore from '@/store';
