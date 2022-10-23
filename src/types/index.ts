@@ -281,8 +281,7 @@ export type {
   Localization,
   AuthContext,
   MarkerCategory,
-  FilteredMarkersData,
-  Localization
+  FilteredMarkersData
 };
 export {
   Sex,
