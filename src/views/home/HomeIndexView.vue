@@ -1,7 +1,7 @@
 <template>
   <RouteWrapper class="flex flex-col justify-center items-center">
     <section class="flex flex-col justify-center items-center h-full text-center">
-        <h1 class="text-3xl md:text-6xl p-2 whitespace-nowrap font-bold text-white">Pomoc sąsiedzka w zasięgu ręki!</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl p-2 whitespace-nowrap font-bold text-white">Pomoc sąsiedzka w zasięgu ręki!</h1>
         <p class="text-lg md:text-xl text-gray-lighter my-2 w-[65%]">Innowacyjna platforma zacieśniająca więzi międzyludzkie. Sprawdzaj i dodawaj ogłoszenia w swojej okolicy. Oferuj pomoc, organizuj imprezy masowe i wiele więcej!</p>
         <div class="flex flex-row">
             <CustomButton class="m-2 text-lg" v-for="button in buttons" :props="button" />

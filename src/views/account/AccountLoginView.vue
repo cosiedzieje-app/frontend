@@ -83,7 +83,7 @@ import CustomButton from "@/components/general/CustomButton.vue";
 
 import { useRoute, useRouter } from "vue-router";
 import { ref, type Ref, computed, type ComputedRef, watch } from "vue";
-import type { ButtonProps,LoginData, SomsiadStatus } from "@/types";
+import type { ButtonProps, LoginData, SomsiadStatus } from "@/types";
 import { login, getUserData } from "@/api/user";
 import useStore from "@/store";
 
@@ -160,7 +160,7 @@ async function sendForm() {
     });
 }
 
-const buttonProps: Ref<ButtonProps> = ref({
+const buttonProps: Ref<ButtonProps> = ref<ButtonProps>({
   caption: 'Prześlij',
   action: () => sendForm(),
   icon: 'fa-solid fa-check',
