@@ -411,9 +411,11 @@ async function submitMarker() {
       val: contactVal.value
     }
   };
-
-  let start = Math.round((new Date(startTime.value.replace('T', " ")).getTime()) / 1000)
-  let end =  Math.round((new Date(endTime.value.replace('T', " ")).getTime()) / 1000)
+  let start;
+  let end;
+  if((startTime.value != null || startTime.value != null) && (endTime.value != null || endTime.value != null)){
+   start = Math.round((new Date(startTime.value.replace('T', " ")).getTime()) / 1000)
+   end =  Math.round((new Date(endTime.value.replace('T', " ")).getTime()) / 1000)}
 
   const markerData: NewMarker ={
     latitude: adresL.longitude,
