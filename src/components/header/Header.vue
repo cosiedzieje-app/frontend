@@ -13,75 +13,80 @@
 </template>
 
 <script setup lang="ts">
-import NavBar from "./NavBar.vue";
-import type { ButtonProps } from "@/types";
-import { useRouter } from "vue-router";
-import useStore from '@/store';
-import { ref, type Ref, onMounted } from 'vue';
+ import NavBar from "./NavBar.vue";
+ import type { ButtonProps } from "@/types";
+ import { useRouter } from "vue-router";
+ import useStore from '@/store';
+ import { ref, type Ref, onMounted } from 'vue';
 
-const router = useRouter();
-const store = useStore();
-const baseNavbarItems: ButtonProps[] = [
-  {
-    caption: "Ogłoszenia",
-    action: () => router.push("/markers"),
-    icon: "fa-solid fa-location-dot"
-  },
-];
+ const router = useRouter();
+ const store = useStore();
+ const baseNavbarItems: ButtonProps[] = [
+   {
+     caption: "Kod źródłowy",
+     action: () => window.open("https://github.com/cosiedzieje-app"),
+     icon: "fa-brands fa-github"
+   },
+   {
+     caption: "Ogłoszenia",
+     action: () => router.push("/markers"),
+     icon: "fa-solid fa-location-dot"
+   }
+ ];
 
-const navbarItems: Ref<ButtonProps[]> = ref([]);
-
-onMounted(() => {
-  if(store.isAuthenticated === true) {
-    navbarItems.value = [ 
-      ...baseNavbarItems,
-      {
-        caption: "Dodaj ogłoszenie",
-        action: () => router.push({ name: 'markersAdd' }),
-        icon: "fa-solid fa-map-pin"
-      },
-      {
-        caption: "Wyloguj się",
-        action: () => router.replace({ name: "accountLogout" }),
-        icon: "fa-solid fa-key"
-      }
-    ]; 
-  } else {
-    navbarItems.value = [ 
-      ...baseNavbarItems, 
-      {
-        caption: "Załóż konto",
-        action: () => router.push("/account/register"),
-        icon: ""
-      }
-    ];
-  }
-});
-
-store.$subscribe((mutation, state) => {
-  if(state.authenticated === true) {
-    navbarItems.value = [ 
-      ...baseNavbarItems,
-      {
-        caption: "Dodaj ogłoszenie",
-        action: () => router.push({ name: 'markersAdd' }),
-        icon: "fa-solid fa-map-pin"
-      },
-      {
-        caption: "Wyloguj się",
-        action: () => router.replace({ name: "accountLogout" }),
-        icon: "fa-solid fa-key"
-      }
-    ]; 
-  } else {
-    navbarItems.value = [ 
-      ...baseNavbarItems,
-      {
-        caption: "Załóż konto",
-        action: () => router.push("/account/register"),
-        icon: ""
-      }
-    ];
-  }
-});
+ const navbarItems: Ref<ButtonProps[]> = ref([]);
+ 
+ onMounted(() => {
+   if(store.isAuthenticated === true) {
+     navbarItems.value = [ 
+       ...baseNavbarItems,
+       {
+         caption: "Dodaj ogłoszenie",
+         action: () => router.push({ name: 'markersAdd' }),
+         icon: "fa-solid fa-map-pin"
+       },
+       {
+         caption: "Wyloguj się",
+         action: () => router.replace({ name: "accountLogout" }),
+         icon: "fa-solid fa-key"
+       }
+     ]; 
+   } else {
+     navbarItems.value = [ 
+       ...baseNavbarItems, 
+       {
+         caption: "Załóż konto",
+         action: () => router.push("/account/register"),
+         icon: ""
+       }
+     ];
+   }
+ });
+ 
+ store.$subscribe((mutation, state) => {
+   if(state.authenticated === true) {
+     navbarItems.value = [ 
+       ...baseNavbarItems,
+       {
+         caption: "Dodaj ogłoszenie",
+         action: () => router.push({ name: 'markersAdd' }),
+         icon: "fa-solid fa-map-pin"
+       },
+       {
+         caption: "Wyloguj się",
+         action: () => router.replace({ name: "accountLogout" }),
+         icon: "fa-solid fa-key"
+       }
+     ]; 
+   } else {
+     navbarItems.value = [ 
+       ...baseNavbarItems,
+       {
+         caption: "Załóż konto",
+         action: () => router.push("/account/register"),
+         icon: ""
+       }
+     ];
+   }
+ });
 </script>
