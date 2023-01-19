@@ -11,7 +11,7 @@ npm install yarn@1.22.19 -g
 ```
 yarn
 ```
-5. Stwórz plik `.env` w głównym katalogu repozytorium i zamieść w nim zmienną `VITE_BACKEND_URL` zawierającą adres URL odnoszący się do adresu serwera backendu oraz `VITE_GEO_API_KEY` niezbędne do pozyskiwania koordynatów adresów.
+5. Stwórz plik `.env` w głównym katalogu repozytorium i zamieść w nim zmienną `VITE_BACKEND_URL` zawierającą adres URL odnoszący się do adresu serwera backendu oraz `VITE_GEO_API_KEY` zawierającą klucz dostępowy do API serwisu [positionstack](https://positionstack.com), niezbędnego do pozyskiwania koordynatów adresów.
 np.:
 ```
 VITE_BACKEND_URL="http://127.0.0.1:8000"
